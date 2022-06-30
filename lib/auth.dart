@@ -33,7 +33,7 @@ class AuthPage extends StatelessWidget {
                 height: 50,
               ),
               CircleAvatar(
-                radius: GetPlatform.isDesktop ? 165 : 145,
+                radius: GetPlatform.isDesktop ? 165 : 150,
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: GetPlatform.isDesktop
                     ? Center(
@@ -52,21 +52,11 @@ class AuthPage extends StatelessWidget {
                           ),
                         ),
                       )
-                    : Center(
-                        child: Container(
-                          padding: EdgeInsets.all(30),
-                          height: 243,
-                          width: 290,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Expanded(
-                                child: FormPage(),
-                              ),
-                            ],
-                          ),
-                        ),
+                    : Container(
+                        padding: const EdgeInsets.only(left: 32, right: 32, top: 10),
+                        // margin: EdgeInsets.only(top: 5),
+                        height: 237,
+                        child: FormPage(),
                       ),
               ),
               SizedBox(

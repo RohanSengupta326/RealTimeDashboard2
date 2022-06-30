@@ -1,11 +1,34 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:login/api/post.dart';
+import 'package:login/homeview.dart';
 
 class FormPage extends StatelessWidget {
+  final api = Get.put(PostRequest());
   final _formKey = GlobalKey<FormState>();
   String _userName = '';
   String _userPassword = '';
+  var isLoading = false.obs;
+
+  void onSubmitted(BuildContext context) async {
+    isLoading.value = true;
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    // unfocuses from any text field
+
+    if (isValid) {
+      _formKey.currentState!.save();
+      await api.fetchData(_userName, _userPassword);
+      // api call with get from another file
+      isLoading.value = false;
+      Get.snackbar('Congrats', 'Logged In successfully');
+      Get.to(() => HomeView());
+    } else {
+      isLoading.value = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class FormPage extends StatelessWidget {
           children: <Widget>[
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty || value.length < 4) {
-                  return 'please enter username of atleast 4 characters';
+                if (value != '9067201452') {
+                  return 'please enter valid username';
                 }
                 return null;
               },
@@ -42,7 +65,7 @@ class FormPage extends StatelessWidget {
             ),
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty || value.length < 7) {
+                if (value != "agent007") {
                   return 'Wrong Password';
                 }
                 return null;
@@ -76,11 +99,20 @@ class FormPage extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.background,
-              child: Icon(Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.onError),
-            ),
+            GestureDetector(
+                onTap: () => onSubmitted(context),
+                child: Obx(() {
+                  return isLoading.value
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        )
+                      : CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.background,
+                          child: Icon(Icons.arrow_forward_ios,
+                              color: Theme.of(context).colorScheme.onError),
+                        );
+                })),
           ]),
     );
   }
