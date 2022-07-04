@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login/auth.dart';
 import 'package:get/get.dart';
+import 'package:login/homeview.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LogIn',
       theme: ThemeData(
-          primaryColor: Color.fromRGBO(1, 53, 80, 1),
+          primaryColor: Color.fromARGB(255, 224, 128, 221),
           colorScheme: const ColorScheme(
               brightness: Brightness.light,
               primary: Colors.blue,
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 17,
                   color: Colors.white,
                   fontWeight: FontWeight.bold))),
-      home: AuthPage(),
+      home: HomeView(),
     );
   }
 }

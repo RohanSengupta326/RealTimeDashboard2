@@ -14,10 +14,10 @@ class PostRequest extends GetxController {
     return [..._items];
   }
 
-  Future<void> fetchData(String username, String password) async {
+  Future<void> fetchData() async {
     // print(url);
 
-    var parsedUrl = Uri.parse(
+    /* var parsedUrl = Uri.parse(
       url,
     );
     try {
@@ -26,10 +26,9 @@ class PostRequest extends GetxController {
         body: json.encode(
           // converts this map to json, comes from dart:convert package
           {
-            "username": username,
-            "password": password,
-            "meta_info": {"test1": "test123"},
-            "key": true
+            "startDateTime": 1656873000000,
+            "endDateTime": 16569139200000,
+            "svcid": 4,
           },
         ),
       );
@@ -43,30 +42,48 @@ class PostRequest extends GetxController {
           return;
         }
 
-        for (int i = 0; i < extractedData.length; i++) {
-          final Map<String, dynamic> favoriteResponse = extractedData[i];
-          // first map
-
-          // print(favoriteResponse['agentId']);
-          // print(favoriteResponse['serviceName']);
-          _items.add(
-            Data(
-              agentId: favoriteResponse['agentId'],
-              serviceName: favoriteResponse['serviceName'],
-            ),
-          );
-        }
+        // print(extractedData['agentId']);
+        // print(extractedData['serviceName']);
+        _items.add(
+          Data(
+            answeredCallInbound: extractedData['answeredCallInbound'],
+            missedCallInbound: extractedData['missedCallInbound'],
+            answeredCallOutbound: extractedData['answeredCallOutbound'],
+            missedCallOutbound: extractedData['missedCallOutbound'],
+            customerMissedCallOutbound:
+                extractedData['customerMissedCallOutbound'],
+            agentMissedCallOutbound: extractedData['agentMissedCallOutbound'],
+          ),
+        );
       } else if (response.statusCode > 400) {
         Get.snackbar('error', 'some error occurred');
       }
     } catch (error) {
       throw (error);
-    }
+    } */
+    _items.add(Data(
+      answeredCallInbound: 6,
+      missedCallInbound: 5,
+      answeredCallOutbound: 4,
+      missedCallOutbound: 3,
+      customerMissedCallOutbound: 2,
+      agentMissedCallOutbound: 1,
+    ));
   }
 }
 
 class Data {
-  var agentId;
-  var serviceName;
-  Data({this.agentId, this.serviceName});
+  var answeredCallInbound;
+  var missedCallInbound;
+  var answeredCallOutbound;
+  var missedCallOutbound;
+  var customerMissedCallOutbound;
+  var agentMissedCallOutbound;
+  Data(
+      {this.answeredCallInbound,
+      this.missedCallInbound,
+      this.answeredCallOutbound,
+      this.missedCallOutbound,
+      this.customerMissedCallOutbound,
+      this.agentMissedCallOutbound});
 }
