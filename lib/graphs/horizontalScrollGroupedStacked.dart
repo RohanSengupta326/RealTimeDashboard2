@@ -5,6 +5,9 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 class HorizontalStackedGrouped extends StatelessWidget {
+  var smallWidth;
+  HorizontalStackedGrouped([this.smallWidth]);
+
   @override
   Widget build(BuildContext context) {
     return charts.BarChart(
@@ -19,9 +22,8 @@ class HorizontalStackedGrouped extends StatelessWidget {
 
         charts.ChartTitle(
           subTitle: 'Answered + Missed',
-          innerPadding: 16,
-          titlePadding: 16,
-          outerPadding: 16,
+          outerPadding: smallWidth ? 0 : 16,
+          innerPadding: smallWidth ? 2 : 16,
           'Calls',
           titleStyleSpec:
               charts.TextStyleSpec(color: charts.MaterialPalette.black.lighter),
@@ -29,7 +31,7 @@ class HorizontalStackedGrouped extends StatelessWidget {
         ),
         // charts.BehaviorPosition.start is label at y axis
         charts.ChartTitle(
-          outerPadding: 16,
+          outerPadding: smallWidth ? 4 : 16,
           'Week Days',
           titleStyleSpec: charts.TextStyleSpec(
             color: charts.MaterialPalette.black.lighter,

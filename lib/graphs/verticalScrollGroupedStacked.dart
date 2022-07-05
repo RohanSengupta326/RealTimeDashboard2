@@ -5,6 +5,9 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 class verticalScrollGroupedStacked extends StatelessWidget {
+  var isSmallWidth;
+  verticalScrollGroupedStacked([this.isSmallWidth]);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -21,7 +24,7 @@ class verticalScrollGroupedStacked extends StatelessWidget {
           charts.PanAndZoomBehavior(),
 
           charts.ChartTitle(
-            outerPadding: 16,
+            outerPadding: isSmallWidth ? 2 : 16,
             'Week Days',
             titleStyleSpec: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black.lighter),
@@ -29,9 +32,9 @@ class verticalScrollGroupedStacked extends StatelessWidget {
           ),
           // charts.BehaviorPosition.start is label at y axis
           charts.ChartTitle(
-            innerPadding: 16,
-            titlePadding: 16,
-            outerPadding: 16,
+            innerPadding: isSmallWidth ? 2 : 16,
+            titlePadding: isSmallWidth ? 2 : 16,
+            outerPadding: isSmallWidth ? 4 : 16,
             'Calls',
             subTitle: 'Answered + Missed',
             titleStyleSpec: charts.TextStyleSpec(
@@ -53,8 +56,8 @@ class verticalScrollGroupedStacked extends StatelessWidget {
         // ),
         flipVerticalAxis: true,
         primaryMeasureAxis: const charts.NumericAxisSpec(
-          showAxisLine: true,
           viewport: charts.NumericExtents(0, 270),
+          showAxisLine: true,
           // y axis from  0 to 270 fixed
           tickProviderSpec:
               charts.BasicNumericTickProviderSpec(desiredTickCount: 20),

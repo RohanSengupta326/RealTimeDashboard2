@@ -343,7 +343,7 @@ class _HomeViewState extends State<HomeView> {
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                               Expanded(
-                                child: verticalScrollGroupedStacked(),
+                                child: verticalScrollGroupedStacked(false),
                               ),
                             ],
                           ),
@@ -365,7 +365,7 @@ class _HomeViewState extends State<HomeView> {
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                               Expanded(
-                                child: HorizontalStackedGrouped(),
+                                child: HorizontalStackedGrouped(false),
                               ),
                             ],
                           ),
@@ -375,6 +375,37 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: GetPlatform.isAndroid ? 500 : 600,
+                        width: GetPlatform.isAndroid ? 400 : 600,
+                        padding: EdgeInsets.all(20),
+                        child: Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  '',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                Expanded(
+                                  child: HorizontalStackedGrouped(true),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
             ],
           ),
         ),
