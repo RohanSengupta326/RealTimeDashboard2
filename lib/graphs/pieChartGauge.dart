@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class PieChartGauge extends StatefulWidget {
   @override
@@ -51,9 +52,10 @@ class _PieChartGaugeState extends State<PieChartGauge> {
             horizontalFirst: false,
             position: charts.BehaviorPosition.bottom,
             desiredMaxRows: 1,
-            cellPadding: EdgeInsets.only(right: 6.0, bottom: 4.0),
+            cellPadding: EdgeInsets.only(
+                bottom: 20, left: GetPlatform.isAndroid ? 50 : 110),
             entryTextStyle: charts.TextStyleSpec(
-                color: charts.MaterialPalette.black.lighter, fontSize: 20),
+                color: charts.MaterialPalette.gray.shade600, fontSize: 14),
           ),
         ],
         defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
