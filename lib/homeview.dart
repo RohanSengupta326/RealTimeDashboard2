@@ -37,6 +37,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/utils.dart';
 import 'package:get/get.dart';
 import 'package:login/graphs/copyStackedBar.dart';
+import 'package:login/graphs/horizontalScrollGroupedStacked.dart';
 import 'package:login/graphs/stackedGroupedBarChart.dart';
 import './api/post.dart';
 import './graphs/pieChartGauge.dart';
@@ -212,8 +213,8 @@ class _HomeViewState extends State<HomeView> {
                 child: Row(
                   children: [
                     Container(
-                      height: GetPlatform.isAndroid ? 320 : 500,
-                      width: GetPlatform.isAndroid ? Get.width + 10 : 600,
+                      height: GetPlatform.isAndroid ? 350 : 500,
+                      width: GetPlatform.isAndroid ? 500 : 600,
                       padding: EdgeInsets.all(20),
                       child: Card(
                         elevation: 10,
@@ -230,8 +231,8 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     Container(
-                      height: GetPlatform.isAndroid ? 320 : 500,
-                      width: GetPlatform.isAndroid ? Get.width + 10 : 600,
+                      height: GetPlatform.isAndroid ? 350 : 500,
+                      width: GetPlatform.isAndroid ? 500 : 600,
                       padding: EdgeInsets.all(20),
                       child: Card(
                         elevation: 10,
@@ -252,8 +253,8 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     Container(
-                      height: GetPlatform.isAndroid ? 320 : 500,
-                      width: GetPlatform.isAndroid ? Get.width + 10 : 600,
+                      height: GetPlatform.isAndroid ? 350 : 500,
+                      width: GetPlatform.isAndroid ? 500 : 600,
                       padding: EdgeInsets.all(20),
                       child: Card(
                         elevation: 10,
@@ -277,7 +278,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -343,6 +344,28 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Expanded(
                                 child: verticalScrollGroupedStacked(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: GetPlatform.isAndroid ? 500 : 600,
+                      width: GetPlatform.isAndroid ? 600 : 600,
+                      padding: EdgeInsets.all(20),
+                      child: Card(
+                        elevation: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                '',
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                              Expanded(
+                                child: HorizontalStackedGrouped(),
                               ),
                             ],
                           ),

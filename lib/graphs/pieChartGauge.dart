@@ -53,7 +53,7 @@ class _PieChartGaugeState extends State<PieChartGauge> {
             position: charts.BehaviorPosition.bottom,
             desiredMaxRows: 1,
             cellPadding: EdgeInsets.only(
-                bottom: 20, left: GetPlatform.isAndroid ? 50 : 110),
+                bottom: 20, left: GetPlatform.isAndroid ? 80 : 110,),
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.gray.shade600, fontSize: 14),
           ),

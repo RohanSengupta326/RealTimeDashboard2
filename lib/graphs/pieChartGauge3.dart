@@ -52,7 +52,7 @@ class _PieChartGauge3State extends State<PieChartGauge3> {
           charts.DatumLegend(
             horizontalFirst: false,
             desiredMaxRows: 1,
-            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 50 : 125),
+            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 95 : 125),
             position: charts.BehaviorPosition.bottom,
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.gray.shade600, fontSize: 14),
