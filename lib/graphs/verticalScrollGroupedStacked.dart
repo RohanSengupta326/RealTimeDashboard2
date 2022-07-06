@@ -24,7 +24,7 @@ class verticalScrollGroupedStacked extends StatelessWidget {
           charts.PanAndZoomBehavior(),
 
           charts.ChartTitle(
-            outerPadding: isSmallWidth ? 2 : 16,
+            outerPadding: isSmallWidth ? 5 : 16,
             'Week Days',
             titleStyleSpec: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black.lighter),
@@ -32,9 +32,9 @@ class verticalScrollGroupedStacked extends StatelessWidget {
           ),
           // charts.BehaviorPosition.start is label at y axis
           charts.ChartTitle(
-            innerPadding: isSmallWidth ? 2 : 16,
-            titlePadding: isSmallWidth ? 2 : 16,
-            outerPadding: isSmallWidth ? 4 : 16,
+            // innerPadding: isSmallWidth ? 16 : 16,
+            titlePadding: isSmallWidth ? 16 : 16,
+            // outerPadding: isSmallWidth ? 16 : 16,
             'Calls',
             subTitle: 'Answered + Missed',
             titleStyleSpec: charts.TextStyleSpec(
@@ -55,12 +55,13 @@ class verticalScrollGroupedStacked extends StatelessWidget {
         //   // bar width
         // ),
         flipVerticalAxis: true,
-        primaryMeasureAxis: const charts.NumericAxisSpec(
+        primaryMeasureAxis: charts.NumericAxisSpec(
           viewport: charts.NumericExtents(0, 270),
           showAxisLine: true,
           // y axis from  0 to 270 fixed
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 20),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              desiredTickCount: isSmallWidth ? 10 : 20),
+              // how many ticks you want to show
         ),
         domainAxis: charts.OrdinalAxisSpec(
             viewport: charts.OrdinalViewport(
