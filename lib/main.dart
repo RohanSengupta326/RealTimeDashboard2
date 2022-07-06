@@ -3,7 +3,7 @@ import 'package:login/auth.dart';
 import 'package:get/get.dart';
 import 'package:login/homeview.dart';
 import './customScroll.dart';
-// for horizontal scrolling
+// for horizontal scrolling on web
 
 void main() {
   runApp(const MyApp());
