@@ -52,16 +52,16 @@ class _PieChartGauge2State extends State<PieChartGauge2> {
             horizontalFirst: false,
             position: charts.BehaviorPosition.bottom,
             desiredMaxRows: 1,
-            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 90 : 125),
+            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 40 : 125),
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.gray.shade600, fontSize: 14),
           ),
         ],
         defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
           charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside,
-              outsideLabelStyleSpec: charts.TextStyleSpec(
-                  fontSize: 17,
+              labelPosition: charts.ArcLabelPosition.inside,
+              insideLabelStyleSpec: charts.TextStyleSpec(
+                  fontSize: 14,
                   color: charts.ColorUtil.fromDartColor(Colors.black)))
         ], arcWidth: 30, startAngle: 4 / 5 * 3.14, arcLength: 7 / 5 * 3.14));
   }

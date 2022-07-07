@@ -89,34 +89,40 @@ class _HomeViewState extends State<HomeView> {
               child: Row(
                 children: [
                   Container(
-                    height: GetPlatform.isAndroid ? 370 : 500,
-                    width: GetPlatform.isAndroid ? 500 : 600,
+                    height: GetPlatform.isAndroid ? 500 : 500,
+                    width: GetPlatform.isAndroid ? Get.width : 600,
+                    padding: EdgeInsets.all(10),
                     child: Card(
                       elevation: 10,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: PieChartGauge(),
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 30,
+                  ),
                   Container(
-                    height: GetPlatform.isAndroid ? 370 : 500,
-                    width: GetPlatform.isAndroid ? 500 : 600,
+                    height: GetPlatform.isAndroid ? 500 : 500,
+                    width: GetPlatform.isAndroid ? Get.width : 600,
+                    padding: EdgeInsets.all(10),
                     child: Card(
                       elevation: 10,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: PieChartGauge2(),
                       ),
                     ),
                   ),
                   Container(
-                    height: GetPlatform.isAndroid ? 370 : 500,
-                    width: GetPlatform.isAndroid ? 500 : 600,
+                    height: GetPlatform.isAndroid ? 500 : 500,
+                    width: GetPlatform.isAndroid ? Get.width : 600,
+                    padding: EdgeInsets.all(10),
                     child: Card(
                       elevation: 10,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: PieChartGauge3(),
                       ),
                     ),

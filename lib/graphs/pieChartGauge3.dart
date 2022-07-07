@@ -52,7 +52,7 @@ class _PieChartGauge3State extends State<PieChartGauge3> {
           charts.DatumLegend(
             horizontalFirst: false,
             desiredMaxRows: 1,
-            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 95 : 125),
+            cellPadding: EdgeInsets.only(bottom: 20, left: GetPlatform.isAndroid ? 40 : 125),
             position: charts.BehaviorPosition.bottom,
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.gray.shade600, fontSize: 14),
@@ -60,9 +60,9 @@ class _PieChartGauge3State extends State<PieChartGauge3> {
         ],
         defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
           charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside,
-              outsideLabelStyleSpec: charts.TextStyleSpec(
-                  fontSize: 17,
+              labelPosition: charts.ArcLabelPosition.inside,
+              insideLabelStyleSpec: charts.TextStyleSpec(
+                  fontSize: 14,
                   color: charts.ColorUtil.fromDartColor(Colors.black)))
         ], arcWidth: 30, startAngle: 4 / 5 * 3.14, arcLength: 7 / 5 * 3.14));
   }
