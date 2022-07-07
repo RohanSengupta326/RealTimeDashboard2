@@ -65,6 +65,8 @@ class _PieChartGaugeState extends State<PieChartGauge> {
                   fontSize: 17,
                   color: charts.ColorUtil.fromDartColor(Colors.black)))
         ], arcWidth: 30, startAngle: 4 / 5 * 3.14, arcLength: 7 / 5 * 3.14));
+        // arclength  = how much we are gapping from the circle to create gauge
+        // startAngle = from which angle gauge is starting
   }
 }
 

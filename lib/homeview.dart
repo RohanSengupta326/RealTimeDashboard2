@@ -89,64 +89,35 @@ class _HomeViewState extends State<HomeView> {
               child: Row(
                 children: [
                   Container(
-                    height: GetPlatform.isAndroid ? 520 : 500,
+                    height: GetPlatform.isAndroid ? 370 : 500,
                     width: GetPlatform.isAndroid ? 500 : 600,
-                    padding: EdgeInsets.all(20),
-                    child: Card(
-                      elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: <Widget>[
-                            Expanded(
-                              child: PieChartGauge(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: GetPlatform.isAndroid ? 350 : 500,
-                    width: GetPlatform.isAndroid ? 500 : 600,
-                    padding: EdgeInsets.all(20),
                     child: Card(
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              '',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            Expanded(
-                              child: PieChartGauge2(),
-                            ),
-                          ],
-                        ),
+                        child: PieChartGauge(),
                       ),
                     ),
                   ),
                   Container(
-                    height: GetPlatform.isAndroid ? 350 : 500,
+                    height: GetPlatform.isAndroid ? 370 : 500,
                     width: GetPlatform.isAndroid ? 500 : 600,
-                    padding: EdgeInsets.all(20),
                     child: Card(
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              '',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            Expanded(
-                              child: PieChartGauge3(),
-                            ),
-                          ],
-                        ),
+                        child: PieChartGauge2(),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: GetPlatform.isAndroid ? 370 : 500,
+                    width: GetPlatform.isAndroid ? 500 : 600,
+                    child: Card(
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PieChartGauge3(),
                       ),
                     ),
                   ),

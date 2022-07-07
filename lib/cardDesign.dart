@@ -71,6 +71,7 @@ class _CardDesignState extends State<CardDesign> {
                         color: items[index].endColor,
                         blurRadius: 12,
                         offset: Offset(0, 6),
+                        // offset(x, y) how much distance shadow will come x=0 y=6
                       ),
                     ],
                   ),
@@ -174,21 +175,30 @@ class CustomCardShapePainter extends CustomPainter {
     var radius = 24.0;
 
     var paint = Paint();
-    paint.shader = ui.Gradient.linear(
-        Offset(0, 0), Offset(size.width, size.height), [
+    paint.shader =
+        ui.Gradient.linear(Offset(0, 0), Offset(size.width, size.height), [
+          // size.width, size.height that recieved when calling this class
       HSLColor.fromColor(startColor).withLightness(0.8).toColor(),
       endColor
+      // create the shaded color gradient
     ]);
 
     var path = Path()
       ..moveTo(0, size.height)
+      // moved to bottom left corner x = 0, y= height , means bottom left
       ..lineTo(size.width - radius, size.height)
+      // draw line from bottom left to bottom right, but leaving container curve radius space on the right
       ..quadraticBezierTo(
           size.width, size.height, size.width, size.height - radius)
+      // now drawn a curve on the right, quadraticBezierTo(x1, y1, x2, y2) , x1,y1 = where to start the curve, x2,y2  = where we'll end the curve
       ..lineTo(size.width, radius)
+      // another line from the bottom right corner to top
       ..quadraticBezierTo(size.width, 0, size.width - radius, 0)
+      // another curve on the top right for fitting the container border curve
       ..lineTo(size.width - 1.5 * radius, 0)
+      //
       ..quadraticBezierTo(-radius, 2 * radius, 0, size.height)
+      // draw curve from top to bottom as
       ..close();
 
     canvas.drawPath(path, paint);
