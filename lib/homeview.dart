@@ -32,10 +32,10 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/utils.dart';
+
 import 'package:get/get.dart';
+
+import 'package:login/call_analytics_monitor_view/callAnalyticsView.dart';
 import 'package:login/cardDesign.dart';
 import 'package:login/graphs/copyStackedBar.dart';
 import 'package:login/graphs/horizontalScrollGroupedStacked.dart';
@@ -45,6 +45,8 @@ import './graphs/pieChartGauge.dart';
 import './graphs/pieChartGauge2.dart';
 import './graphs/pieChartGauge3.dart';
 import './graphs/verticalScrollGroupedStacked.dart';
+
+import './graphs/customLegeds.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -60,15 +62,31 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
+/* const Padding(
+                      padding: EdgeInsets.only(right: 215),
+                      child: Text(
+                        '| Dashboard',
+                        style: TextStyle(
+                            color: Color(0xff2b5a00),
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ), */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.green.shade400,
+        elevation: 0,
+        backgroundColor: Colors.white,
         title: Text(
-          'ApiFetchModel',
-          style: TextStyle(color: Theme.of(context).colorScheme.onError),
+          '| Dashboard',
+          style: TextStyle(
+              color: Color(0xff2b5a00),
+              fontSize: 18,
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -274,7 +292,15 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            // calling widget for Gauge card designs
+            CallAnalyticsView(),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),
