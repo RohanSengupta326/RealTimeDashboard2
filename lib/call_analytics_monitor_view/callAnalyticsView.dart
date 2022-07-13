@@ -21,11 +21,13 @@ class CallAnalyticsView extends StatelessWidget {
             Container(
               height: 100,
               width: 500,
-              child: TabDesign(),
+              child: TabDesign(false, false),
             ),
 
             Expanded(child: CardRowOne()),
+            // Row 1 for 2 cards
             Expanded(child: CardRowTwo()),
+            // row 2 for another set of 2 cards
           ],
         ),
       ),

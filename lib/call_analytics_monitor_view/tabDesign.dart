@@ -2,10 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TabDesign extends StatelessWidget {
-  var isSelectedTodayTab = false.obs;
-  var isSelectedWeekTab = false.obs;
-  var isSelectedMonthTab = false.obs;
-  var isSelectedMonthsTab = false.obs;
+  static var tabListIndex = 0.obs;
+  // change index when swiped to show different tab and rebuild screen
+  // static to store index value on every class call to remember which tab was focused
+
+  bool onLeftSwipe = false;
+  // if screen swiped left
+  bool onRightSwipe = false;
+  // if screen swiped right
+
+  TabDesign(bool leftSwipe, bool rightSwipe) {
+    onLeftSwipe = leftSwipe;
+    onRightSwipe = rightSwipe;
+
+    if (onLeftSwipe) {
+      // if screen swiped left
+      print('\nonLeftSwipe');
+      print(tabListIndex.value);
+
+      if (tabListIndex.value < 3) {
+        // if tab is remaining on the right side on left swipe go to right tabs else if user already on 3rd = last tab dont increase index anymore
+        print('increasing');
+        tabListIndex.value = tabListIndex.value + 1;
+        print(tabListIndex.value);
+      }
+    }
+
+    if (onRightSwipe) {
+      // if screen swiped right
+      print('\nonRightSwipe');
+      print(tabListIndex.value);
+      if (tabListIndex.value > 0) {
+        // if tab is remaining on the left side on left swipe go to left tabs else if user already on 0th = first tab dont decrease index anymore
+        print('decreasing');
+        tabListIndex.value = tabListIndex.value - 1;
+        print(tabListIndex.value);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +51,20 @@ class TabDesign extends StatelessWidget {
           // when hovering mouse cursor changes
           child: GestureDetector(
             onTap: () {
-              isSelectedTodayTab.value = !isSelectedTodayTab.value;
-              isSelectedWeekTab.value = false;
-              isSelectedMonthTab.value = false;
-              isSelectedMonthsTab.value = false;
+              tabListIndex.value = 0;
+              // on tap also change index to focus on selected tab
             },
             child: Obx(
               () {
                 return Container(
-                  height: isSelectedTodayTab.value ? 55 : 50,
-                  width: isSelectedTodayTab.value ? 65 : 60,
+                  // increased height and width if tab is focused
+                  height: tabListIndex.value == 0 ? 55 : 50,
+                  width: tabListIndex.value == 0 ? 65 : 60,
                   child: Center(
                       child: Text(
                     'Today',
-                    style: isSelectedTodayTab.value
+                    style: tabListIndex.value == 0
+                        // bold text and large font if tab is focused
                         ? TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -53,20 +87,17 @@ class TabDesign extends StatelessWidget {
           // when hovering mouse cursor changes
           child: GestureDetector(
             onTap: () {
-              isSelectedTodayTab.value = false;
-              isSelectedWeekTab.value = !isSelectedWeekTab.value;
-              isSelectedMonthTab.value = false;
-              isSelectedMonthsTab.value = false;
+              tabListIndex.value = 1;
             },
             child: Obx(
               () {
                 return Container(
-                  height: isSelectedWeekTab.value ? 55 : 50,
-                  width: isSelectedWeekTab.value ? 65 : 60,
+                  height: tabListIndex.value == 1 ? 55 : 50,
+                  width: tabListIndex.value == 1 ? 65 : 60,
                   child: Center(
                       child: Text(
                     'Week',
-                    style: isSelectedWeekTab.value
+                    style: tabListIndex.value == 1
                         ? TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -89,20 +120,17 @@ class TabDesign extends StatelessWidget {
           // when hovering mouse cursor changes
           child: GestureDetector(
             onTap: () {
-              isSelectedTodayTab.value = false;
-              isSelectedWeekTab.value = false;
-              isSelectedMonthTab.value = !isSelectedMonthTab.value;
-              isSelectedMonthsTab.value = false;
+              tabListIndex.value = 2;
             },
             child: Obx(
               () {
                 return Container(
-                  height: isSelectedMonthTab.value ? 55 : 50,
-                  width: isSelectedMonthTab.value ? 65 : 60,
+                  height: tabListIndex.value == 2 ? 55 : 50,
+                  width: tabListIndex.value == 2 ? 65 : 60,
                   child: Center(
                       child: Text(
                     'Month',
-                    style: isSelectedMonthTab.value
+                    style: tabListIndex.value == 2
                         ? TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -125,23 +153,20 @@ class TabDesign extends StatelessWidget {
           // when hovering mouse cursor changes
           child: GestureDetector(
             onTap: () {
-              isSelectedTodayTab.value = false;
-              isSelectedWeekTab.value = false;
-              isSelectedMonthTab.value = false;
-              isSelectedMonthsTab.value = !isSelectedMonthsTab.value;
+              tabListIndex.value = 3;
             },
             child: Obx(
               () {
                 return Container(
-                  height: isSelectedMonthsTab.value ? 55 : 50,
-                  width: isSelectedMonthsTab.value ? 75 : 70,
+                  height: tabListIndex.value == 3 ? 55 : 50,
+                  width: tabListIndex.value == 3 ? 75 : 70,
                   child: Center(
                       child: FittedBox(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         '3 Months',
-                        style: isSelectedMonthsTab.value
+                        style: tabListIndex.value == 3
                             ? TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,

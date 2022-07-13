@@ -28,40 +28,43 @@ class IconRenderer extends charts.CustomSymbolRenderer {
 }
 
 class PieChartGaugeDashboard extends StatefulWidget {
-  final Color col;
-  final Color col2;
-  PieChartGaugeDashboard(this.col, this.col2);
+  final Color color;
+  final Color color2;
+  PieChartGaugeDashboard(this.color, this.color2);
 
   @override
   State<PieChartGaugeDashboard> createState() => _PieChartGaugeDashboardState();
 }
 
 class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
-  List<charts.Series<Task, String>> _seriesPieData = [];
+  List<charts.Series<PieChartData, String>> _seriesPieData = [];
+  // list to store graph data
 
   _generateData() {
-    var piedata = [
-      Task(
+    var pieData = [
+      PieChartData(
+        // class to store legend title, graph percentage, and graph color
         'Answered',
         60,
-        widget.col,
+        widget.color,
       ),
-      Task(
+      PieChartData(
         'Missed',
         0,
-        widget.col2,
+        widget.color2,
       ),
     ];
 
     _seriesPieData.add(
+      // adding data to graph
       charts.Series(
-        domainFn: (Task task, _) => task.task,
-        measureFn: (Task task, _) => task.taskvalue,
-        colorFn: (Task task, _) =>
-            charts.ColorUtil.fromDartColor(task.colorval),
+        domainFn: (PieChartData title, _) => title.legendAndxAxesTitle,
+        measureFn: (PieChartData chartData, _) => chartData.pieChartDataOne,
+        colorFn: (PieChartData chartColor, _) =>
+            charts.ColorUtil.fromDartColor(chartColor.colorval),
         id: 'sample',
-        data: piedata,
-        labelAccessorFn: (Task row, _) => '${row.taskvalue}',
+        data: pieData,
+        labelAccessorFn: (PieChartData row, _) => '${row.pieChartDataOne}',
       ),
     );
   }
@@ -84,7 +87,7 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
             horizontalFirst: false,
             position: charts.BehaviorPosition.bottom,
             desiredMaxRows: 2,
-            cellPadding: EdgeInsets.only(left:16, bottom: 5),
+            cellPadding: EdgeInsets.only(left: 16, bottom: 5),
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black, fontSize: 11),
           ),
@@ -107,10 +110,10 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   }
 }
 
-class Task {
-  String task;
-  int taskvalue;
+class PieChartData {
+  int pieChartDataOne;
+  String legendAndxAxesTitle;
   Color colorval;
 
-  Task(this.task, this.taskvalue, this.colorval);
+  PieChartData(this.legendAndxAxesTitle, this.pieChartDataOne, this.colorval);
 }

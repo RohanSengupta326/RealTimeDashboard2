@@ -31,11 +31,13 @@
 //   }
 // }
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import 'package:login/call_analytics_monitor_view/callAnalyticsView.dart';
+import 'package:login/call_analytics_monitor_view/tabDesign.dart';
 import 'package:login/cardDesign.dart';
 import 'package:login/graphs/copyStackedBar.dart';
 import 'package:login/graphs/horizontalScrollGroupedStacked.dart';
@@ -297,7 +299,23 @@ class _HomeViewState extends State<HomeView> {
               height: 30,
             ),
             // calling widget for Gauge card designs
-            CallAnalyticsView(),
+            GestureDetector(
+              onHorizontalDragEnd: (details) {
+                // DragEnd only considers swipe one time, DragUpdate keep taking swipes and calls function multiple times
+
+                if (details.primaryVelocity! > 0) {
+                  // Right Swipe
+                  print('right swipe');
+                  TabDesign(false, true);
+                } else if (details.primaryVelocity! < 0) {
+                  //Left Swipe
+                  print('left swipe');
+                  TabDesign(true, false);
+                }
+              },
+              child: CallAnalyticsView(),
+              // card designs
+            ),
             SizedBox(
               height: 50,
             ),

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:login/graphs/pieChartGaugeDashboard.dart';
 
 class CardRowOne extends StatelessWidget {
-  const CardRowOne({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // first card 
         Expanded(
           flex: 2,
+          // takes 50% of screen horizontally 
           child: Container(
             margin: EdgeInsets.all(8),
             child: Card(
@@ -39,6 +39,7 @@ class CardRowOne extends StatelessWidget {
             ),
           ),
         ),
+        // second card
         Expanded(
           flex: 2,
           child: Container(
