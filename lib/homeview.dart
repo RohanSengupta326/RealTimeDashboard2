@@ -40,6 +40,7 @@ import 'package:login/call_analytics_monitor_view/callAnalyticsView.dart';
 import 'package:login/graphs/charts_and_cards.dart';
 
 import './api/post.dart';
+import './call_analytics_monitor_view/app_drawer.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -59,14 +60,16 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      // initially which tab will be selected 
+      // initially which tab will be selected
       length: 4,
       // how many tabs
       child: Scaffold(
+        drawer: AppDrawer(),
         backgroundColor: Colors.white,
         appBar: AppBar(
           bottom: const TabBar(
             // tabs
+
             labelColor: Colors.black,
             // selected tab color
             labelStyle: TextStyle(
@@ -80,7 +83,7 @@ class _HomeViewState extends State<HomeView> {
                 color: Colors.grey,
                 fontWeight: FontWeight.normal,
                 fontSize: 13),
-              // unselected tab text style
+            // unselected tab text style
             indicatorColor: Colors.white,
             // underline below tab while selected
             indicatorSize: TabBarIndicatorSize.label,
@@ -111,16 +114,14 @@ class _HomeViewState extends State<HomeView> {
           ),
           elevation: 0,
           backgroundColor: Colors.white,
-          title: const Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Text(
-              '| Dashboard',
-              style: TextStyle(
-                  color: Color(0xff2b5a00),
-                  fontSize: 18,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold),
-            ),
+          iconTheme: IconThemeData(color: Color(0xff2b5a00)),
+          title: const Text(
+            '| Dashboard',
+            style: TextStyle(
+                color: Color(0xff2b5a00),
+                fontSize: 18,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.bold),
           ),
         ),
         body: /* SingleChildScrollView(
