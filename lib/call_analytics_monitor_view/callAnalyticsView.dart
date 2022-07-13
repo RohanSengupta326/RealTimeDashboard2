@@ -5,28 +5,25 @@ import 'cardRowOne.dart';
 import 'cardRowTwo.dart';
 
 class CallAnalyticsView extends StatelessWidget {
-  const CallAnalyticsView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       height: GetPlatform.isAndroid ? 570 : 600,
       width: GetPlatform.isAndroid ? 500 : 600,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // tabs here
-            Container(
-              height: 100,
-              width: 500,
-              child: TabDesign(false, false),
-            ),
+            // Container(
+            //   height: 100,
+            //   width: 500,
+            // ),
 
-            Expanded(child: CardRowOne()),
+            Expanded(flex: 2, child: CardRowOne()),
             // Row 1 for 2 cards
-            Expanded(child: CardRowTwo()),
+
+            Expanded(flex: 2, child: CardRowTwo()),
             // row 2 for another set of 2 cards
           ],
         ),

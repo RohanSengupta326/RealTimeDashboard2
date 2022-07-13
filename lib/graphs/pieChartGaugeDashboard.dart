@@ -1,11 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
-import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 // external class to design custom legends
 class IconRenderer extends charts.CustomSymbolRenderer {
@@ -59,11 +53,15 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
       // adding data to graph
       charts.Series(
         domainFn: (PieChartData title, _) => title.legendAndxAxesTitle,
+        // for xaxes labels and legend titles
         measureFn: (PieChartData chartData, _) => chartData.pieChartDataOne,
+        // for value of graph in y axis, here percentage of arc
         colorFn: (PieChartData chartColor, _) =>
+        // color of the chart
             charts.ColorUtil.fromDartColor(chartColor.colorval),
         id: 'sample',
         data: pieData,
+        // giving the preset data to the chart
         labelAccessorFn: (PieChartData row, _) => '${row.pieChartDataOne}',
       ),
     );
@@ -71,7 +69,7 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // generating data first
     _generateData();
   }
 
@@ -81,20 +79,28 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
         animate: true,
         animationDuration: Duration(seconds: 1),
         _seriesPieData,
+        // intregrating set data with graph
         behaviors: [
           charts.DatumLegend(
+            // adding legends
             outsideJustification: charts.OutsideJustification.start,
+            // position of legend at left most position
             horizontalFirst: false,
             position: charts.BehaviorPosition.bottom,
+            // legends at bottom
             desiredMaxRows: 2,
+            // keep legends in two rows
             cellPadding: EdgeInsets.only(left: 16, bottom: 5),
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black, fontSize: 11),
+            // legend styling
           ),
         ],
         defaultRenderer: charts.ArcRendererConfig(
+            // configuration of the pie arc
             symbolRenderer: IconRenderer(CupertinoIcons.rhombus_fill),
             // calling overridden class to design custom widget
+
             // arcRendererDecorators: [
             //   charts.ArcLabelDecorator(
             //       labelPosition: charts.ArcLabelPosition.inside,
@@ -105,7 +111,6 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
             // arcWidth: 30,
             startAngle: -2 / 5,
             arcLength: 7 / 5 * 3.14));
-
     // startAngle = from which angle gauge is starting
   }
 }
