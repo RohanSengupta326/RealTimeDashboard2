@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/homeview.dart';
-import 'dashboard2.dart';
+import 'dashboard2HomePage.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
