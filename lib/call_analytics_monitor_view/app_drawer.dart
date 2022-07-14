@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/homeview.dart';
 import 'dashboard2HomePage.dart';
+import 'dashboardThree.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -42,6 +43,19 @@ class AppDrawer extends StatelessWidget {
                 )),
             onTap: () {
               Get.offAll(DashboardTwo());
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.dashboard_sharp,
+            ),
+            title: Text('Dashboard 3',
+                style: TextStyle(
+                  color: Colors.black,
+                )),
+            onTap: () {
+              Get.offAll(DashboardThree());
             },
           ),
         ],

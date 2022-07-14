@@ -1,9 +1,8 @@
-import 'package:login/call_analytics_monitor_view/dashBoardTwoDesign.dart';
-
 import 'app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'dashBoardThreeDesign.dart';
 
-class DashboardTwo extends StatelessWidget {
+class DashboardThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -74,11 +73,10 @@ class DashboardTwo extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            DashBoardTwoDesign(),
-            // second dashboard structure
-            DashBoardTwoDesign(),
-            DashBoardTwoDesign(),
-            DashBoardTwoDesign(),
+            DashBoardThreeDesign(),
+            DashBoardThreeDesign(),
+            DashBoardThreeDesign(),
+            DashBoardThreeDesign(),
           ],
         ),
       ),
