@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardTwo extends StatelessWidget {
+  // call data, will fetch from api later
   double answredCalls = 20.0;
   double missedCalls = 54.0;
   double outboundMissedCustomer = 20.0;
   double outboundMissedAgent = 54.0;
 
   // DashboardTwo([this.answredCalls]);
+  // will take data later in constructors
 
   @override
   Widget build(BuildContext context) {
