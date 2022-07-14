@@ -3,14 +3,10 @@ import 'package:get/get.dart';
 
 class DashBoardTwoDesign extends StatelessWidget {
   // call data, will fetch from api later
-  /* double answredCalls = 20.0;
-  double missedCalls = 54.0;
-  double outboundMissedCustomer = 20.0;
-  double outboundMissedAgent = 54.0; */
 
   var totalAllCalls = 100;
   // total calls
-  // will be different total for diff type of calls later
+  // will be different total for different type of calls later
 
   // all type of call data
   int answeredInboundCalls = 20;
