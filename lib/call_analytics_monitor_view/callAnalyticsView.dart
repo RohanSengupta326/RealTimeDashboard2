@@ -5,6 +5,9 @@ import 'cardRowOne.dart';
 import 'cardRowTwo.dart';
 
 class CallAnalyticsView extends StatelessWidget {
+  int _tabControllerIndex;
+  CallAnalyticsView(this._tabControllerIndex);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,10 +23,10 @@ class CallAnalyticsView extends StatelessWidget {
             //   width: 500,
             // ),
 
-            Expanded(flex: 2, child: CardRowOne()),
+            Expanded(flex: 2, child: CardRowOne(_tabControllerIndex)),
             // Row 1 for 2 cards
 
-            Expanded(flex: 2, child: CardRowTwo()),
+            Expanded(flex: 2, child: CardRowTwo(_tabControllerIndex)),
             // row 2 for another set of 2 cards
           ],
         ),

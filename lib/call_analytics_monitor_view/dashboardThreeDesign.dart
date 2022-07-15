@@ -1,19 +1,50 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/graphs/horizontalBar.dart';
 
-class DashBoardThreeDesign extends StatelessWidget {
+class DashBoardThreeDesign extends StatefulWidget {
+  int tabControllerIndex;
+  DashBoardThreeDesign(this.tabControllerIndex);
+
+  @override
+  State<DashBoardThreeDesign> createState() => _DashBoardThreeDesignState();
+}
+
+class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
   // call data, will fetch from api later
+  int totalInboundCalls = 74;
+
+  int totalOutboundCalls = 74;
+
+  int totalOutboundMissedCalls = 74;
 
   // all type of call data
   int answeredInboundCalls = 20;
+
   int answeredOutboundCalls = 20;
 
   int missedInboundCalls = 54;
+
   int missedOutboundCalls = 54;
 
   int outboundMissedCustomer = 20;
+
   int outboundMissedAgent = 54;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   _generateData();
+
+  //   super.initState();
+  // }
+
+
+
+  // _generateData(){
+  //   // api fetch according to tab except dont fetch for today tab again
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +88,8 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: answeredInboundCalls < 110
-                          ? answeredInboundCalls.toDouble() + 10
-                          : 110,
+                      width:
+                          (answeredInboundCalls / totalInboundCalls * 100) + 10,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.green),
                           color: Color(0xffd9e6d4)),
@@ -85,9 +115,9 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: answeredInboundCalls < 110
-                          ? answeredOutboundCalls.toDouble() + 10
-                          : 110,
+                      width:
+                          (answeredOutboundCalls / totalOutboundCalls * 100) +
+                              10,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.green),
                           color: Color(0xffd9e6d4)),
@@ -130,9 +160,8 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: missedInboundCalls < 110
-                          ? missedInboundCalls.toDouble() + 10
-                          : 110,
+                      width:
+                          (missedInboundCalls / totalInboundCalls * 100) + 10,
                       decoration: BoxDecoration(
                           border: Border.all(color: Color(0xff96251d)),
                           color: Color(0xfff5dbd6)),
@@ -158,9 +187,8 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: missedInboundCalls < 110
-                          ? missedOutboundCalls.toDouble() + 10
-                          : 110,
+                      width:
+                          (missedOutboundCalls / totalOutboundCalls * 100) + 10,
                       decoration: BoxDecoration(
                           border: Border.all(color: Color(0xff96251d)),
                           color: Color(0xfff5dbd6)),
@@ -212,9 +240,10 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: outboundMissedCustomer < 400
-                          ? outboundMissedCustomer.toDouble() + 10
-                          : 400,
+                      width: (outboundMissedCustomer /
+                              totalOutboundMissedCalls *
+                              100) +
+                          10,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         color: Color(0xfff5b470),
@@ -258,9 +287,10 @@ class DashBoardThreeDesign extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 20,
-                      width: outboundMissedAgent < 400
-                          ? outboundMissedAgent.toDouble() + 10
-                          : 400,
+                      width: (outboundMissedAgent /
+                              totalOutboundMissedCalls *
+                              100) +
+                          10,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         color: Color(0xfffff98e),

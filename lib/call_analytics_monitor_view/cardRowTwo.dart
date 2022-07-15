@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:login/graphs/pieChartGaugeDashboard.dart';
 
 class CardRowTwo extends StatelessWidget {
-  const CardRowTwo({super.key});
+  int _tabControllerIndex;
+  CardRowTwo(this._tabControllerIndex);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CardRowTwo extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 40, top: 10),
                     child: Text(
-                      'Inbound',
+                      'Missed',
                       style: TextStyle(
                           color: Color(0xff0038c9),
                           fontFamily: 'Lato',
@@ -34,8 +35,8 @@ class CardRowTwo extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: PieChartGaugeDashboard(
-                        Color(0xff0038c9), Color(0xff94a2fd)),
+                    child: PieChartGaugeDashboard(Color(0xff0038c9),
+                        Color(0xff94a2fd), _tabControllerIndex, false, false),
                   ),
                 ],
               ),
@@ -56,7 +57,7 @@ class CardRowTwo extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 40, top: 10),
                     child: Text(
-                      'Inbound',
+                      'Total',
                       style: TextStyle(
                           color: Color(0xff8b2751),
                           fontFamily: 'Lato',
@@ -65,8 +66,8 @@ class CardRowTwo extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: PieChartGaugeDashboard(
-                        Color(0xff8b2751), Color(0xffeb7bb6)),
+                    child: PieChartGaugeDashboard(Color(0xff8b2751),
+                        Color(0xffeb7bb6), _tabControllerIndex, false, false),
                   ),
                 ],
               ),

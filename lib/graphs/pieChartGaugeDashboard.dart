@@ -1,30 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:login/api/post.dart';
+import '../api/post.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 // external class to design custom legends
-class IconRenderer extends charts.CustomSymbolRenderer {
-  final IconData iconData;
-
-  IconRenderer(this.iconData);
-
-  @override
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled = true}) {
-    return SizedBox.fromSize(
-      size: size,
-      child: Icon(
-        iconData,
-        color: color,
-        size: 12,
-      ),
-    );
-  }
-}
 
 class PieChartGaugeDashboard extends StatefulWidget {
   final Color color;
   final Color color2;
-  PieChartGaugeDashboard(this.color, this.color2);
+  int _tabControllerIndex;
+  bool inbound;
+  bool outbound;
+  PieChartGaugeDashboard(this.color, this.color2, this._tabControllerIndex,
+      this.inbound, this.outbound);
 
   @override
   State<PieChartGaugeDashboard> createState() => _PieChartGaugeDashboardState();
@@ -34,17 +24,27 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   List<charts.Series<PieChartData, String>> _seriesPieData = [];
   // list to store graph data
 
+  var controller = Get.put(PostRequest());
+
   _generateData() {
     var pieData = [
       PieChartData(
         // class to store legend title, graph percentage, and graph color
         'Answered',
-        60,
+        widget.inbound
+            ? controller.todayData[0].answeredCallInbound
+            : widget.outbound
+                ? controller.todayData[0].answeredCallOutbound
+                : 60,
         widget.color,
       ),
       PieChartData(
         'Missed',
-        0,
+        widget.inbound
+            ? controller.todayData[0].missedCallInbound
+            : widget.outbound
+                ? controller.todayData[0].missedCallOutbound
+                : 40,
         widget.color2,
       ),
     ];
@@ -57,7 +57,7 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
         measureFn: (PieChartData chartData, _) => chartData.pieChartDataOne,
         // for value of graph in y axis, here percentage of arc
         colorFn: (PieChartData chartColor, _) =>
-        // color of the chart
+            // color of the chart
             charts.ColorUtil.fromDartColor(chartColor.colorval),
         id: 'sample',
         data: pieData,
@@ -70,6 +70,8 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   @override
   void initState() {
     // generating data first
+    // fetch Api data according to _tabControllerIndex, 0 = todays data, 1 = weeks data .....
+    // just dont fetch todays(index 0) data again, thats once fetched on homeview
     _generateData();
   }
 
@@ -97,20 +99,22 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
           ),
         ],
         defaultRenderer: charts.ArcRendererConfig(
-            // configuration of the pie arc
-            symbolRenderer: IconRenderer(CupertinoIcons.rhombus_fill),
-            // calling overridden class to design custom widget
+          // configuration of the pie arc
+          strokeWidthPx: 0,
+          // gap between two different colors in graph
 
-            // arcRendererDecorators: [
-            //   charts.ArcLabelDecorator(
-            //       labelPosition: charts.ArcLabelPosition.inside,
-            //       insideLabelStyleSpec: charts.TextStyleSpec(
-            //           fontSize: 14,
-            //           color: charts.ColorUtil.fromDartColor(Colors.black)))
-            // ],
-            // arcWidth: 30,
-            startAngle: -2 / 5,
-            arcLength: 7 / 5 * 3.14));
+          // calling overridden class to design custom widget
+
+          arcRendererDecorators: [
+            charts.ArcLabelDecorator(
+                labelPosition: charts.ArcLabelPosition.inside,
+                insideLabelStyleSpec: charts.TextStyleSpec(
+                    fontSize: 11,
+                    color: charts.ColorUtil.fromDartColor(Colors.white)))
+          ],
+          // arcWidth: 30,
+          startAngle: 0,
+        ));
     // startAngle = from which angle gauge is starting
   }
 }

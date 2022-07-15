@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:login/api/api.dart';
@@ -8,16 +10,66 @@ import 'api.dart';
 class PostRequest extends GetxController {
   var url = Api().uri;
 
-  List<Data> _items = [];
+  // error storing variables
+  bool isInternetError = false;
+  bool fetchDataError = false;
+  bool apiError = false;
 
-  List<Data> get items {
-    return [..._items];
+  // post request variables
+  late String startTimeDate;
+  late String endTimeDate;
+
+  List<Data> _todayData = [];
+  List<Data> _weekData = [];
+
+  // month and 3 month data just fetch once after app opening cause that wont change
+  // and big data so not feasible to fetch multiple times
+  List<Data> _monthData = [];
+  List<Data> _threeMonthData = [];
+
+  List<Data> get monthData {
+    return [..._monthData];
   }
 
-  Future<void> fetchData() async {
-    // print(url);
+  List<Data> get threeMonthData {
+    return [..._threeMonthData];
+  }
 
-    /* var parsedUrl = Uri.parse(
+  List<Data> get todayData {
+    return [..._todayData];
+  }
+
+  List<Data> get weekData {
+    return [..._weekData];
+  }
+
+  Future<void> fetchData([int? index]) async {
+    // time conversion
+    late DateTime startTimeDateTemp;
+    late DateTime endTimeDateTemp;
+
+    if (index == 0) {
+      // tab 1 = today's data
+      final now = DateTime.now();
+      startTimeDateTemp = now.subtract(
+        Duration(
+          days: 365,
+          hours: now.hour,
+          minutes: now.minute,
+          seconds: now.second,
+          milliseconds: now.millisecond,
+          microseconds: now.microsecond,
+        ),
+      );
+      endTimeDateTemp = DateTime(now.year, now.month, now.day, now.hour, 0);
+    }
+    startTimeDate = startTimeDateTemp.toUtc().toIso8601String();
+    endTimeDate = endTimeDateTemp.toUtc().toIso8601String();
+
+    print(startTimeDate);
+    print(endTimeDate);
+
+    var parsedUrl = Uri.parse(
       url,
     );
     try {
@@ -26,64 +78,103 @@ class PostRequest extends GetxController {
         body: json.encode(
           // converts this map to json, comes from dart:convert package
           {
-            "startDateTime": 1656873000000,
-            "endDateTime": 16569139200000,
-            "svcid": 4,
+            "start-time": /* '2021-01-14T18:30:00Z' */ startTimeDate,
+            "end-time": /* '2022-07-15T05:30:00Z' */ endTimeDate,
           },
         ),
       );
 
-      // print(response.statusCode);
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        // print(response.body);
+        print(response.body);
         var extractedData = json.decode(response.body);
-        if (extractedData == null) {
-          Get.snackbar('Error', 'Could not load data');
+        if (extractedData['aggregations']['inbound']['doc_count'] == 0 ||
+            extractedData == null) {
+          fetchDataError = true;
           return;
         }
 
-        // print(extractedData['agentId']);
-        // print(extractedData['serviceName']);
-        _items.add(
-          Data(
-            answeredCallInbound: extractedData['answeredCallInbound'],
-            missedCallInbound: extractedData['missedCallInbound'],
-            answeredCallOutbound: extractedData['answeredCallOutbound'],
-            missedCallOutbound: extractedData['missedCallOutbound'],
-            customerMissedCallOutbound:
-                extractedData['customerMissedCallOutbound'],
-            agentMissedCallOutbound: extractedData['agentMissedCallOutbound'],
-          ),
-        );
+        // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
+
+        index == 0
+            ? _todayData.add(
+                Data(
+                  totalInboundCalls: extractedData['aggregations']['inbound']
+                      ['doc_count'],
+                  answeredCallInbound: extractedData['aggregations']['inbound']
+                      ['1']['buckets'][0]['doc_count'],
+                  missedCallInbound: extractedData['aggregations']['inbound']
+                      ['1']['buckets'][1]['doc_count'],
+                  totalOutboundCalls: extractedData['aggregations']['outbound']
+                      ['doc_count'],
+                  answeredCallOutbound: extractedData['aggregations']
+                      ['outbound']['2']['buckets'][1]['doc_count'],
+                  missedCallOutbound: extractedData['aggregations']['outbound']
+                      ['2']['buckets'][0]['doc_count'],
+                ),
+              )
+            : index == 1
+                ? _weekData.add(
+                    Data(
+                      answeredCallInbound: extractedData['answeredCallInbound'],
+                      missedCallInbound: extractedData['missedCallInbound'],
+                      answeredCallOutbound:
+                          extractedData['answeredCallOutbound'],
+                      missedCallOutbound: extractedData['missedCallOutbound'],
+                    ),
+                  )
+                : index == 2
+                    ? _monthData.add(
+                        Data(
+                          answeredCallInbound:
+                              extractedData['answeredCallInbound'],
+                          missedCallInbound: extractedData['missedCallInbound'],
+                          answeredCallOutbound:
+                              extractedData['answeredCallOutbound'],
+                          missedCallOutbound:
+                              extractedData['missedCallOutbound'],
+                        ),
+                      )
+                    : _threeMonthData.add(
+                        Data(
+                          answeredCallInbound:
+                              extractedData['answeredCallInbound'],
+                          missedCallInbound: extractedData['missedCallInbound'],
+                          answeredCallOutbound:
+                              extractedData['answeredCallOutbound'],
+                          missedCallOutbound:
+                              extractedData['missedCallOutbound'],
+                        ),
+                      );
       } else if (response.statusCode > 400) {
         Get.snackbar('error', 'some error occurred');
       }
+    } on SocketException catch (error) {
+      // internet connection error
+      isInternetError = true;
+      return;
     } catch (error) {
-      throw (error);
-    } */
-    _items.add(Data(
-      answeredCallInbound: 6,
-      missedCallInbound: 5,
-      answeredCallOutbound: 4,
-      missedCallOutbound: 3,
-      customerMissedCallOutbound: 2,
-      agentMissedCallOutbound: 1,
-    ));
+      // some generic unknown error
+      apiError = true;
+      return;
+    }
   }
 }
 
 class Data {
+  var totalInboundCalls;
   var answeredCallInbound;
   var missedCallInbound;
+  var totalOutboundCalls;
   var answeredCallOutbound;
   var missedCallOutbound;
-  var customerMissedCallOutbound;
-  var agentMissedCallOutbound;
-  Data(
-      {this.answeredCallInbound,
-      this.missedCallInbound,
-      this.answeredCallOutbound,
-      this.missedCallOutbound,
-      this.customerMissedCallOutbound,
-      this.agentMissedCallOutbound});
+
+  Data({
+    this.totalInboundCalls,
+    this.answeredCallInbound,
+    this.missedCallInbound,
+    this.totalOutboundCalls,
+    this.answeredCallOutbound,
+    this.missedCallOutbound,
+  });
 }

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               bodyText1: TextStyle(
                   fontSize: 17,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold))),
+                  fontWeight: FontWeight.bold),),),
       home: HomeView(),
     );
   }
