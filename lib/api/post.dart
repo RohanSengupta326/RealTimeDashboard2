@@ -9,6 +9,7 @@ import 'api.dart';
 
 class PostRequest extends GetxController {
   var url = Api().uri;
+  // Api class not pushed on github.
 
   // error storing variables
   bool isInternetError = false;
