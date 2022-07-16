@@ -68,7 +68,7 @@ class PostRequest extends GetxController {
           .toUtc()
           .toIso8601String();
     } else */
-    print(index); 
+    print('in api file index : $index'); 
     if (index == 0) {
       // week data
       print('entered if');
@@ -156,8 +156,8 @@ class PostRequest extends GetxController {
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
 
-        index == 0
-            ? _todayData.add(
+        /* index == 0
+            ? */ _todayData.add(
                 Data(
                   totalInboundCalls: extractedData['aggregations']['inbound']
                       ['doc_count'],
@@ -172,8 +172,8 @@ class PostRequest extends GetxController {
                   missedCallOutbound: extractedData['aggregations']['outbound']
                       ['2']['buckets'][0]['doc_count'],
                 ),
-              )
-            : index == 1
+              );
+            /* : index == 1
                 ? _weekData.add(
                     Data(
                       answeredCallInbound: extractedData['answeredCallInbound'],
@@ -205,7 +205,7 @@ class PostRequest extends GetxController {
                           missedCallOutbound:
                               extractedData['missedCallOutbound'],
                         ),
-                      );
+                      ); */
       } else if (response.statusCode > 400) {
         Get.snackbar('error', 'some error occurred');
       }

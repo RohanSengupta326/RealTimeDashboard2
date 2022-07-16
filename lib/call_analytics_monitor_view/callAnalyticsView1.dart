@@ -8,9 +8,8 @@ import 'errorPage.dart';
 class CallAnalyticsView1 extends StatefulWidget {
   int _tabControllerIndex;
   final Function generateData;
-  bool _isLoading;
-  CallAnalyticsView1(
-      this._tabControllerIndex, this.generateData, this._isLoading);
+
+  CallAnalyticsView1(this._tabControllerIndex, this.generateData);
 
   @override
   State<CallAnalyticsView1> createState() => _CallAnalyticsView1State();

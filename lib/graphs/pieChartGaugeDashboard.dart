@@ -29,6 +29,7 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
 
   _generateData() {
     // fetch data according to index
+    print('graph recieved index : ${widget._tabControllerIndex}');
 
     var pieData = [
       PieChartData(

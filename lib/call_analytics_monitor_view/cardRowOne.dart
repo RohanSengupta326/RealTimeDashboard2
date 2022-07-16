@@ -8,6 +8,7 @@ class CardRowOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('card row one : $_tabControllerIndex');
     return Row(
       children: [
         // first card

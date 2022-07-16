@@ -87,7 +87,7 @@ class _HomeViewState extends State<HomeView>
 
   Future<void> _generateData(int tabIndex) async {
     _isLoading.value = true;
-    print(tabIndex);
+    print('generate data function : $tabIndex');
     await api.fetchData(tabIndex).then(
       (_) {
         _isLoading.value = false;
@@ -95,6 +95,7 @@ class _HomeViewState extends State<HomeView>
     );
     print(api.apiError);
     print(api.fetchDataError);
+    return;
   }
 
   @override
@@ -111,77 +112,78 @@ class _HomeViewState extends State<HomeView>
           // without builder function
           builder: (context) {
         return Scaffold(
-            drawer: AppDrawer(),
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              bottom: TabBar(
-                // tabs
-                controller: _controller,
-                labelColor: Colors.black,
-                // selected tab color
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13.5,
+          drawer: AppDrawer(),
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            bottom: TabBar(
+              // tabs
+              controller: _controller,
+              labelColor: Colors.black,
+              // selected tab color
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13.5,
+              ),
+              // selected tab text style
+              unselectedLabelColor: Colors.grey,
+              // unselected tab color
+              unselectedLabelStyle: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 13),
+              // unselected tab text style
+              indicatorColor: Colors.white,
+              // underline below tab while selected
+              indicatorSize: TabBarIndicatorSize.label,
+              // length of the indicator
+              tabs: [
+                // different tabs
+                Tab(
+                  child: Text(
+                    'Today',
+                  ),
                 ),
-                // selected tab text style
-                unselectedLabelColor: Colors.grey,
-                // unselected tab color
-                unselectedLabelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 13),
-                // unselected tab text style
-                indicatorColor: Colors.white,
-                // underline below tab while selected
-                indicatorSize: TabBarIndicatorSize.label,
-                // length of the indicator
-                tabs: [
-                  // different tabs
-                  Tab(
-                    child: Text(
-                      'Today',
-                    ),
+                Tab(
+                  child: Text(
+                    'Week',
                   ),
-                  Tab(
-                    child: Text(
-                      'Week',
-                    ),
+                ),
+                Tab(
+                  child: Text(
+                    'Month',
                   ),
-                  Tab(
-                    child: Text(
-                      'Month',
-                    ),
+                ),
+                Tab(
+                  child: Text(
+                    '3 Months',
                   ),
-                  Tab(
-                    child: Text(
-                      '3 Months',
-                    ),
-                  ),
-                ],
-              ),
-              elevation: 0,
-              backgroundColor: Colors.white,
-              iconTheme: IconThemeData(color: Color(0xff2b5a00)),
-              title: const Text(
-                '| Dashboard',
-                style: TextStyle(
-                    color: Color(0xff2b5a00),
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold),
-              ),
+                ),
+              ],
             ),
-            body: /* Obx(() {
-              return */ TabBarView(
-                controller: _controller,
-                children: [
-                  CallAnalyticsView1(0, _generateData, _isLoading.value),
-                  CallAnalyticsView2(0, _generateData, _isLoading.value),
-                  CallAnalyticsView3(2, _generateData),
-                  CallAnalyticsView4(3, _generateData),
-                ],
-              ),
-            /* }) */);
+            elevation: 0,
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(color: Color(0xff2b5a00)),
+            title: const Text(
+              '| Dashboard',
+              style: TextStyle(
+                  color: Color(0xff2b5a00),
+                  fontSize: 18,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          body: /* Obx(() {
+              return */
+              TabBarView(
+            controller: _controller,
+            children: [
+              CallAnalyticsView1(0, _generateData),
+              CallAnalyticsView2(0, _generateData),
+              CallAnalyticsView3(2, _generateData),
+              CallAnalyticsView4(3, _generateData),
+            ],
+          ), /* }) */
+        );
       }),
     );
   }
