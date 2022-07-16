@@ -13,6 +13,7 @@ class PieChartGaugeDashboard extends StatefulWidget {
   int _tabControllerIndex;
   bool inbound;
   bool outbound;
+
   PieChartGaugeDashboard(this.color, this.color2, this._tabControllerIndex,
       this.inbound, this.outbound);
 
@@ -27,24 +28,68 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   var controller = Get.put(PostRequest());
 
   _generateData() {
+    // fetch data according to index
+
     var pieData = [
       PieChartData(
         // class to store legend title, graph percentage, and graph color
         'Answered',
-        widget.inbound
-            ? controller.todayData[0].answeredCallInbound
-            : widget.outbound
-                ? controller.todayData[0].answeredCallOutbound
-                : 60,
+        widget._tabControllerIndex == 0
+            ? widget.inbound
+                ? controller.todayData[0].answeredCallInbound
+                : widget.outbound
+                    ? controller.todayData[0].answeredCallOutbound
+                    : 60
+            : widget._tabControllerIndex == 1
+                ? widget.inbound
+                    ? controller.weekData[0].answeredCallInbound
+                    : widget.outbound
+                        ? controller.weekData[0].answeredCallOutbound
+                        : 60
+                : widget._tabControllerIndex == 2
+                    ? widget.inbound
+                        ? controller.monthData[0].answeredCallInbound
+                        : widget.outbound
+                            ? controller.monthData[0].answeredCallOutbound
+                            : 60
+                    : widget._tabControllerIndex == 3
+                        ? widget.inbound
+                            ? controller.threeMonthData[0].answeredCallInbound
+                            : widget.outbound
+                                ? controller
+                                    .threeMonthData[0].answeredCallOutbound
+                                : 60
+                        : 0,
         widget.color,
       ),
       PieChartData(
         'Missed',
-        widget.inbound
-            ? controller.todayData[0].missedCallInbound
-            : widget.outbound
-                ? controller.todayData[0].missedCallOutbound
-                : 40,
+        widget._tabControllerIndex == 0
+            ? widget.inbound
+                ? controller.todayData[0].missedCallInbound
+                : widget.outbound
+                    ? controller.todayData[0].missedCallOutbound
+                    : 40
+            : widget._tabControllerIndex == 1
+                ? widget.inbound
+                    ? controller.weekData[0].missedCallInbound
+                    : widget.outbound
+                        ? controller.weekData[0].missedCallOutbound
+                        : 40
+                : widget._tabControllerIndex == 2
+                    ? widget.inbound
+                        ? controller.monthData[0].missedCallInbound
+                        : widget.outbound
+                            ? controller.monthData[0].missedCallOutbound
+                            : 40
+                    : widget._tabControllerIndex == 3
+                        ? widget.inbound
+                            ? controller.threeMonthData[0].missedCallInbound
+                            : widget.outbound
+                                ? controller
+                                    .threeMonthData[0].missedCallOutbound
+                                : 40
+                        : 0,
         widget.color2,
       ),
     ];

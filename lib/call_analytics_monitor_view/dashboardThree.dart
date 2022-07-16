@@ -24,10 +24,10 @@ class _DashboardThreeState extends State<DashboardThree> {
 
   // @override
   Future<void> _generateData() async {
-    _isLoading.value = true;
-    await api.fetchData().then((value) {
-      _isLoading.value = false;
-    });
+    // _isLoading.value = true;
+    // await api.fetchData().then((value) {
+    //   _isLoading.value = false;
+    // });
   }
 
   @override

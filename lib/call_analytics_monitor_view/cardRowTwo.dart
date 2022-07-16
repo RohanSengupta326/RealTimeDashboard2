@@ -6,6 +6,7 @@ import 'package:login/graphs/pieChartGaugeDashboard.dart';
 
 class CardRowTwo extends StatelessWidget {
   int _tabControllerIndex;
+
   CardRowTwo(this._tabControllerIndex);
 
   @override
@@ -35,8 +36,13 @@ class CardRowTwo extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: PieChartGaugeDashboard(Color(0xff0038c9),
-                        Color(0xff94a2fd), _tabControllerIndex, false, false),
+                    child: PieChartGaugeDashboard(
+                      Color(0xff0038c9),
+                      Color(0xff94a2fd),
+                      _tabControllerIndex,
+                      false,
+                      false,
+                    ),
                   ),
                 ],
               ),
@@ -66,8 +72,13 @@ class CardRowTwo extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: PieChartGaugeDashboard(Color(0xff8b2751),
-                        Color(0xffeb7bb6), _tabControllerIndex, false, false),
+                    child: PieChartGaugeDashboard(
+                      Color(0xff8b2751),
+                      Color(0xffeb7bb6),
+                      _tabControllerIndex,
+                      false,
+                      false,
+                    ),
                   ),
                 ],
               ),

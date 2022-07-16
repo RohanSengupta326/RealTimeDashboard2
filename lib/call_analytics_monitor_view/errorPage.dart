@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 class ErrorPage extends StatelessWidget {
   final Function generateData;
   final String errorMessage;
-  ErrorPage(this.generateData, this.errorMessage);
+  final int tabIndex;
+  ErrorPage(this.generateData, this.errorMessage, this.tabIndex);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class ErrorPage extends StatelessWidget {
                       MaterialStateProperty.all(Color(0xff2b5a00))),
               onPressed: () {
                 // logic to refresh app
-                generateData();
+                generateData(tabIndex);
               },
               child: Text(
                 'Try Again',

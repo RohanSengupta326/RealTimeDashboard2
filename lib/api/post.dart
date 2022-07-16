@@ -17,8 +17,8 @@ class PostRequest extends GetxController {
   bool apiError = false;
 
   // post request variables
-  late String startTimeDate;
-  late String endTimeDate;
+  String startTimeDate = '';
+  String endTimeDate = '';
 
   List<Data> _todayData = [];
   List<Data> _weekData = [];
@@ -44,28 +44,88 @@ class PostRequest extends GetxController {
     return [..._weekData];
   }
 
-  Future<void> fetchData([int? index]) async {
+  Future<void> fetchData(int index) async {
     // time conversion
-    late DateTime startTimeDateTemp;
-    late DateTime endTimeDateTemp;
 
-    if (index == 0) {
+    /* if (index == 0) {
       // tab 1 = today's data
+      // print('index = 0');
       final now = DateTime.now();
-      startTimeDateTemp = now.subtract(
-        Duration(
-          days: 365,
-          hours: now.hour,
-          minutes: now.minute,
-          seconds: now.second,
-          milliseconds: now.millisecond,
-          microseconds: now.microsecond,
-        ),
-      );
-      endTimeDateTemp = DateTime(now.year, now.month, now.day, now.hour, 0);
-    }
-    startTimeDate = startTimeDateTemp.toUtc().toIso8601String();
-    endTimeDate = endTimeDateTemp.toUtc().toIso8601String();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 365,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } else */
+    print(index); 
+    if (index == 1) {
+      // week data
+      print('entered if');
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 365,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } /* else if (index == 2) {
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 30,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } else if (index == 3) {
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 90,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } */
 
     print(startTimeDate);
     print(endTimeDate);
@@ -89,8 +149,7 @@ class PostRequest extends GetxController {
       if (response.statusCode == 200) {
         print(response.body);
         var extractedData = json.decode(response.body);
-        if (extractedData['aggregations']['inbound']['doc_count'] == 0 ||
-            extractedData == null) {
+        if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
           fetchDataError = true;
           return;
         }
