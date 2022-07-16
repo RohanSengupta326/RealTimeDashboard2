@@ -7,10 +7,10 @@ import '../api/post.dart';
 
 class CallAnalyticsView2 extends StatefulWidget {
   int _tabControllerIndex;
-  final Function(int) _generateData;
+  final void Function(int) fetchDataFunction;
   bool _isLoading;
   CallAnalyticsView2(
-      this._tabControllerIndex, this._generateData, this._isLoading);
+      this._tabControllerIndex, this.fetchDataFunction, this._isLoading);
 
   @override
   State<CallAnalyticsView2> createState() => _CallAnalyticsView2State();
@@ -23,7 +23,7 @@ class _CallAnalyticsView2State extends State<CallAnalyticsView2> {
   Widget graph() {
     // api fetch
     // if (fetchOnce == 0) {
-    widget._generateData(1);
+    widget.fetchDataFunction(0);
     //   fetchOnce++;
     // }
     return widget._isLoading == true
@@ -33,13 +33,14 @@ class _CallAnalyticsView2State extends State<CallAnalyticsView2> {
             ),
           )
         : api.isInternetError
-            ? ErrorPage(
-                widget._generateData, 'Unable to connect to the Internet', 1)
+            ? ErrorPage(widget.fetchDataFunction,
+                'Unable to connect to the Internet', 1)
             : api.apiError
-                ? ErrorPage(widget._generateData,
+                ? ErrorPage(widget.fetchDataFunction,
                     'Could not load data at this moment', 1)
                 : api.fetchDataError
-                    ? ErrorPage(widget._generateData, 'Unable to load data', 1)
+                    ? ErrorPage(
+                        widget.fetchDataFunction, 'Unable to load data', 1)
                     : Container(
                         height: GetPlatform.isAndroid ? 570 : 600,
                         width: GetPlatform.isAndroid ? 500 : 600,
@@ -57,14 +58,14 @@ class _CallAnalyticsView2State extends State<CallAnalyticsView2> {
                               Expanded(
                                   flex: 2,
                                   child: CardRowOne(
-                                    1,
+                                    widget._tabControllerIndex,
                                   )),
                               // Row 1 for 2 cards
 
                               Expanded(
                                   flex: 2,
                                   child: CardRowTwo(
-                                    1,
+                                    widget._tabControllerIndex,
                                   )),
                               // row 2 for another set of 2 cards
                             ],

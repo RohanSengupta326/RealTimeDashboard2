@@ -69,7 +69,7 @@ class PostRequest extends GetxController {
           .toIso8601String();
     } else */
     print(index); 
-    if (index == 1) {
+    if (index == 0) {
       // week data
       print('entered if');
       final now = DateTime.now();

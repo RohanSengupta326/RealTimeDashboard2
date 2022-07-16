@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView>
   @override
   void initState() {
     // TODO: implement initState
-    _generateData(0);
+    // _generateData(0);
     _controller = TabController(length: 4, vsync: this);
 
     _controller.addListener(() {
@@ -171,17 +171,17 @@ class _HomeViewState extends State<HomeView>
                     fontWeight: FontWeight.bold),
               ),
             ),
-            body: Obx(() {
-              return TabBarView(
+            body: /* Obx(() {
+              return */ TabBarView(
                 controller: _controller,
                 children: [
                   CallAnalyticsView1(0, _generateData, _isLoading.value),
-                  CallAnalyticsView2(1, _generateData, _isLoading.value),
+                  CallAnalyticsView2(0, _generateData, _isLoading.value),
                   CallAnalyticsView3(2, _generateData),
                   CallAnalyticsView4(3, _generateData),
                 ],
-              );
-            }));
+              ),
+            /* }) */);
       }),
     );
   }
