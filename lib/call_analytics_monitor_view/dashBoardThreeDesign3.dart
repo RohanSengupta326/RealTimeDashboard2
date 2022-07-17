@@ -4,16 +4,16 @@ import 'package:login/graphs/horizontalBar.dart';
 import '../api/post.dart';
 import 'errorPage.dart';
 
-class DashBoardThreeDesign extends StatefulWidget {
+class DashBoardThreeDesign3 extends StatefulWidget {
   int tabControllerIndex;
   final Future<void> Function(int) generateData;
-  DashBoardThreeDesign(this.tabControllerIndex, this.generateData);
+  DashBoardThreeDesign3(this.tabControllerIndex, this.generateData);
 
   @override
-  State<DashBoardThreeDesign> createState() => _DashBoardThreeDesignState();
+  State<DashBoardThreeDesign3> createState() => _DashBoardThreeDesign3State();
 }
 
-class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
+class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   // call data, will fetch from api later
   int totalInboundCalls = 74;
 
@@ -48,15 +48,15 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
     if (api.apiError == false &&
         api.fetchDataError == false &&
         api.isInternetError == false &&
-        api.todayData.isNotEmpty) {
-      totalInboundCalls = api.todayData[0].totalInboundCalls;
-      totalOutboundCalls = api.todayData[0].totalOutboundCalls;
+        api.threeMonthData.isNotEmpty) {
+      totalInboundCalls = api.threeMonthData[0].totalInboundCalls;
+      totalOutboundCalls = api.threeMonthData[0].totalOutboundCalls;
 
-      answeredInboundCalls = api.todayData[0].answeredCallInbound;
-      answeredOutboundCalls = api.todayData[0].answeredCallOutbound;
+      answeredInboundCalls = api.threeMonthData[0].answeredCallInbound;
+      answeredOutboundCalls = api.threeMonthData[0].answeredCallOutbound;
 
-      missedInboundCalls = api.todayData[0].missedCallInbound;
-      missedOutboundCalls = api.todayData[0].missedCallOutbound;
+      missedInboundCalls = api.threeMonthData[0].missedCallInbound;
+      missedOutboundCalls = api.threeMonthData[0].missedCallOutbound;
     }
     return Obx(() {
       return _isLoading.value

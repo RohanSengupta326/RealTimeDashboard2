@@ -52,10 +52,6 @@ class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
   var _selectedIndex = 0.obs;
-  var createPage1 = false.obs;
-  var createPage2 = false.obs;
-  var createPage3 = false.obs;
-  var _isLoading = false.obs;
 
   // FETCH TODAYS DATA AS WE ARE AT THE FIRST SCREEN WHEN APP RUNS
   var api = Get.put(PostRequest());
@@ -64,21 +60,12 @@ class _HomeViewState extends State<HomeView>
   @override
   void initState() {
     // TODO: implement initState
-    // _generateData(0);
+
     _controller = TabController(length: 4, vsync: this);
 
     _controller.addListener(() {
+      // for keep a check on which tab is selected
       _selectedIndex.value = _controller.index;
-      // if (fetchOnce == 0) {
-      //   if (_selectedIndex.value == 1) {
-      //     createPage1.value = true;
-      //   } else if (_selectedIndex.value == 2) {
-      //     createPage2.value = true;
-      //   } else if (_selectedIndex.value == 3) {
-      //     createPage3.value = true;
-      //   }
-      //   fetchOnce++;
-      // }
 
       print("Selected Index: " + _controller.index.toString());
     });
@@ -86,15 +73,10 @@ class _HomeViewState extends State<HomeView>
   }
 
   Future<void> _generateData(int tabIndex) async {
-    _isLoading.value = true;
     print('generate data function : $tabIndex');
-    await api.fetchData(tabIndex).then(
-      (_) {
-        _isLoading.value = false;
-      },
-    );
-    print(api.apiError);
-    print(api.fetchDataError);
+    await api.fetchData(tabIndex);
+    // print(api.apiErrorIndex0);
+    // print(api.fetchDataErrorIndex0);
     return;
   }
 
@@ -175,10 +157,11 @@ class _HomeViewState extends State<HomeView>
           body: /* Obx(() {
               return */
               TabBarView(
+            // it does page functions when on the respective page not before
             controller: _controller,
             children: [
               CallAnalyticsView1(0, _generateData),
-              CallAnalyticsView2(0, _generateData),
+              CallAnalyticsView2(1, _generateData),
               CallAnalyticsView3(2, _generateData),
               CallAnalyticsView4(3, _generateData),
             ],

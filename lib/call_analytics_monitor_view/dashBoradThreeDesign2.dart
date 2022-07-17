@@ -4,16 +4,16 @@ import 'package:login/graphs/horizontalBar.dart';
 import '../api/post.dart';
 import 'errorPage.dart';
 
-class DashBoardThreeDesign extends StatefulWidget {
+class DashBoardThreeDesign2 extends StatefulWidget {
   int tabControllerIndex;
   final Future<void> Function(int) generateData;
-  DashBoardThreeDesign(this.tabControllerIndex, this.generateData);
+  DashBoardThreeDesign2(this.tabControllerIndex, this.generateData);
 
   @override
-  State<DashBoardThreeDesign> createState() => _DashBoardThreeDesignState();
+  State<DashBoardThreeDesign2> createState() => _DashBoardThreeDesign2State();
 }
 
-class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
+class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
   // call data, will fetch from api later
   int totalInboundCalls = 74;
 
@@ -41,23 +41,23 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
     // print('callAnalyticsView index recieved : ${widget.tabControllerIndex}');
     widget.generateData(widget.tabControllerIndex).then((value) {
       // calling fetch data with index
-
       _isLoading.value = false;
     });
 
     if (api.apiError == false &&
         api.fetchDataError == false &&
         api.isInternetError == false &&
-        api.todayData.isNotEmpty) {
-      totalInboundCalls = api.todayData[0].totalInboundCalls;
-      totalOutboundCalls = api.todayData[0].totalOutboundCalls;
+        api.monthData.isNotEmpty) {
+      totalInboundCalls = api.monthData[0].totalInboundCalls;
+      totalOutboundCalls = api.monthData[0].totalOutboundCalls;
 
-      answeredInboundCalls = api.todayData[0].answeredCallInbound;
-      answeredOutboundCalls = api.todayData[0].answeredCallOutbound;
+      answeredInboundCalls = api.monthData[0].answeredCallInbound;
+      answeredOutboundCalls = api.monthData[0].answeredCallOutbound;
 
-      missedInboundCalls = api.todayData[0].missedCallInbound;
-      missedOutboundCalls = api.todayData[0].missedCallOutbound;
+      missedInboundCalls = api.monthData[0].missedCallInbound;
+      missedOutboundCalls = api.monthData[0].missedCallOutbound;
     }
+
     return Obx(() {
       return _isLoading.value
           ? const Center(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ErrorPage extends StatelessWidget {
-  final Function generateData;
+  final Future<void> Function(int) generateData;
   final String errorMessage;
   final int tabIndex;
   ErrorPage(this.generateData, this.errorMessage, this.tabIndex);

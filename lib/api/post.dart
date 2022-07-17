@@ -45,9 +45,13 @@ class PostRequest extends GetxController {
   }
 
   Future<void> fetchData(int index) async {
+    // everytime calling the function making the errors false so that the it doesnt take the previous error
+    isInternetError = false;
+    fetchDataError = false;
+    apiError = false;
     // time conversion
 
-    /* if (index == 0) {
+    if (index == 0) {
       // tab 1 = today's data
       // print('index = 0');
       final now = DateTime.now();
@@ -67,16 +71,16 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
-    } else */
-    print('in api file index : $index'); 
-    if (index == 0) {
+    } else
+    // print('in api file index : $index');
+    if (index == 1) {
       // week data
       print('entered if');
       final now = DateTime.now();
       startTimeDate = now
           .subtract(
             Duration(
-              days: 365,
+              days: 7,
               hours: now.hour,
               minutes: now.minute,
               seconds: now.second,
@@ -89,7 +93,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
-    } /* else if (index == 2) {
+    } else if (index == 2) {
       final now = DateTime.now();
       startTimeDate = now
           .subtract(
@@ -125,7 +129,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
-    } */
+    }
 
     print(startTimeDate);
     print(endTimeDate);
@@ -149,15 +153,15 @@ class PostRequest extends GetxController {
       if (response.statusCode == 200) {
         print(response.body);
         var extractedData = json.decode(response.body);
-        if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
+        if (extractedData['aggregations']['inbound']['doc_count'] <= 0) {
           fetchDataError = true;
           return;
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
 
-        /* index == 0
-            ? */ _todayData.add(
+        index == 0
+            ? _todayData.add(
                 Data(
                   totalInboundCalls: extractedData['aggregations']['inbound']
                       ['doc_count'],
@@ -172,40 +176,60 @@ class PostRequest extends GetxController {
                   missedCallOutbound: extractedData['aggregations']['outbound']
                       ['2']['buckets'][0]['doc_count'],
                 ),
-              );
-            /* : index == 1
+              )
+            : index == 1
                 ? _weekData.add(
                     Data(
-                      answeredCallInbound: extractedData['answeredCallInbound'],
-                      missedCallInbound: extractedData['missedCallInbound'],
-                      answeredCallOutbound:
-                          extractedData['answeredCallOutbound'],
-                      missedCallOutbound: extractedData['missedCallOutbound'],
+                      totalInboundCalls: extractedData['aggregations']
+                          ['inbound']['doc_count'],
+                      answeredCallInbound: extractedData['aggregations']
+                          ['inbound']['1']['buckets'][0]['doc_count'],
+                      missedCallInbound: extractedData['aggregations']
+                          ['inbound']['1']['buckets'][1]['doc_count'],
+                      totalOutboundCalls: extractedData['aggregations']
+                          ['outbound']['doc_count'],
+                      answeredCallOutbound: extractedData['aggregations']
+                          ['outbound']['2']['buckets'][1]['doc_count'],
+                      missedCallOutbound: extractedData['aggregations']
+                          ['outbound']['2']['buckets'][0]['doc_count'],
                     ),
                   )
                 : index == 2
                     ? _monthData.add(
                         Data(
-                          answeredCallInbound:
-                              extractedData['answeredCallInbound'],
-                          missedCallInbound: extractedData['missedCallInbound'],
-                          answeredCallOutbound:
-                              extractedData['answeredCallOutbound'],
-                          missedCallOutbound:
-                              extractedData['missedCallOutbound'],
+                          totalInboundCalls: extractedData['aggregations']
+                              ['inbound']['doc_count'],
+                          answeredCallInbound: extractedData['aggregations']
+                              ['inbound']['1']['buckets'][0]['doc_count'],
+                          missedCallInbound: extractedData['aggregations']
+                              ['inbound']['1']['buckets'][1]['doc_count'],
+                          totalOutboundCalls: extractedData['aggregations']
+                              ['outbound']['doc_count'],
+                          answeredCallOutbound: extractedData['aggregations']
+                              ['outbound']['2']['buckets'][1]['doc_count'],
+                          missedCallOutbound: extractedData['aggregations']
+                              ['outbound']['2']['buckets'][0]['doc_count'],
                         ),
                       )
-                    : _threeMonthData.add(
-                        Data(
-                          answeredCallInbound:
-                              extractedData['answeredCallInbound'],
-                          missedCallInbound: extractedData['missedCallInbound'],
-                          answeredCallOutbound:
-                              extractedData['answeredCallOutbound'],
-                          missedCallOutbound:
-                              extractedData['missedCallOutbound'],
-                        ),
-                      ); */
+                    : index == 3
+                        ? _threeMonthData.add(
+                            Data(
+                              totalInboundCalls: extractedData['aggregations']
+                                  ['inbound']['doc_count'],
+                              answeredCallInbound: extractedData['aggregations']
+                                  ['inbound']['1']['buckets'][0]['doc_count'],
+                              missedCallInbound: extractedData['aggregations']
+                                  ['inbound']['1']['buckets'][1]['doc_count'],
+                              totalOutboundCalls: extractedData['aggregations']
+                                  ['outbound']['doc_count'],
+                              answeredCallOutbound:
+                                  extractedData['aggregations']['outbound']['2']
+                                      ['buckets'][1]['doc_count'],
+                              missedCallOutbound: extractedData['aggregations']
+                                  ['outbound']['2']['buckets'][0]['doc_count'],
+                            ),
+                          )
+                        : null;
       } else if (response.statusCode > 400) {
         Get.snackbar('error', 'some error occurred');
       }
