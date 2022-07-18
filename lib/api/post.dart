@@ -69,8 +69,6 @@ class PostRequest extends GetxController {
   }
 
   Future<void> fetchData(int index) async {
-    // everytime calling the function making the errors false so that the it doesnt take the previous error
-
     // time conversion
 
     // setting post request time variables according to pages
@@ -338,7 +336,7 @@ class PostRequest extends GetxController {
               : index == 2
                   ? apiErrorMonth = true
                   : apiErrorThreeMonth = true;
-      return;
+      rethrow;
     }
   }
 }

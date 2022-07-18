@@ -418,7 +418,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                   .headline6,
                                             ),
                                             Expanded(
-                                              child: HorizontalBarChart(true),
+                                              child: HorizontalBarChart(widget.tabControllerIndex),
                                             ),
                                           ],
                                         ),

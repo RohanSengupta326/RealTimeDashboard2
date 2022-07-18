@@ -74,10 +74,11 @@ class _HomeViewState extends State<HomeView>
 
   Future<void> _generateData(int tabIndex) async {
     print('generate data function : $tabIndex');
-    await api.fetchData(tabIndex);
+    await api.fetchData(tabIndex).catchError((onError) {
+      throw onError;
+    });
     // print(api.apiErrorIndex0);
     // print(api.fetchDataErrorIndex0);
-    return;
   }
 
   @override

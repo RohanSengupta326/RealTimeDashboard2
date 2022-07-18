@@ -5,64 +5,73 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 class HorizontalBarChart extends StatelessWidget {
-  var isSmallWidth;
-  HorizontalBarChart([this.isSmallWidth]);
+  int tabControllerIndex;
+  HorizontalBarChart(this.tabControllerIndex);
 
   @override
   Widget build(BuildContext context) {
     return charts.BarChart(
-      vertical: false,
-      barGroupingType: charts.BarGroupingType.stacked,
-      behaviors: [
-        charts.ChartTitle(
-          outerPadding: isSmallWidth ? 5 : 16,
-          'Time(Day/Hour)',
-          titleStyleSpec: charts.TextStyleSpec(
-              fontSize: 15, color: charts.MaterialPalette.black.lighter),
-          behaviorPosition: charts.BehaviorPosition.start,
-        ),
-        // charts.BehaviorPosition.start is label at y axis
-        charts.ChartTitle(
-          // innerPadding: isSmallWidth ? 16 : 16,
-          titlePadding: isSmallWidth ? 8 : 16,
-          // outerPadding: isSmallWidth ? 16 : 16,
-          'Call Count',
-          subTitle: 'answered, missed, abandoned, rejected',
-          titleStyleSpec: charts.TextStyleSpec(
-            color: charts.MaterialPalette.black.lighter,
-            fontSize: 15,
+        vertical: false,
+        barGroupingType: charts.BarGroupingType.stacked,
+        behaviors: [
+          charts.ChartTitle(
+            outerPadding: 5,
+            'Time(Day/Hour)',
+            titleStyleSpec: charts.TextStyleSpec(
+                fontSize: 15, color: charts.MaterialPalette.black.lighter),
+            behaviorPosition: charts.BehaviorPosition.start,
           ),
-          behaviorPosition: charts.BehaviorPosition.bottom,
-        ),
-        // charts.BehaviorPosition.bottom is label at x axis
-      ],
-      _createSampleData(),
-      animate: true,
-      animationDuration: const Duration(seconds: 0),
-      flipVerticalAxis: true,
-      // primaryMeasureAxis: charts.NumericAxisSpec(
-      //   viewport: charts.NumericExtents(0, 0),
-      //   showAxisLine: false,
-      //   // y axis from  0 to 270 fixed
-      //   tickProviderSpec:
-      //       charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
-      //   // how many ticks you want to show
-      // ),
+          // charts.BehaviorPosition.start is label at y axis
+          charts.ChartTitle(
+            // innerPadding: isSmallWidth ? 16 : 16,
 
-      barRendererDecorator: new charts.BarLabelDecorator<String>(),
-      // Hide domain axis.
-      primaryMeasureAxis:
-          charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-      domainAxis: charts.OrdinalAxisSpec(
-          viewport: charts.OrdinalViewport(
-              // for showing the part of the graph, and then click right to go right and left to go left
-              DateFormat('MMMd').format(DateTime.now()),
-              7 /* = how many bars you wanna show on one scrMMMdn */)),
-    );
+            // outerPadding: isSmallWidth ? 16 : 16,
+            'Call Count',
+            subTitle: 'answered, missed, abandoned, rejected',
+            titleStyleSpec: charts.TextStyleSpec(
+              color: charts.MaterialPalette.black.lighter,
+              fontSize: 15,
+            ),
+            behaviorPosition: charts.BehaviorPosition.bottom,
+          ),
+          // charts.BehaviorPosition.bottom is label at x axis
+        ],
+        _createSampleData(),
+        animate: true,
+        animationDuration: const Duration(seconds: 0),
+        flipVerticalAxis: true,
+        // primaryMeasureAxis: charts.NumericAxisSpec(
+        //   viewport: charts.NumericExtents(0, 0),
+        //   showAxisLine: false,
+        //   // y axis from  0 to 270 fixed
+        //   tickProviderSpec:
+        //       charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
+        //   // how many ticks you want to show
+        // ),
+
+        barRendererDecorator: charts.BarLabelDecorator<String>(
+            labelAnchor: charts.BarLabelAnchor.middle),
+        // for the label inside graph to be centered
+        // Hide domain axis.
+        primaryMeasureAxis:
+            charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+        domainAxis: charts.OrdinalAxisSpec(
+            viewport: tabControllerIndex == 0
+                ? null
+                : tabControllerIndex == 1
+                    ? charts.OrdinalViewport(
+                        // for showing the part of the graph, and then click right to go right and left to go left
+                        DateFormat('MMMd').format(DateTime.now()),
+                        7,
+                      )
+                    : tabControllerIndex == 2
+                        ? null
+                        : null /* = how many bars you wanna show on one scr MMMdn */));
   }
 
   List<charts.Series<liveData, String>> _createSampleData() {
-    // String temp = start.toString() + ' --> ' + end.toString();
+    print(tabControllerIndex);
+
     List<liveData> answered = [];
     List<liveData> missed = [];
     List<liveData> abandoned = [];
@@ -70,33 +79,50 @@ class HorizontalBarChart extends StatelessWidget {
 
     var temp = '';
 
-    for (var i = 1, j = 0; i <= 7; i++) {
+    int j = 0;
+    int numberOfBars = tabControllerIndex == 0
+        ? 1
+        : tabControllerIndex == 1
+            ? 7
+            : tabControllerIndex == 2
+                ? 4
+                : tabControllerIndex == 3
+                    ? 12
+                    : 0;
+    int i;
+
+    for (i = 1; i <= numberOfBars; i++, j++) {
+      int substrcatMonthWeek =
+          tabControllerIndex == 0 || tabControllerIndex == 1
+              ? i
+              : tabControllerIndex == 2
+                  ? i * 7
+                  : i * 7;
       answered.insert(
           j,
           liveData(
-              DateFormat('MMMd')
-                  .format(DateTime.now().subtract(Duration(days: i))),
+              DateFormat('MMMd').format(DateTime.now().subtract(Duration(
+                days: substrcatMonthWeek,
+              ))),
               Random().nextInt(60) + 30));
       missed.insert(
           j,
           liveData(
-              DateFormat('MMMd')
-                  .format(DateTime.now().subtract(Duration(days: i))),
+              DateFormat('MMMd').format(
+                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
       abandoned.insert(
           j,
           liveData(
-              DateFormat('MMMd')
-                  .format(DateTime.now().subtract(Duration(days: i))),
+              DateFormat('MMMd').format(
+                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
       rejected.insert(
           j,
           liveData(
-              DateFormat('MMMd')
-                  .format(DateTime.now().subtract(Duration(days: i))),
+              DateFormat('MMMd').format(
+                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
-
-      j++;
     }
 
     return [
@@ -107,8 +133,9 @@ class HorizontalBarChart extends StatelessWidget {
         domainFn: (liveData value, _) => value.day,
         measureFn: (liveData value, _) => value.value,
         labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) => charts.TextStyleSpec(
-            fontSize: 11, color: charts.MaterialPalette.black)),
+        insideLabelStyleAccessorFn: ((datum, index) =>
+            const charts.TextStyleSpec(
+                fontSize: 6, color: charts.MaterialPalette.black)),
         data: answered,
       ),
       charts.Series<liveData, String>(
@@ -118,8 +145,9 @@ class HorizontalBarChart extends StatelessWidget {
         domainFn: (liveData value, _) => value.day,
         measureFn: (liveData value, _) => value.value,
         labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) => charts.TextStyleSpec(
-            fontSize: 11, color: charts.MaterialPalette.black)),
+        insideLabelStyleAccessorFn: ((datum, index) =>
+            const charts.TextStyleSpec(
+                fontSize: 6, color: charts.MaterialPalette.black)),
         data: missed,
       ),
       charts.Series<liveData, String>(
@@ -129,8 +157,9 @@ class HorizontalBarChart extends StatelessWidget {
         domainFn: (liveData value, _) => value.day,
         measureFn: (liveData value, _) => value.value,
         labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) => charts.TextStyleSpec(
-            fontSize: 11, color: charts.MaterialPalette.black)),
+        insideLabelStyleAccessorFn: ((datum, index) =>
+            const charts.TextStyleSpec(
+                fontSize: 6, color: charts.MaterialPalette.black)),
         data: abandoned,
       ),
       charts.Series<liveData, String>(
@@ -140,8 +169,9 @@ class HorizontalBarChart extends StatelessWidget {
         domainFn: (liveData value, _) => value.day,
         measureFn: (liveData value, _) => value.value,
         labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) => charts.TextStyleSpec(
-            fontSize: 11, color: charts.MaterialPalette.black)),
+        insideLabelStyleAccessorFn: ((datum, index) =>
+            const charts.TextStyleSpec(
+                fontSize: 6, color: charts.MaterialPalette.black)),
         data: rejected,
       ),
     ];

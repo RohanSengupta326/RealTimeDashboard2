@@ -24,7 +24,9 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
 
     // no fetch only once condition here cause for today screen, fetch data everytime user comes to today page
     _isLoading.value = true;
-    widget.fetchDataFunction(widget._tabControllerIndex).then((value) {
+    widget.fetchDataFunction(widget._tabControllerIndex).catchError((onError) {
+      Get.snackbar('error', 'error occurred');
+    }).then((value) {
       // calling fetch data with index
       _isLoading.value = false;
     });
@@ -38,7 +40,7 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
             )
           // different error storing variables, to show different screens according to errors and for different pages , so that one page's error doesnt effect other pages error
           : api.isInternetErrorToday
-        // it takes some time to fetch data, but if understand no internet then shows error page not immediately
+              // it takes some time to fetch data, but if understand no internet then shows error page not immediately
               ? ErrorPage(
                   widget.fetchDataFunction,
                   'Unable to connect to the Internet',

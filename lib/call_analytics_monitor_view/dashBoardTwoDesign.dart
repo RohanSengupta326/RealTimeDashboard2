@@ -310,28 +310,28 @@ class DashBoardTwoDesign extends StatelessWidget {
             height: 20,
           ),
           // graph
-          Container(
-            height: GetPlatform.isAndroid ? 418 : 600,
-            width: GetPlatform.isAndroid ? 500 : 600,
-            padding: EdgeInsets.all(8),
-            child: Card(
-              elevation: 10,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      '',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Expanded(
-                      child: HorizontalBarChart(true),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Container(
+          //   height: GetPlatform.isAndroid ? 418 : 600,
+          //   width: GetPlatform.isAndroid ? 500 : 600,
+          //   padding: EdgeInsets.all(8),
+          //   child: Card(
+          //     elevation: 10,
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Column(
+          //         children: <Widget>[
+          //           Text(
+          //             '',
+          //             style: Theme.of(context).textTheme.headline6,
+          //           ),
+          //           Expanded(
+          //             child: HorizontalBarChart(widget.tabControllerIndex),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

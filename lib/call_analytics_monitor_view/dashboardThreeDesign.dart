@@ -386,14 +386,15 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                     height: 20,
                                   ),
                                   // graph
+                                  SizedBox(height: 120,),
                                   Container(
-                                    height: GetPlatform.isAndroid ? 418 : 600,
+                                    height: GetPlatform.isAndroid ? 200 : 600,
                                     width: GetPlatform.isAndroid ? 500 : 600,
                                     padding: EdgeInsets.all(8),
                                     child: Card(
                                       elevation: 0,
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(8.0),
                                         child: Column(
                                           children: <Widget>[
                                             Text(
@@ -403,7 +404,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                                   .headline6,
                                             ),
                                             Expanded(
-                                              child: HorizontalBarChart(true),
+                                              child: HorizontalBarChart(
+                                                  widget.tabControllerIndex),
                                             ),
                                           ],
                                         ),
