@@ -46,22 +46,22 @@ class ErrorPage extends StatelessWidget {
               height: 20,
             ),
             // try again button
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Color(0xff2b5a00))),
-              onPressed: () {
-                // logic to refresh app
-                generateData(tabIndex);
-              },
-              child: Text(
-                'Try Again',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-              ),
-            )
+            // ElevatedButton(
+            //   style: ButtonStyle(
+            //       backgroundColor:
+            //           MaterialStateProperty.all(Color(0xff2b5a00))),
+            //   onPressed: () {
+            //     // logic to refresh app
+            //     generateData(tabIndex);
+            //   },
+            //   child: Text(
+            //     'Try Again',
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: 14,
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

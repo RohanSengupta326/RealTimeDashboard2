@@ -11,17 +11,41 @@ class PostRequest extends GetxController {
   var url = Api().uri;
   // Api class not pushed on github.
 
-  // error storing variables
-  bool isInternetError = false;
-  bool fetchDataError = false;
-  bool apiError = false;
+  // error storing variables, to show different screens according to errors and for different pages , so that one page's error doesnt effect other pages error
+  bool isInternetErrorToday = false;
+  bool fetchDataErrorToday = false;
+  bool apiErrorToday = false;
+  bool statusCodeErrorToday = false;
+
+  bool isInternetErrorWeek = false;
+  bool fetchDataErrorWeek = false;
+  bool apiErrorWeek = false;
+  bool statusCodeErrorWeek = false;
+
+  bool isInternetErrorMonth = false;
+  bool fetchDataErrorMonth = false;
+  bool apiErrorMonth = false;
+  bool statusCodeErrorMonth = false;
+
+  bool isInternetErrorThreeMonth = false;
+  bool fetchDataErrorThreeMonth = false;
+  bool apiErrorThreeMonth = false;
+  bool statusCodeErrorThreeMonth = false;
+
+  // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
+  // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
+  // also couldnt fetch data
+  bool noValueToday = false;
+  bool noValueWeek = false;
+  bool noValueMonth = false;
+  bool noValueThreeMonth = false;
 
   // post request variables
   String startTimeDate = '';
   String endTimeDate = '';
 
   List<Data> _todayData = [];
-  List<Data> _weekData = [];
+  static List<Data> _weekData = [];
 
   // month and 3 month data just fetch once after app opening cause that wont change
   // and big data so not feasible to fetch multiple times
@@ -46,11 +70,10 @@ class PostRequest extends GetxController {
 
   Future<void> fetchData(int index) async {
     // everytime calling the function making the errors false so that the it doesnt take the previous error
-    isInternetError = false;
-    fetchDataError = false;
-    apiError = false;
+
     // time conversion
 
+    // setting post request time variables according to pages
     if (index == 0) {
       // tab 1 = today's data
       // print('index = 0');
@@ -153,8 +176,63 @@ class PostRequest extends GetxController {
       if (response.statusCode == 200) {
         print(response.body);
         var extractedData = json.decode(response.body);
-        if (extractedData['aggregations']['inbound']['doc_count'] <= 0) {
-          fetchDataError = true;
+        if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
+          // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
+          // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
+          // also couldnt fetch data
+          index == 0
+              ? noValueToday = true
+              : index == 1
+                  ? noValueWeek = true
+                  : index == 2
+                      ? noValueMonth = true
+                      : noValueThreeMonth = true;
+
+          index == 0
+              ? _todayData.add(
+                  Data(
+                    totalInboundCalls: 0,
+                    answeredCallInbound: 0,
+                    missedCallInbound: 0,
+                    totalOutboundCalls: 0,
+                    answeredCallOutbound: 0,
+                    missedCallOutbound: 0,
+                  ),
+                )
+              : index == 1
+                  ? _weekData.add(
+                      Data(
+                        totalInboundCalls: 0,
+                        answeredCallInbound: 0,
+                        missedCallInbound: 0,
+                        totalOutboundCalls: 0,
+                        answeredCallOutbound: 0,
+                        missedCallOutbound: 0,
+                      ),
+                    )
+                  : index == 2
+                      ? _monthData.add(
+                          Data(
+                            totalInboundCalls: 0,
+                            answeredCallInbound: 0,
+                            missedCallInbound: 0,
+                            totalOutboundCalls: 0,
+                            answeredCallOutbound: 0,
+                            missedCallOutbound: 0,
+                          ),
+                        )
+                      : index == 3
+                          ? _threeMonthData.add(
+                              Data(
+                                totalInboundCalls: 0,
+                                answeredCallInbound: 0,
+                                missedCallInbound: 0,
+                                totalOutboundCalls: 0,
+                                answeredCallOutbound: 0,
+                                missedCallOutbound: 0,
+                              ),
+                            )
+                          : null;
           return;
         }
 
@@ -231,15 +309,35 @@ class PostRequest extends GetxController {
                           )
                         : null;
       } else if (response.statusCode > 400) {
-        Get.snackbar('error', 'some error occurred');
+        index == 0
+            ? statusCodeErrorToday = true
+            : index == 1
+                ? statusCodeErrorWeek = true
+                : index == 2
+                    ? statusCodeErrorMonth = true
+                    : statusCodeErrorThreeMonth = true;
+        return;
       }
-    } on SocketException catch (error) {
+    } on SocketException catch (_) {
       // internet connection error
-      isInternetError = true;
+      index == 0
+          ? isInternetErrorToday = true
+          : index == 1
+              ? isInternetErrorWeek = true
+              : index == 2
+                  ? isInternetErrorMonth = true
+                  : isInternetErrorThreeMonth = true;
+
       return;
     } catch (error) {
       // some generic unknown error
-      apiError = true;
+      index == 0
+          ? apiErrorToday = true
+          : index == 1
+              ? apiErrorWeek = true
+              : index == 2
+                  ? apiErrorMonth = true
+                  : apiErrorThreeMonth = true;
       return;
     }
   }

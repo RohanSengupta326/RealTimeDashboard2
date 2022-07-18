@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login/api/post.dart';
 import 'package:login/graphs/pieChartGaugeDashboard.dart';
+import 'package:get/get.dart';
 
 class CardRowOne extends StatelessWidget {
   int _tabControllerIndex;
@@ -8,10 +10,12 @@ class CardRowOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('card row one : $_tabControllerIndex');
+    final api = Get.put(PostRequest());
+
+    // print('card row one : $_tabControllerIndex');
     return Row(
       children: [
-        // first card
+        // first card row
         Expanded(
           flex: 2,
           // takes 50% of screen horizontally
@@ -35,21 +39,86 @@ class CardRowOne extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Expanded(
-                    child: PieChartGaugeDashboard(
-                      Color(0xff553dca),
-                      Color(0xffc1a5fe),
-                      _tabControllerIndex,
-                      true,
-                      false,
-                    ),
-                  ),
+                  // to not fetch data multiple times we keep track of different variables of noValue cause once fetched noValue for today , week etc
+                  // it wont fetch again . for different pages using different noValue or else if one graph couldnt fetch data it will show that other graphs
+                  // also couldnt fetch data
+
+                  // for index = 0 =>  it will check noValue for today , index = 1 => check for week ...
+                  // else if  I check with only one noValue , lets say ,I didnt get data for week so noValue =true, then I call threemonth data I get the data and noValue turned false ,
+                  // but for week noValue should be true , but using one noValue for all graph will cause problem
+                  _tabControllerIndex == 0
+                      ? api.noValueToday
+                          ? Container(
+                              margin: EdgeInsets.only(top: 120),
+                              child: Text(
+                                'No Calls',
+                              ),
+                            )
+                          : Expanded(
+                              child: PieChartGaugeDashboard(
+                                Color(0xff553dca),
+                                Color(0xffc1a5fe),
+                                _tabControllerIndex,
+                                true,
+                                false,
+                              ),
+                            )
+                      : _tabControllerIndex == 1
+                          ? api.noValueWeek
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 120),
+                                  child: Text(
+                                    'No Calls',
+                                  ),
+                                )
+                              : Expanded(
+                                  child: PieChartGaugeDashboard(
+                                    Color(0xff553dca),
+                                    Color(0xffc1a5fe),
+                                    _tabControllerIndex,
+                                    true,
+                                    false,
+                                  ),
+                                )
+                          : _tabControllerIndex == 2
+                              ? api.noValueMonth
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 120),
+                                      child: Text(
+                                        'No Calls',
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: PieChartGaugeDashboard(
+                                        Color(0xff553dca),
+                                        Color(0xffc1a5fe),
+                                        _tabControllerIndex,
+                                        true,
+                                        false,
+                                      ),
+                                    )
+                              : api.noValueThreeMonth
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 120),
+                                      child: Text(
+                                        'No Calls',
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: PieChartGaugeDashboard(
+                                        Color(0xff553dca),
+                                        Color(0xffc1a5fe),
+                                        _tabControllerIndex,
+                                        true,
+                                        false,
+                                      ),
+                                    ),
                 ],
               ),
             ),
           ),
         ),
-        // second card
+        // second card row
         Expanded(
           flex: 2,
           child: Container(
@@ -74,17 +143,81 @@ class CardRowOne extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Expanded(
-                    child: PieChartGaugeDashboard(
-                      Color(
-                        0xffef8733,
-                      ),
-                      Color(0xfff8cc9e),
-                      _tabControllerIndex,
-                      false,
-                      true,
-                    ),
-                  ),
+                  _tabControllerIndex == 0
+                      ? api.noValueToday
+                          ? Container(
+                              margin: EdgeInsets.only(top: 120),
+                              child: Text(
+                                'No Calls',
+                              ),
+                            )
+                          : Expanded(
+                              child: PieChartGaugeDashboard(
+                                Color(
+                                  0xffef8733,
+                                ),
+                                Color(0xfff8cc9e),
+                                _tabControllerIndex,
+                                false,
+                                true,
+                              ),
+                            )
+                      : _tabControllerIndex == 1
+                          ? api.noValueWeek
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 120),
+                                  child: Text(
+                                    'No Calls',
+                                  ),
+                                )
+                              : Expanded(
+                                  child: PieChartGaugeDashboard(
+                                    Color(
+                                      0xffef8733,
+                                    ),
+                                    Color(0xfff8cc9e),
+                                    _tabControllerIndex,
+                                    false,
+                                    true,
+                                  ),
+                                )
+                          : _tabControllerIndex == 2
+                              ? api.noValueMonth
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 120),
+                                      child: Text(
+                                        'No Calls',
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: PieChartGaugeDashboard(
+                                        Color(
+                                          0xffef8733,
+                                        ),
+                                        Color(0xfff8cc9e),
+                                        _tabControllerIndex,
+                                        false,
+                                        true,
+                                      ),
+                                    )
+                              : api.noValueThreeMonth
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 120),
+                                      child: Text(
+                                        'No Calls',
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: PieChartGaugeDashboard(
+                                        Color(
+                                          0xffef8733,
+                                        ),
+                                        Color(0xfff8cc9e),
+                                        _tabControllerIndex,
+                                        false,
+                                        true,
+                                      ),
+                                    ),
                 ],
               ),
             ),
