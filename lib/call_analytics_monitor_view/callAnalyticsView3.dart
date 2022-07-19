@@ -31,10 +31,6 @@ class _CallAnalyticsView3State extends State<CallAnalyticsView3> {
       widget
           .fetchDataFunction(widget._tabControllerIndex)
           .catchError((onError) {
-        // Get.snackbar(
-        //   'error',
-        //   'error occurred',
-        // );
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -67,11 +63,6 @@ class _CallAnalyticsView3State extends State<CallAnalyticsView3> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        // Container(
-                        //   height: 100,
-                        //   width: 500,
-                        // ),
-
                         Expanded(
                             flex: 2,
                             child: CardRowOne(

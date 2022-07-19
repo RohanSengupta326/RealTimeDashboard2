@@ -17,27 +17,17 @@ class _DashboardThreeState extends State<DashboardThree> {
   // FETCH TODAYS DATA AS WE ARE AT THE FIRST SCREEN WHEN APP RUNS
   var api = Get.put(PostRequest());
 
-  // @override
   Future<void> _generateData(int tabIndex) async {
-    print('generate data function : $tabIndex');
     await api.fetchData(tabIndex).catchError((onError) {
       throw onError;
     });
-    ;
-    // print(api.apiErrorIndex0);
-    // print(api.fetchDataErrorIndex0);
-    return;
   }
 
+  // api fetch function for horizontal bar chart
   Future<void> _generateBarChartData(int tabIndex) async {
-    print('generate data function : $tabIndex');
     await api.fetchHistoData(tabIndex).catchError((onError) {
       throw onError;
     });
-
-    // print(api.apiErrorIndex0);
-    // print(api.fetchDataErrorIndex0);
-    return;
   }
 
   @override
@@ -52,6 +42,7 @@ class _DashboardThreeState extends State<DashboardThree> {
           drawer: AppDrawer(),
           backgroundColor: Colors.white,
           appBar: AppBar(
+            centerTitle: false,
             bottom: const TabBar(
               // tabs
 
@@ -99,7 +90,7 @@ class _DashboardThreeState extends State<DashboardThree> {
             ),
             elevation: 0,
             backgroundColor: Colors.white,
-            iconTheme: IconThemeData(color: Color(0xff86233d)),
+            iconTheme: const IconThemeData(color: Color(0xff86233d)),
             title: const Text(
               'Dashboard',
               style: TextStyle(

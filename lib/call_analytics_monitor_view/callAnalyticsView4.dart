@@ -16,7 +16,6 @@ class CallAnalyticsView4 extends StatefulWidget {
 }
 
 class _CallAnalyticsView4State extends State<CallAnalyticsView4> {
-  // static to keep fetchOnce updated to fetch week data only once
   var api = Get.put(PostRequest());
   var _isLoading = false.obs;
   String errorMsg = '';
@@ -32,10 +31,6 @@ class _CallAnalyticsView4State extends State<CallAnalyticsView4> {
       widget
           .fetchDataFunction(widget._tabControllerIndex)
           .catchError((onError) {
-        // Get.snackbar(
-        //   'error',
-        //   'error occurred',
-        // );
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -68,11 +63,6 @@ class _CallAnalyticsView4State extends State<CallAnalyticsView4> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        // Container(
-                        //   height: 100,
-                        //   width: 500,
-                        // ),
-
                         Expanded(
                             flex: 2,
                             child: CardRowOne(

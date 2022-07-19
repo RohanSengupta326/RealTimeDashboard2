@@ -1,36 +1,3 @@
-// import 'package:flutter/src/widgets/container.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:http/http.dart';
-// import 'package:login/api/post.dart';
-
-// class HomeView extends StatelessWidget {
-//   var api = Get.put(PostRequest());
-
-//   @override
-//   Widget build(BuildContext context) {
-//     print('this : ');
-//     // print(api.items.isEmpty);
-//     return Scaffold(
-//       body: Center(
-//         child: ListView.builder(
-//           itemBuilder: ((context, index) {
-//             return Center(
-//               child: Padding(
-//                 padding: const EdgeInsets.only(top: 150, left: 20, right: 20),
-//                 child: Text(
-//                     "${index + 1})  Agent Id : ${api.items[index].agentId} , \nService Name : ${api.items[index].serviceName} \n\n"),
-//               ),
-//             );
-//
-//           itemCount: api.items.length,
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:login/call_analytics_monitor_view/callAnalyticsView1.dart';
 import 'package:login/call_analytics_monitor_view/callAnalyticsView2.dart';
@@ -50,8 +17,11 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
+  // with cause to access index of tabs = now not used
   late TabController _controller;
+  // tab index controller
   var _selectedIndex = 0.obs;
+  // variable to store index
 
   // FETCH TODAYS DATA AS WE ARE AT THE FIRST SCREEN WHEN APP RUNS
   var api = Get.put(PostRequest());
@@ -62,9 +32,10 @@ class _HomeViewState extends State<HomeView>
     // TODO: implement initState
 
     _controller = TabController(length: 4, vsync: this);
+    // setting tab controller with length of tabs
 
     _controller.addListener(() {
-      // for keep a check on which tab is selected
+      // for keep a check on which tab is selected and update variable value accordingly
       _selectedIndex.value = _controller.index;
 
       print("Selected Index: " + _controller.index.toString());
@@ -73,12 +44,11 @@ class _HomeViewState extends State<HomeView>
   }
 
   Future<void> _generateData(int tabIndex) async {
-    print('generate data function : $tabIndex');
+    // fetching api
     await api.fetchData(tabIndex).catchError((onError) {
       throw onError;
+      // catching this error on every respective tab pages
     });
-    // print(api.apiErrorIndex0);
-    // print(api.fetchDataErrorIndex0);
   }
 
   @override
@@ -98,6 +68,7 @@ class _HomeViewState extends State<HomeView>
           drawer: AppDrawer(),
           backgroundColor: Colors.white,
           appBar: AppBar(
+            centerTitle: false,
             bottom: TabBar(
               // tabs
               controller: _controller,
@@ -110,7 +81,7 @@ class _HomeViewState extends State<HomeView>
               // selected tab text style
               unselectedLabelColor: Colors.grey,
               // unselected tab color
-              unselectedLabelStyle: TextStyle(
+              unselectedLabelStyle: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.normal,
                   fontSize: 13),
@@ -119,7 +90,7 @@ class _HomeViewState extends State<HomeView>
               // underline below tab while selected
               indicatorSize: TabBarIndicatorSize.label,
               // length of the indicator
-              tabs: [
+              tabs: const [
                 // different tabs
                 Tab(
                   child: Text(
@@ -145,7 +116,7 @@ class _HomeViewState extends State<HomeView>
             ),
             elevation: 0,
             backgroundColor: Colors.white,
-            iconTheme: IconThemeData(color: Color(0xff2b5a00)),
+            iconTheme: const IconThemeData(color: Color(0xff2b5a00)),
             title: const Text(
               '| Dashboard',
               style: TextStyle(
@@ -155,18 +126,16 @@ class _HomeViewState extends State<HomeView>
                   fontWeight: FontWeight.bold),
             ),
           ),
-          body: /* Obx(() {
-              return */
-              TabBarView(
-            // it does page functions when on the respective page not before
+          body: TabBarView(
             controller: _controller,
             children: [
               CallAnalyticsView1(0, _generateData),
+              // tab pages with page index and fetch api function reference to call
               CallAnalyticsView2(1, _generateData),
               CallAnalyticsView3(2, _generateData),
               CallAnalyticsView4(3, _generateData),
             ],
-          ), /* }) */
+          ),
         );
       }),
     );

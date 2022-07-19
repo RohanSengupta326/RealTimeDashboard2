@@ -36,27 +36,24 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
 
   int outboundMissedAgent = 54;
 
+  // variables to store errors to show on error screen
   String errorMsg = '';
   String errorMsgForBarChart = '';
 
   var api = Get.put(PostRequest());
 
+  // body of the horizontal bar chart
   Widget barChart() {
     var _isLoading = false.obs;
     _isLoading.value = true;
-    // print('callAnalyticsView index recieved : ${widget.tabControllerIndex}');
+
     widget
         .generateBarChartData(widget.tabControllerIndex)
         .catchError((onError) {
-      // Get.snackbar(
-      //   'error',
-      //   'error occurred',
-      // );
       // print(onError);
 
       errorMsgForBarChart = onError.toString();
     }).then((value) {
-      // calling fetch data with index
       _isLoading.value = false;
     });
 
@@ -65,11 +62,11 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
         return Container(
           height: GetPlatform.isAndroid ? 600 : 600,
           width: GetPlatform.isAndroid ? 500 : 600,
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Card(
             elevation: 0,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: _isLoading.value
                   ? const Center(
                       child: CircularProgressIndicator(
@@ -78,13 +75,13 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                     )
                   : errorMsgForBarChart.isNotEmpty
                       ? Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 150, horizontal: 40),
                           child: Text(
                             errorMsgForBarChart,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ))
-                      : api.noValueForGraphToday
+                      : api.todayBarChartData[0].totalInboundCalls == 0
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),
@@ -103,15 +100,12 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
     );
   }
 
+  // body of the progressive container
   Widget graph() {
     var _isLoading = false.obs;
     _isLoading.value = true;
-    // print('callAnalyticsView index recieved : ${widget.tabControllerIndex}');
+
     widget.generateData(widget.tabControllerIndex).catchError((onError) {
-      // Get.snackbar(
-      //   'error',
-      //   'error occurred',
-      // );
       // print(onError);
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -120,8 +114,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
       ));
       errorMsg = onError.toString();
     }).then((value) {
-      // calling fetch data with index
       if (errorMsg.isEmpty && api.todayData.isNotEmpty) {
+        // if no error and some value was fetched even if 0, then only store the data
         totalInboundCalls = api.todayData[0].totalInboundCalls;
         totalOutboundCalls = api.todayData[0].totalOutboundCalls;
 
@@ -147,17 +141,17 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
-                        children: [
+                        children: const [
                           Expanded(flex: 2, child: SizedBox()),
                           Expanded(flex: 2, child: Text('Inbound')),
                           Expanded(flex: 2, child: Text('Outbound')),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -165,8 +159,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                           Expanded(
                             flex: 2,
                             child: Container(
-                              margin: EdgeInsets.only(left: 25),
-                              child: Text(
+                              margin: const EdgeInsets.only(left: 25),
+                              child: const Text(
                                 'Answered',
                                 style: TextStyle(
                                     color: Color(0xff265000), fontSize: 10),
@@ -179,30 +173,31 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                             child: SizedBox(
                               height: 20,
                               child: Align(
-                                // to give height and width to a widget inside an expanded widget
+                                // to give height and width to a widget inside an expanded widget so the child also doesnt take the full height and width
                                 alignment: Alignment.topLeft,
                                 child: Container(
                                   height: 20,
                                   width: answeredInboundCalls == 0
                                       ? 20
+                                      // if 0 calls keep a fix width to show the value else size the container according to the percentage+10 of the recieved data
                                       : (answeredInboundCalls /
                                               totalInboundCalls *
                                               100) +
                                           10,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.green),
-                                      color: Color(0xffd9e6d4)),
+                                      color: const Color(0xffd9e6d4)),
                                   child: Center(
                                     child: Text(
                                       '$answeredInboundCalls',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Expanded(
@@ -222,23 +217,23 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                           10,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.green),
-                                      color: Color(0xffd9e6d4)),
+                                      color: const Color(0xffd9e6d4)),
                                   child: Center(
                                     child: Text(
                                       '$answeredOutboundCalls',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -246,8 +241,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                           Expanded(
                             flex: 2,
                             child: Container(
-                              margin: EdgeInsets.only(left: 25),
-                              child: Text(
+                              margin: const EdgeInsets.only(left: 25),
+                              child: const Text(
                                 'Missed',
                                 style: TextStyle(
                                     color: Color(0xff9b271f), fontSize: 10),
@@ -270,20 +265,20 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                               100) +
                                           10,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff96251d)),
-                                      color: Color(0xfff5dbd6)),
+                                      border: Border.all(
+                                          color: const Color(0xff96251d)),
+                                      color: const Color(0xfff5dbd6)),
                                   child: Center(
                                     child: Text(
                                       '$missedInboundCalls',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Expanded(
@@ -302,34 +297,34 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                               100) +
                                           10,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff96251d)),
-                                      color: Color(0xfff5dbd6)),
+                                      border: Border.all(
+                                          color: const Color(0xff96251d)),
+                                      color: const Color(0xfff5dbd6)),
                                   child: Center(
                                     child: Text(
                                       '$missedOutboundCalls',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
-                        children: [
+                        children: const [
                           Expanded(flex: 1, child: SizedBox()),
                           Expanded(flex: 2, child: Text('Outbound Missed')),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -337,8 +332,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                           Expanded(
                             flex: 1,
                             child: Container(
-                              margin: EdgeInsets.only(left: 25),
-                              child: Text(
+                              margin: const EdgeInsets.only(left: 25),
+                              child: const Text(
                                 'Customer',
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 10),
@@ -362,24 +357,24 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                           10,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.black),
-                                    color: Color(0xfff5b470),
+                                    color: const Color(0xfff5b470),
                                   ),
                                   child: Center(
                                     child: Text(
                                       '$outboundMissedCustomer',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -387,8 +382,8 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                           Expanded(
                             flex: 1,
                             child: Container(
-                              margin: EdgeInsets.only(left: 25),
-                              child: Text(
+                              margin: const EdgeInsets.only(left: 25),
+                              child: const Text(
                                 'Agent',
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 10),
@@ -412,24 +407,24 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                           10,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.black),
-                                    color: Color(0xfffff98e),
+                                    color: const Color(0xfffff98e),
                                   ),
                                   child: Center(
                                     child: Text(
                                       '$outboundMissedAgent',
-                                      style: TextStyle(fontSize: 11),
+                                      style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       // graph

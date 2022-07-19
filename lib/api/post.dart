@@ -10,41 +10,28 @@ import 'api.dart';
 import '../models/http_exception.dart';
 
 class PostRequest extends GetxController {
-  var url = Api().pieChartUri;
+  var urlForAll = Api().pieChartUri;
   // api for pie charts and progressive containers
   // Api class not pushed on github.
-  var url2 = Api().barChartUri;
-
-  // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
-  // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
-  // also couldnt fetch data
-  bool noValueToday = false;
-  bool noValueWeek = false;
-  bool noValueMonth = false;
-  bool noValueThreeMonth = false;
-
-  bool noValueForGraphToday = false;
-  bool noValueForGraphWeek = false;
-  bool noValueForGraphMonth = false;
-  bool noValueForGraphThreeMonth = false;
+  var urlForGraph = Api().barChartUri;
 
   // post request variables
   String startTimeDate = '';
   String endTimeDate = '';
 
+  // lists to store pie chart and progressive container data
   List<Data> _todayData = [];
-  static List<Data> _weekData = [];
-
-  // month and 3 month data just fetch once after app opening cause that wont change
-  // and big data so not feasible to fetch multiple times
+  List<Data> _weekData = [];
   List<Data> _monthData = [];
   List<Data> _threeMonthData = [];
 
+  // lists to store data for horizontal bar charts
   List<Data> _todayBarChartData = [];
   List<Data> _weekBarChartData = [];
   List<Data> _monthBarChartData = [];
   List<Data> _threeMonthBarChartData = [];
 
+  // getters to access all data lists
   List<Data> get monthData {
     return [..._monthData];
   }
@@ -77,18 +64,18 @@ class PostRequest extends GetxController {
     return [..._threeMonthBarChartData];
   }
 
+  // fetch function for api 1
   Future<void> fetchData(int index) async {
     // time conversion
 
     // setting post request time variables according to pages
     if (index == 0) {
       // tab 1 = today's data
-      // print('index = 0');
+
       final now = DateTime.now();
       startTimeDate = now
           .subtract(
             Duration(
-              days: 365,
               hours: now.hour,
               minutes: now.minute,
               seconds: now.second,
@@ -101,9 +88,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
-    } else
-    // print('in api file index : $index');
-    if (index == 1) {
+    } else if (index == 1) {
       // week data
       print('entered if');
       final now = DateTime.now();
@@ -165,7 +150,7 @@ class PostRequest extends GetxController {
     print(endTimeDate);
 
     var parsedUrl = Uri.parse(
-      url,
+      urlForAll,
     );
     try {
       final response = await http.post(
@@ -173,27 +158,18 @@ class PostRequest extends GetxController {
         body: json.encode(
           // converts this map to json, comes from dart:convert package
           {
-            "start-time": /* '2021-01-14T18:30:00Z' */ startTimeDate,
-            "end-time": /* '2022-07-15T05:30:00Z' */ endTimeDate,
+            "start-time": startTimeDate,
+            "end-time": endTimeDate,
           },
         ),
       );
 
-      print(response.statusCode);
+      // print(response.statusCode);
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         var extractedData = json.decode(response.body);
         if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
-          // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
-          // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
-          // also couldnt fetch data
-          index == 0
-              ? noValueToday = true
-              : index == 1
-                  ? noValueWeek = true
-                  : index == 2
-                      ? noValueMonth = true
-                      : noValueThreeMonth = true;
+          // no value true when api return 0 calls
 
           index == 0
               ? _todayData.add(
@@ -423,7 +399,7 @@ class PostRequest extends GetxController {
     print(endTimeDate);
 
     var parsedUrl = Uri.parse(
-      url2,
+      urlForGraph,
     );
     try {
       final response = await http.post(
@@ -445,13 +421,6 @@ class PostRequest extends GetxController {
           // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
           // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
           // also couldnt fetch data
-          index == 0
-              ? noValueForGraphToday = true
-              : index == 1
-                  ? noValueForGraphWeek = true
-                  : index == 2
-                      ? noValueForGraphMonth = true
-                      : noValueForGraphThreeMonth = true;
 
           index == 0
               ? _todayData.add(

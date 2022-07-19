@@ -44,14 +44,10 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
     var _isLoading = false.obs;
     if (api.weekBarChartData.isEmpty) {
       _isLoading.value = true;
-      // print('callAnalyticsView index recieved : ${widget.tabControllerIndex}');
+
       widget
           .generateBarChartData(widget.tabControllerIndex)
           .catchError((onError) {
-        // Get.snackbar(
-        //   'error',
-        //   'error occurred',
-        // );
         // print(onError);
 
         errorMsgForBarChart = onError.toString();
@@ -85,7 +81,7 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                             errorMsgForBarChart,
                             style: TextStyle(color: Colors.black),
                           ))
-                      : api.noValueForGraphToday
+                      : api.weekBarChartData[0].totalInboundCalls == 0
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),
@@ -122,12 +118,8 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
     if (api.weekData.isEmpty) {
       // only fetch data when already not fetched once  list empty
       _isLoading.value = true;
-      // print('callAnalyticsView index recieved : ${widget.tabControllerIndex}');
+
       widget.generateData(widget.tabControllerIndex).catchError((onError) {
-        // Get.snackbar(
-        //   'error',
-        //   'error occurred',
-        // );
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

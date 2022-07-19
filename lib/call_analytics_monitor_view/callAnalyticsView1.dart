@@ -23,23 +23,18 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
     // api fetch
 
     String errorMsg = '';
-    // no fetch only once condition here cause for today screen, fetch data everytime user comes to today page
+    // not fetching only once condition here cause for today screen, fetch data everytime user comes to today page
     _isLoading.value = true;
     widget.fetchDataFunction(widget._tabControllerIndex).catchError((onError) {
-      // Get.snackbar(
-      //   'error',
-      //   'error occurred',
-      // );
-      print(onError.toString());
+      // print(onError.toString());
       errorMsg = onError.toString();
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: Duration(seconds: 5),
         content: Text(onError.toString()),
         backgroundColor: Colors.black,
       ));
     }).then((value) {
-      // calling fetch data with index
-
       _isLoading.value = false;
     });
 
@@ -50,7 +45,7 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
                 color: Color(0xff2b5a00),
               ),
             )
-          // different error storing variables, to show different screens according to errors and for different pages , so that one page's error doesnt effect other pages error
+          // if no error then show normal graph , if error then show error page
           : errorMsg.isNotEmpty
               ? ErrorPage(widget.fetchDataFunction, errorMsg,
                   widget._tabControllerIndex)
@@ -63,14 +58,10 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        // Container(
-                        //   height: 100,
-                        //   width: 500,
-                        // ),
-
                         Expanded(
                             flex: 2,
                             child: CardRowOne(
+                              // to desgin the first row of pie charts
                               widget._tabControllerIndex,
                             )),
                         // Row 1 for 2 cards
@@ -78,9 +69,9 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
                         Expanded(
                             flex: 2,
                             child: CardRowTwo(
+                              // to design second row of pie charts
                               widget._tabControllerIndex,
                             )),
-                        // row 2 for another set of 2 cards
                       ],
                     ),
                   ),

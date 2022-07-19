@@ -65,20 +65,20 @@ class HorizontalBarChart extends StatelessWidget {
                         : null /* = how many bars you wanna show on one scr MMMdn */));
   }
 
-  List<charts.Series<liveData, String>> _createSampleData() {
+  List<charts.Series<graphData, String>> _createSampleData() {
     print(tabControllerIndex);
 
-    List<liveData> answered = [];
-    List<liveData> missed = [];
-    List<liveData> abandoned = [];
-    List<liveData> rejected = [];
+    List<graphData> answered = [];
+    List<graphData> missed = [];
+    List<graphData> abandoned = [];
+    List<graphData> rejected = [];
 
     var temp = '';
 
     int j = 0;
 
     int numberOfBars = tabControllerIndex == 0
-        ? DateTime.now().hour.abs()
+        ? DateTime.now().hour
         : tabControllerIndex == 1
             ? 7
             : tabControllerIndex == 2
@@ -86,9 +86,11 @@ class HorizontalBarChart extends StatelessWidget {
                 : tabControllerIndex == 3
                     ? 12
                     : 0;
+    // 0 means todays page, so first substract 0 so till current hour is shown
     int i = tabControllerIndex == 0 ? 0 : 1;
 
     for (i; i <= numberOfBars; i++, j++) {
+      // if today or week , substract 1 hour / day and keep going back but for month and three month substract 7 days
       int substrcatMonthWeek =
           tabControllerIndex == 0 || tabControllerIndex == 1
               ? i
@@ -97,8 +99,9 @@ class HorizontalBarChart extends StatelessWidget {
                   : i * 7;
       answered.insert(
           j,
-          liveData(
+          graphData(
               tabControllerIndex == 0
+                  // if today then show hour format
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
                       hours: substrcatMonthWeek,
                     )))
@@ -108,7 +111,7 @@ class HorizontalBarChart extends StatelessWidget {
               Random().nextInt(60) + 30));
       missed.insert(
           j,
-          liveData(
+          graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
                       hours: substrcatMonthWeek,
@@ -118,7 +121,7 @@ class HorizontalBarChart extends StatelessWidget {
               Random().nextInt(60) + 30));
       abandoned.insert(
           j,
-          liveData(
+          graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
                       hours: substrcatMonthWeek,
@@ -128,7 +131,7 @@ class HorizontalBarChart extends StatelessWidget {
               Random().nextInt(60) + 30));
       rejected.insert(
           j,
-          liveData(
+          graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
                       hours: substrcatMonthWeek,
@@ -139,61 +142,61 @@ class HorizontalBarChart extends StatelessWidget {
     }
 
     return [
-      charts.Series<liveData, String>(
+      charts.Series<graphData, String>(
         id: 'answered',
         seriesCategory: 'A',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault.lighter,
-        domainFn: (liveData value, _) => value.day,
-        measureFn: (liveData value, _) => value.value,
-        labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) =>
-            const charts.TextStyleSpec(
-                fontSize: 6, color: charts.MaterialPalette.black)),
+        domainFn: (graphData yAxisValue, _) => yAxisValue.day,
+        measureFn: (graphData xAxisValue, _) => xAxisValue.value,
+        labelAccessorFn: ((graphData labelInStack, _) =>
+            labelInStack.value.toString()),
+        insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
+            fontSize: 6, color: charts.MaterialPalette.black)),
         data: answered,
       ),
-      charts.Series<liveData, String>(
+      charts.Series<graphData, String>(
         id: 'missed',
         seriesCategory: 'A',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
-        domainFn: (liveData value, _) => value.day,
-        measureFn: (liveData value, _) => value.value,
-        labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) =>
-            const charts.TextStyleSpec(
-                fontSize: 6, color: charts.MaterialPalette.black)),
+        domainFn: (graphData yAxisValue, _) => yAxisValue.day,
+        measureFn: (graphData xAxisValue, _) => xAxisValue.value,
+        labelAccessorFn: ((graphData labelInStack, _) =>
+            labelInStack.value.toString()),
+        insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
+            fontSize: 6, color: charts.MaterialPalette.black)),
         data: missed,
       ),
-      charts.Series<liveData, String>(
+      charts.Series<graphData, String>(
         id: 'abandoned',
         seriesCategory: 'B',
         colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault.darker,
-        domainFn: (liveData value, _) => value.day,
-        measureFn: (liveData value, _) => value.value,
-        labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) =>
-            const charts.TextStyleSpec(
-                fontSize: 6, color: charts.MaterialPalette.black)),
+        domainFn: (graphData yAxisValue, _) => yAxisValue.day,
+        measureFn: (graphData xAxisValue, _) => xAxisValue.value,
+        labelAccessorFn: ((graphData labelInStack, _) =>
+            labelInStack.value.toString()),
+        insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
+            fontSize: 6, color: charts.MaterialPalette.black)),
         data: abandoned,
       ),
-      charts.Series<liveData, String>(
+      charts.Series<graphData, String>(
         id: 'rejected',
         seriesCategory: 'B',
         colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault.lighter,
-        domainFn: (liveData value, _) => value.day,
-        measureFn: (liveData value, _) => value.value,
-        labelAccessorFn: ((liveData data, _) => data.value.toString()),
-        insideLabelStyleAccessorFn: ((datum, index) =>
-            const charts.TextStyleSpec(
-                fontSize: 6, color: charts.MaterialPalette.black)),
+        domainFn: (graphData yAxisValue, _) => yAxisValue.day,
+        measureFn: (graphData xAxisValue, _) => xAxisValue.value,
+        labelAccessorFn: ((graphData labelInStack, _) =>
+            labelInStack.value.toString()),
+        insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
+            fontSize: 6, color: charts.MaterialPalette.black)),
         data: rejected,
       ),
     ];
   }
 }
 
-class liveData {
+class graphData {
   final String day;
   final int value;
 
-  liveData(this.day, this.value);
+  graphData(this.day, this.value);
 }

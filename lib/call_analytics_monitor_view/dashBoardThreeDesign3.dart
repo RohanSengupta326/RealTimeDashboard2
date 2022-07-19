@@ -86,7 +86,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                             errorMsgForBarChart,
                             style: TextStyle(color: Colors.black),
                           ))
-                      : api.noValueForGraphToday
+                      : api.threeMonthBarChartData[0].totalInboundCalls == 0
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),
