@@ -4,33 +4,16 @@ import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:login/api/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:login/models/generic_error.dart';
 import 'dart:convert';
 import 'api.dart';
+import '../models/http_exception.dart';
 
 class PostRequest extends GetxController {
-  var url = Api().uri;
+  var url = Api().pieChartUri;
+  // api for pie charts and progressive containers
   // Api class not pushed on github.
-
-  // error storing variables, to show different screens according to errors and for different pages , so that one page's error doesnt effect other pages error
-  bool isInternetErrorToday = false;
-  bool fetchDataErrorToday = false;
-  bool apiErrorToday = false;
-  bool statusCodeErrorToday = false;
-
-  bool isInternetErrorWeek = false;
-  bool fetchDataErrorWeek = false;
-  bool apiErrorWeek = false;
-  bool statusCodeErrorWeek = false;
-
-  bool isInternetErrorMonth = false;
-  bool fetchDataErrorMonth = false;
-  bool apiErrorMonth = false;
-  bool statusCodeErrorMonth = false;
-
-  bool isInternetErrorThreeMonth = false;
-  bool fetchDataErrorThreeMonth = false;
-  bool apiErrorThreeMonth = false;
-  bool statusCodeErrorThreeMonth = false;
+  var url2 = Api().barChartUri;
 
   // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
   // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
@@ -39,6 +22,11 @@ class PostRequest extends GetxController {
   bool noValueWeek = false;
   bool noValueMonth = false;
   bool noValueThreeMonth = false;
+
+  bool noValueForGraphToday = false;
+  bool noValueForGraphWeek = false;
+  bool noValueForGraphMonth = false;
+  bool noValueForGraphThreeMonth = false;
 
   // post request variables
   String startTimeDate = '';
@@ -51,6 +39,11 @@ class PostRequest extends GetxController {
   // and big data so not feasible to fetch multiple times
   List<Data> _monthData = [];
   List<Data> _threeMonthData = [];
+
+  List<Data> _todayBarChartData = [];
+  List<Data> _weekBarChartData = [];
+  List<Data> _monthBarChartData = [];
+  List<Data> _threeMonthBarChartData = [];
 
   List<Data> get monthData {
     return [..._monthData];
@@ -66,6 +59,22 @@ class PostRequest extends GetxController {
 
   List<Data> get weekData {
     return [..._weekData];
+  }
+
+  List<Data> get todayBarChartData {
+    return [..._todayBarChartData];
+  }
+
+  List<Data> get weekBarChartData {
+    return [..._weekBarChartData];
+  }
+
+  List<Data> get monthBarChartData {
+    return [..._monthBarChartData];
+  }
+
+  List<Data> get threeMonthBarChartData {
+    return [..._threeMonthBarChartData];
   }
 
   Future<void> fetchData(int index) async {
@@ -232,6 +241,8 @@ class PostRequest extends GetxController {
                             )
                           : null;
           return;
+        } else if (extractedData == null) {
+          throw 'No Data available at this moment';
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
@@ -307,36 +318,224 @@ class PostRequest extends GetxController {
                           )
                         : null;
       } else if (response.statusCode > 400) {
-        index == 0
-            ? statusCodeErrorToday = true
-            : index == 1
-                ? statusCodeErrorWeek = true
-                : index == 2
-                    ? statusCodeErrorMonth = true
-                    : statusCodeErrorThreeMonth = true;
-        return;
+        throw 'Could not fetch data at this moment';
       }
     } on SocketException catch (_) {
       // internet connection error
-      index == 0
-          ? isInternetErrorToday = true
-          : index == 1
-              ? isInternetErrorWeek = true
-              : index == 2
-                  ? isInternetErrorMonth = true
-                  : isInternetErrorThreeMonth = true;
 
-      return;
+      throw InternetError('Unable to connect to the internet!');
+    } on ArgumentError catch (_) {
+      // when api is wrong
+      throw 'Could not load data from this source';
     } catch (error) {
       // some generic unknown error
-      index == 0
-          ? apiErrorToday = true
-          : index == 1
-              ? apiErrorWeek = true
-              : index == 2
-                  ? apiErrorMonth = true
-                  : apiErrorThreeMonth = true;
-      rethrow;
+
+      throw GenericError('Some Unknown Error occurred !');
+    }
+  }
+
+  // api fetch for bar chart
+  Future<void> fetchHistoData(int index) async {
+    // time conversion
+
+    // setting post request time variables according to pages
+    if (index == 0) {
+      // tab 1 = today's data
+      // print('index = 0');
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 365,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } else
+    // print('in api file index : $index');
+    if (index == 1) {
+      // week data
+      print('entered if');
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 7,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } else if (index == 2) {
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 30,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    } else if (index == 3) {
+      final now = DateTime.now();
+      startTimeDate = now
+          .subtract(
+            Duration(
+              days: 90,
+              hours: now.hour,
+              minutes: now.minute,
+              seconds: now.second,
+              milliseconds: now.millisecond,
+              microseconds: now.microsecond,
+            ),
+          )
+          .toUtc()
+          .toIso8601String();
+      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+          .toUtc()
+          .toIso8601String();
+    }
+
+    print(startTimeDate);
+    print(endTimeDate);
+
+    var parsedUrl = Uri.parse(
+      url2,
+    );
+    try {
+      final response = await http.post(
+        parsedUrl,
+        body: json.encode(
+          // converts this map to json, comes from dart:convert package
+          {
+            "start-time": /* '2021-01-14T18:30:00Z' */ startTimeDate,
+            "end-time": /* '2022-07-15T05:30:00Z' */ endTimeDate,
+          },
+        ),
+      );
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print(response.body);
+        var extractedData = json.decode(response.body);
+        if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
+          // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
+          // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
+          // also couldnt fetch data
+          index == 0
+              ? noValueForGraphToday = true
+              : index == 1
+                  ? noValueForGraphWeek = true
+                  : index == 2
+                      ? noValueForGraphMonth = true
+                      : noValueForGraphThreeMonth = true;
+
+          index == 0
+              ? _todayData.add(
+                  Data(
+                    totalInboundCalls: 0,
+                    answeredCallInbound: 0,
+                    missedCallInbound: 0,
+                    totalOutboundCalls: 0,
+                    answeredCallOutbound: 0,
+                    missedCallOutbound: 0,
+                  ),
+                )
+              : index == 1
+                  ? _weekData.add(
+                      Data(
+                        totalInboundCalls: 0,
+                        answeredCallInbound: 0,
+                        missedCallInbound: 0,
+                        totalOutboundCalls: 0,
+                        answeredCallOutbound: 0,
+                        missedCallOutbound: 0,
+                      ),
+                    )
+                  : index == 2
+                      ? _monthData.add(
+                          Data(
+                            totalInboundCalls: 0,
+                            answeredCallInbound: 0,
+                            missedCallInbound: 0,
+                            totalOutboundCalls: 0,
+                            answeredCallOutbound: 0,
+                            missedCallOutbound: 0,
+                          ),
+                        )
+                      : index == 3
+                          ? _threeMonthData.add(
+                              Data(
+                                totalInboundCalls: 0,
+                                answeredCallInbound: 0,
+                                missedCallInbound: 0,
+                                totalOutboundCalls: 0,
+                                answeredCallOutbound: 0,
+                                missedCallOutbound: 0,
+                              ),
+                            )
+                          : null;
+          return;
+        } else if (extractedData == null) {
+          throw 'No Data available at this moment';
+        }
+
+        // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
+
+        index == 0
+            ? _todayBarChartData.add(
+                Data(),
+              )
+            : index == 1
+                ? _weekBarChartData.add(
+                    Data(),
+                  )
+                : index == 2
+                    ? _monthBarChartData.add(
+                        Data(),
+                      )
+                    : index == 3
+                        ? _threeMonthBarChartData.add(
+                            Data(),
+                          )
+                        : null;
+      } else if (response.statusCode > 400) {
+        throw 'Could not fetch data at this moment';
+      }
+    } on SocketException catch (_) {
+      // internet connection error
+
+      throw InternetError('Unable to connect to the internet!');
+    } on ArgumentError catch (_) {
+      // when api is wrong
+      throw 'Could not load data from this source';
+    } catch (error) {
+      // some generic unknown error
+
+      throw GenericError('Some Unknown Error occurred !');
     }
   }
 }

@@ -1,8 +1,9 @@
 import 'app_drawer.dart';
 import 'package:flutter/material.dart';
-import 'dashBoardThreeDesign.dart';
+
 import 'package:get/get.dart';
 import '../api/post.dart';
+import 'dashboardThreeDesign.dart';
 import 'dashBoardThreeDesign1.dart';
 import 'dashBoradThreeDesign2.dart';
 import 'dashBoardThreeDesign3.dart';
@@ -19,7 +20,21 @@ class _DashboardThreeState extends State<DashboardThree> {
   // @override
   Future<void> _generateData(int tabIndex) async {
     print('generate data function : $tabIndex');
-    await api.fetchData(tabIndex);
+    await api.fetchData(tabIndex).catchError((onError) {
+      throw onError;
+    });
+    ;
+    // print(api.apiErrorIndex0);
+    // print(api.fetchDataErrorIndex0);
+    return;
+  }
+
+  Future<void> _generateBarChartData(int tabIndex) async {
+    print('generate data function : $tabIndex');
+    await api.fetchHistoData(tabIndex).catchError((onError) {
+      throw onError;
+    });
+
     // print(api.apiErrorIndex0);
     // print(api.fetchDataErrorIndex0);
     return;
@@ -96,10 +111,10 @@ class _DashboardThreeState extends State<DashboardThree> {
           ),
           body: TabBarView(
             children: [
-              DashBoardThreeDesign(0, _generateData),
-              DashBoardThreeDesign1(1, _generateData),
-              DashBoardThreeDesign2(2, _generateData),
-              DashBoardThreeDesign3(3, _generateData),
+              DashBoardThreeDesign(0, _generateData, _generateBarChartData),
+              DashBoardThreeDesign1(1, _generateData, _generateBarChartData),
+              DashBoardThreeDesign2(2, _generateData, _generateBarChartData),
+              DashBoardThreeDesign3(3, _generateData, _generateBarChartData),
             ],
           ),
         );

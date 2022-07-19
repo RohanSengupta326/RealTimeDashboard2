@@ -59,11 +59,7 @@ class HorizontalBarChart extends StatelessWidget {
             viewport: tabControllerIndex == 0
                 ? null
                 : tabControllerIndex == 1
-                    ? charts.OrdinalViewport(
-                        // for showing the part of the graph, and then click right to go right and left to go left
-                        DateFormat('MMMd').format(DateTime.now()),
-                        7,
-                      )
+                    ? null
                     : tabControllerIndex == 2
                         ? null
                         : null /* = how many bars you wanna show on one scr MMMdn */));
@@ -80,8 +76,9 @@ class HorizontalBarChart extends StatelessWidget {
     var temp = '';
 
     int j = 0;
+
     int numberOfBars = tabControllerIndex == 0
-        ? 1
+        ? DateTime.now().hour.abs()
         : tabControllerIndex == 1
             ? 7
             : tabControllerIndex == 2
@@ -89,9 +86,9 @@ class HorizontalBarChart extends StatelessWidget {
                 : tabControllerIndex == 3
                     ? 12
                     : 0;
-    int i;
+    int i = tabControllerIndex == 0 ? 0 : 1;
 
-    for (i = 1; i <= numberOfBars; i++, j++) {
+    for (i; i <= numberOfBars; i++, j++) {
       int substrcatMonthWeek =
           tabControllerIndex == 0 || tabControllerIndex == 1
               ? i
@@ -101,27 +98,43 @@ class HorizontalBarChart extends StatelessWidget {
       answered.insert(
           j,
           liveData(
-              DateFormat('MMMd').format(DateTime.now().subtract(Duration(
-                days: substrcatMonthWeek,
-              ))),
+              tabControllerIndex == 0
+                  ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                      hours: substrcatMonthWeek,
+                    )))
+                  : DateFormat('MMMd').format(DateTime.now().subtract(Duration(
+                      days: substrcatMonthWeek,
+                    ))),
               Random().nextInt(60) + 30));
       missed.insert(
           j,
           liveData(
-              DateFormat('MMMd').format(
-                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
+              tabControllerIndex == 0
+                  ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                      hours: substrcatMonthWeek,
+                    )))
+                  : DateFormat('MMMd').format(DateTime.now()
+                      .subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
       abandoned.insert(
           j,
           liveData(
-              DateFormat('MMMd').format(
-                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
+              tabControllerIndex == 0
+                  ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                      hours: substrcatMonthWeek,
+                    )))
+                  : DateFormat('MMMd').format(DateTime.now()
+                      .subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
       rejected.insert(
           j,
           liveData(
-              DateFormat('MMMd').format(
-                  DateTime.now().subtract(Duration(days: substrcatMonthWeek))),
+              tabControllerIndex == 0
+                  ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                      hours: substrcatMonthWeek,
+                    )))
+                  : DateFormat('MMMd').format(DateTime.now()
+                      .subtract(Duration(days: substrcatMonthWeek))),
               Random().nextInt(60) + 30));
     }
 
