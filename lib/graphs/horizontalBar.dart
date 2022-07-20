@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 import 'dart:ui' as ui;
+import '../api/post.dart';
+import 'package:get/get.dart';
 
 class HorizontalBarChart extends StatelessWidget {
   int tabControllerIndex;
   HorizontalBarChart(this.tabControllerIndex);
 
+  final api = Get.put(PostRequest());
+
   @override
   Widget build(BuildContext context) {
     return charts.BarChart(
         vertical: false,
-        barGroupingType: charts.BarGroupingType.stacked,
+        // barGroupingType: charts.BarGroupingType.stacked,
         behaviors: [
           charts.ChartTitle(
             outerPadding: 5,
@@ -91,54 +95,59 @@ class HorizontalBarChart extends StatelessWidget {
 
     for (i; i <= numberOfBars; i++, j++) {
       // if today or week , substract 1 hour / day and keep going back but for month and three month substract 7 days
-      int substrcatMonthWeek =
-          tabControllerIndex == 0 || tabControllerIndex == 1
-              ? i
-              : tabControllerIndex == 2
-                  ? i * 7
-                  : i * 7;
+      int substractMontWeek = tabControllerIndex == 0 || tabControllerIndex == 1
+          ? i
+          : tabControllerIndex == 2
+              ? i * 7
+              : 30 * i;
       answered.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   // if today then show hour format
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substrcatMonthWeek,
+                      hours: substractMontWeek,
                     )))
-                  : DateFormat('MMMd').format(DateTime.now().subtract(Duration(
-                      days: substrcatMonthWeek,
-                    ))),
+                  : tabControllerIndex == 3
+                      ? DateFormat('MM')
+                          .format(DateTime.now().subtract(Duration(
+                          hours: substractMontWeek,
+                        )))
+                      : DateFormat('MMMd')
+                          .format(DateTime.now().subtract(Duration(
+                          days: substractMontWeek,
+                        ))),
               Random().nextInt(60) + 30));
-      missed.insert(
+      /* missed.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substrcatMonthWeek,
+                      hours: substractMontWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substrcatMonthWeek))),
+                      .subtract(Duration(days: substractMontWeek))),
               Random().nextInt(60) + 30));
       abandoned.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substrcatMonthWeek,
+                      hours: substractMontWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substrcatMonthWeek))),
+                      .subtract(Duration(days: substractMontWeek))),
               Random().nextInt(60) + 30));
       rejected.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substrcatMonthWeek,
+                      hours: substractMontWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substrcatMonthWeek))),
-              Random().nextInt(60) + 30));
+                      .subtract(Duration(days: substractMontWeek))),
+              Random().nextInt(60) + 30)); */
     }
 
     return [
@@ -154,7 +163,7 @@ class HorizontalBarChart extends StatelessWidget {
             fontSize: 6, color: charts.MaterialPalette.black)),
         data: answered,
       ),
-      charts.Series<graphData, String>(
+      /* charts.Series<graphData, String>(
         id: 'missed',
         seriesCategory: 'A',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
@@ -189,7 +198,7 @@ class HorizontalBarChart extends StatelessWidget {
         insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
             fontSize: 6, color: charts.MaterialPalette.black)),
         data: rejected,
-      ),
+      ), */
     ];
   }
 }
