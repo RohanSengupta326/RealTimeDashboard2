@@ -218,7 +218,7 @@ class PostRequest extends GetxController {
                           : null;
           return;
         } else if (extractedData == null) {
-          throw 'No Data available at this moment';
+          throw 'No Data available.';
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
@@ -294,7 +294,7 @@ class PostRequest extends GetxController {
                           )
                         : null;
       } else if (response.statusCode > 400) {
-        throw 'Could not fetch data at this moment';
+        throw 'Could not load data at this moment';
       }
     } on SocketException catch (_) {
       // internet connection error
@@ -302,11 +302,11 @@ class PostRequest extends GetxController {
       throw InternetError('Unable to connect to the internet!');
     } on ArgumentError catch (_) {
       // when api is wrong
-      throw 'Could not load data from this source';
+      throw 'Could not load data for graph.';
     } catch (error) {
       // some generic unknown error
 
-      throw GenericError('Some Unknown Error occurred !');
+      throw GenericError('Something went wrong! Please try again later.');
     }
   }
 
@@ -469,7 +469,7 @@ class PostRequest extends GetxController {
                           : null;
           return;
         } else if (extractedData == null) {
-          throw 'No Data available at this moment';
+          throw 'No Data available.';
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
@@ -492,7 +492,7 @@ class PostRequest extends GetxController {
                           )
                         : null;
       } else if (response.statusCode > 400) {
-        throw 'Could not fetch data at this moment';
+        throw 'Could not load data at this moment';
       }
     } on SocketException catch (_) {
       // internet connection error
@@ -500,11 +500,11 @@ class PostRequest extends GetxController {
       throw InternetError('Unable to connect to the internet!');
     } on ArgumentError catch (_) {
       // when api is wrong
-      throw 'Could not load data from this source';
+      throw 'Could not load data for graph.';
     } catch (error) {
       // some generic unknown error
 
-      throw GenericError('Some Unknown Error occurred !');
+      throw GenericError('Something went wrong! Please try again later.');
     }
   }
 }

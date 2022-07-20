@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
-      title: 'LogIn',
+      title: 'Dashboard',
       theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 224, 128, 221),
+          primaryColor: const Color.fromARGB(255, 224, 128, 221),
           colorScheme: const ColorScheme(
               brightness: Brightness.light,
               primary: Colors.blue,
