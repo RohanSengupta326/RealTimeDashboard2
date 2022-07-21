@@ -30,10 +30,9 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   String errorMsgForBarChart = '';
 
   var api = Get.put(PostRequest());
+  var load = false.obs;
 
   Widget graph() {
-    var api = Get.put(PostRequest());
-
     var _isLoading = false.obs;
 
     if (api.threeMonthData.isEmpty) {
@@ -52,356 +51,353 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
       });
     }
 
-    return Obx(
-      () {
-        return Column(
-          children: [
-            _isLoading.value
-                ? const Expanded(
-                    flex: 1,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        color: Color(0xff2b5a00),
-                      ),
+    return Column(
+      children: [
+        Obx(() {
+          return _isLoading.value
+              ? const Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      color: Color(0xff2b5a00),
                     ),
-                  )
-                : errorMsg.isNotEmpty
-                    ? Expanded(
-                        flex: 1,
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              errorMsg,
-                              style: const TextStyle(color: Colors.black),
-                            )))
-                    : Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(flex: 2, child: SizedBox()),
-                                Expanded(flex: 2, child: Text('Inbound')),
-                                Expanded(flex: 2, child: Text('Outbound')),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      'Answered',
-                                      style: TextStyle(
-                                          color: Color(0xff265000),
-                                          fontSize: 10),
-                                    ),
+                  ),
+                )
+              : errorMsg.isNotEmpty
+                  ? Expanded(
+                      flex: 1,
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            errorMsg,
+                            style: const TextStyle(color: Colors.black),
+                          )))
+                  : Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(flex: 2, child: SizedBox()),
+                              Expanded(flex: 2, child: Text('Inbound')),
+                              Expanded(flex: 2, child: Text('Outbound')),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    'Answered',
+                                    style: TextStyle(
+                                        color: Color(0xff265000), fontSize: 10),
                                   ),
                                 ),
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: api.threeMonthData[0]
-                                                    .answeredCallInbound ==
-                                                0
-                                            ? 20
-                                            : (api.threeMonthData[0]
-                                                        .answeredCallInbound /
-                                                    api.threeMonthData[0]
-                                                        .totalInboundCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.green),
-                                            color: Color(0xffd9e6d4)),
-                                        child: Center(
-                                          child: Text(
-                                            '${api.threeMonthData[0].answeredCallInbound}',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: api.threeMonthData[0]
-                                                    .answeredCallOutbound ==
-                                                0
-                                            ? 20
-                                            : (api.threeMonthData[0]
-                                                        .answeredCallOutbound /
-                                                    api.threeMonthData[0]
-                                                        .totalOutboundCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.green),
-                                            color: Color(0xffd9e6d4)),
-                                        child: Center(
-                                          child: Text(
-                                            '${api.threeMonthData[0].answeredCallOutbound}',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      'Missed',
-                                      style: TextStyle(
-                                          color: Color(0xff9b271f),
-                                          fontSize: 10),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: api.threeMonthData[0]
-                                                    .missedCallInbound ==
-                                                0
-                                            ? 20
-                                            : (api.threeMonthData[0]
-                                                        .missedCallInbound /
-                                                    api.threeMonthData[0]
-                                                        .totalInboundCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Color(0xff96251d)),
-                                            color: Color(0xfff5dbd6)),
-                                        child: Center(
-                                          child: Text(
-                                            '${api.threeMonthData[0].missedCallInbound}',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: api.threeMonthData[0]
-                                                    .missedCallOutbound ==
-                                                0
-                                            ? 20
-                                            : (api.threeMonthData[0]
-                                                        .missedCallOutbound /
-                                                    api.threeMonthData[0]
-                                                        .totalOutboundCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Color(0xff96251d)),
-                                            color: Color(0xfff5dbd6)),
-                                        child: Center(
-                                          child: Text(
-                                            '${api.threeMonthData[0].missedCallOutbound}',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(flex: 1, child: SizedBox()),
-                                Expanded(
-                                    flex: 2, child: Text('Outbound Missed')),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      'Customer',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 10),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: outboundMissedCustomer == 0
-                                            ? 20
-                                            : (outboundMissedCustomer /
-                                                    totalOutboundMissedCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
+                              ),
+                              Flexible(
+                                fit: FlexFit.tight,
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: api.threeMonthData[0]
+                                                  .answeredCallInbound ==
+                                              0
+                                          ? 20
+                                          : (api.threeMonthData[0]
+                                                      .answeredCallInbound /
+                                                  api.threeMonthData[0]
+                                                      .totalInboundCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Colors.black),
-                                          color: Color(0xfff5b470),
+                                              Border.all(color: Colors.green),
+                                          color: Color(0xffd9e6d4)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.threeMonthData[0].answeredCallInbound}',
+                                          style: TextStyle(fontSize: 11),
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            '$outboundMissedCustomer',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      'Agent',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 10),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 20,
-                                    child: Align(
-                                      // to give height and width to a widget inside an expanded widget
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 20,
-                                        width: outboundMissedAgent == 0
-                                            ? 20
-                                            : (outboundMissedAgent /
-                                                    totalOutboundMissedCalls *
-                                                    100) +
-                                                10,
-                                        decoration: BoxDecoration(
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: api.threeMonthData[0]
+                                                  .answeredCallOutbound ==
+                                              0
+                                          ? 20
+                                          : (api.threeMonthData[0]
+                                                      .answeredCallOutbound /
+                                                  api.threeMonthData[0]
+                                                      .totalOutboundCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Colors.black),
-                                          color: Color(0xfffff98e),
+                                              Border.all(color: Colors.green),
+                                          color: Color(0xffd9e6d4)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.threeMonthData[0].answeredCallOutbound}',
+                                          style: TextStyle(fontSize: 11),
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            '$outboundMissedAgent',
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                        ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 8,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    'Missed',
+                                    style: TextStyle(
+                                        color: Color(0xff9b271f), fontSize: 10),
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-            Expanded(
-              flex: 2,
-              child: barChart(),
-            ),
-          ],
-        );
-      },
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: api.threeMonthData[0]
+                                                  .missedCallInbound ==
+                                              0
+                                          ? 20
+                                          : (api.threeMonthData[0]
+                                                      .missedCallInbound /
+                                                  api.threeMonthData[0]
+                                                      .totalInboundCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Color(0xff96251d)),
+                                          color: Color(0xfff5dbd6)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.threeMonthData[0].missedCallInbound}',
+                                          style: TextStyle(fontSize: 11),
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: api.threeMonthData[0]
+                                                  .missedCallOutbound ==
+                                              0
+                                          ? 20
+                                          : (api.threeMonthData[0]
+                                                      .missedCallOutbound /
+                                                  api.threeMonthData[0]
+                                                      .totalOutboundCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Color(0xff96251d)),
+                                          color: Color(0xfff5dbd6)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.threeMonthData[0].missedCallOutbound}',
+                                          style: TextStyle(fontSize: 11),
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(flex: 1, child: SizedBox()),
+                              Expanded(flex: 2, child: Text('Outbound Missed')),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    'Customer',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: outboundMissedCustomer == 0
+                                          ? 20
+                                          : (outboundMissedCustomer /
+                                                  totalOutboundMissedCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        color: Color(0xfff5b470),
+                                      ),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '$outboundMissedCustomer',
+                                          style: TextStyle(fontSize: 11),
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    'Agent',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: 20,
+                                      width: outboundMissedAgent == 0
+                                          ? 20
+                                          : (outboundMissedAgent /
+                                                  totalOutboundMissedCalls *
+                                                  100) +
+                                              10,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        color: Color(0xfffff98e),
+                                      ),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '$outboundMissedAgent',
+                                          style: TextStyle(fontSize: 11),
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ));
+        }),
+        Expanded(
+          flex: 2,
+          child: barChart(),
+        ),
+      ],
     );
   }
 
   Widget barChart() {
-    var _isLoading = false.obs;
-    if (api.weekBarChartData.isEmpty) {
-      _isLoading.value = true;
-
+    if (api.threeMonthBarChartData.isEmpty) {
+      load.value = true;
+      print('function called');
       widget
           .generateBarChartData(widget.tabControllerIndex)
           .catchError((onError) {
@@ -410,19 +406,18 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
         errorMsgForBarChart = onError.toString();
       }).then((value) {
         // calling fetch data with index
-        _isLoading.value = false;
+        load.value = false;
       });
     }
 
-    return Obx(
-      () {
-        return Container(
-          padding: EdgeInsets.all(8),
-          child: Card(
-            elevation: 0,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: _isLoading.value
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Card(
+        elevation: 0,
+        child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Obx(() {
+              return load.value
                   ? const Center(
                       child: CircularProgressIndicator(
                         color: Color(0xff2b5a00),
@@ -436,7 +431,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                             errorMsgForBarChart,
                             style: const TextStyle(color: Colors.black),
                           ))
-                      : api.threeMonthBarChartData[0].totalInboundCalls == 0
+                      : api.threeMonthBarChartData.isEmpty
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),
@@ -444,14 +439,13 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                 'No Calls',
                                 style: TextStyle(color: Colors.black),
                               ))
-                          : Expanded(
+                          : Align(
+                              alignment: Alignment.center,
                               child:
                                   HorizontalBarChart(widget.tabControllerIndex),
-                            ),
-            ),
-          ),
-        );
-      },
+                            );
+            })),
+      ),
     );
   }
 

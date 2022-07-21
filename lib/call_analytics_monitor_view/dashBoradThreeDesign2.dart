@@ -392,7 +392,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
 
   Widget barChart() {
     var _isLoading = false.obs;
-    if (api.weekBarChartData.isEmpty) {
+    if (api.monthBarChartData.isEmpty) {
       _isLoading.value = true;
 
       widget

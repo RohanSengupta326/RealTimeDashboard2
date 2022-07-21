@@ -435,7 +435,7 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                             errorMsgForBarChart,
                             style: const TextStyle(color: Colors.black),
                           ))
-                      : api.todayBarChartData[0].totalInboundCalls == 0
+                      : api.todayBarChartData.isEmpty
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),

@@ -18,6 +18,7 @@ class PostRequest extends GetxController {
   // post request variables
   String startTimeDate = '';
   String endTimeDate = '';
+  String interval = '';
 
   // lists to store pie chart and progressive container data
   List<Data> _todayData = [];
@@ -322,7 +323,6 @@ class PostRequest extends GetxController {
       startTimeDate = now
           .subtract(
             Duration(
-              days: 365,
               hours: now.hour,
               minutes: now.minute,
               seconds: now.second,
@@ -335,6 +335,8 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
+
+      interval = '1h';
     } else
     // print('in api file index : $index');
     if (index == 1) {
@@ -357,6 +359,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
+      interval = '1d';
     } else if (index == 2) {
       final now = DateTime.now();
       startTimeDate = now
@@ -375,6 +378,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
+      interval = '1w';
     } else if (index == 3) {
       final now = DateTime.now();
       startTimeDate = now
@@ -393,6 +397,7 @@ class PostRequest extends GetxController {
       endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
           .toUtc()
           .toIso8601String();
+      interval = '1M';
     }
 
     print(startTimeDate);
@@ -409,6 +414,7 @@ class PostRequest extends GetxController {
           {
             "start-time": /* '2021-01-14T18:30:00Z' */ startTimeDate,
             "end-time": /* '2022-07-15T05:30:00Z' */ endTimeDate,
+            "interval": interval,
           },
         ),
       );
@@ -416,81 +422,74 @@ class PostRequest extends GetxController {
       print(response.statusCode);
       if (response.statusCode == 200) {
         print(response.body);
-        var extractedData = json.decode(response.body);
-        if (extractedData['aggregations']['inbound']['doc_count'] == 0) {
-          // to not fetch data multiple times we keep track of different variables of noValue cause once fetched no value for today , week etc
-          // it wont fetch again . for different pages using different no value or else if one graph couldnt fetch data it will show that other graphs
-          // also couldnt fetch data
+        final extractedData = json.decode(response.body)['aggregations']
+            ['counts_over_time']['buckets'];
 
-          index == 0
-              ? _todayData.add(
-                  Data(
-                    totalInboundCalls: 0,
-                    answeredCallInbound: 0,
-                    missedCallInbound: 0,
-                    totalOutboundCalls: 0,
-                    answeredCallOutbound: 0,
-                    missedCallOutbound: 0,
-                  ),
-                )
-              : index == 1
-                  ? _weekData.add(
-                      Data(
-                        totalInboundCalls: 0,
-                        answeredCallInbound: 0,
-                        missedCallInbound: 0,
-                        totalOutboundCalls: 0,
-                        answeredCallOutbound: 0,
-                        missedCallOutbound: 0,
-                      ),
-                    )
-                  : index == 2
-                      ? _monthData.add(
-                          Data(
-                            totalInboundCalls: 0,
-                            answeredCallInbound: 0,
-                            missedCallInbound: 0,
-                            totalOutboundCalls: 0,
-                            answeredCallOutbound: 0,
-                            missedCallOutbound: 0,
-                          ),
-                        )
-                      : index == 3
-                          ? _threeMonthData.add(
-                              Data(
-                                totalInboundCalls: 0,
-                                answeredCallInbound: 0,
-                                missedCallInbound: 0,
-                                totalOutboundCalls: 0,
-                                answeredCallOutbound: 0,
-                                missedCallOutbound: 0,
-                              ),
-                            )
-                          : null;
-          return;
+        if (extractedData[0] == null) {
+          print('bucketlist empty');
+          throw 'zero data available';
         } else if (extractedData == null) {
           throw 'No Data available.';
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
 
-        index == 0
-            ? _todayBarChartData.add(
-                Data(),
-              )
-            : index == 1
-                ? _weekBarChartData.add(
-                    Data(),
-                  )
-                : index == 2
-                    ? _monthBarChartData.add(
-                        Data(),
-                      )
-                    : index == 3
-                        ? _threeMonthBarChartData.add(
-                            Data(),
-                          )
-                        : null;
+        print('starting for loop');
+        // for(int i = 0 ; i < extractedData.length  ; i ++){
+        // }
+
+        // print ('${extractedData[i]['doc_count']}\n');
+        // final data = extractedData[i]['doc_count'];
+
+        if (index == 3) {
+          // print(index);
+
+          // print(extractedData.length);
+          for (int i = 0; i < extractedData.length; i++) {
+            _threeMonthBarChartData.add(
+              Data(
+                totalOutboundCalls: 0,
+                answeredCallInbound: 0,
+                answeredCallOutbound: 0,
+                missedCallInbound: 0,
+                missedCallOutbound: 0,
+                totalInboundCalls: extractedData[i]['doc_count'],
+                dateTime: extractedData[i]['key_as_string'],
+              ),
+            );
+          }
+        }
+        /*  index == 1
+                  ? _weekBarChartData.add(
+                      Data(
+                        answeredCallInbound: 0,
+                        answeredCallOutbound: 0,
+                        missedCallInbound: 0,
+                        missedCallOutbound: 0,
+                        totalInboundCalls: data,
+                      ),
+                    )
+                  : index == 2
+                      ? _monthBarChartData.add(
+                          Data(
+                            answeredCallInbound: 0,
+                            answeredCallOutbound: 0,
+                            missedCallInbound: 0,
+                            missedCallOutbound: 0,
+                            totalInboundCalls: data,
+                          ),
+                        )
+                      : _threeMonthBarChartData.insert(
+                          i,
+                          Data(
+                            answeredCallInbound: 0,
+                            answeredCallOutbound: 0,
+                            missedCallInbound: 0,
+                            missedCallOutbound: 0,
+                            totalInboundCalls: data,
+                          ),
+                        ); */
+
       } else if (response.statusCode > 400) {
         throw 'Could not load data at this moment';
       }
@@ -510,6 +509,7 @@ class PostRequest extends GetxController {
 }
 
 class Data {
+  var dateTime;
   var totalInboundCalls;
   var answeredCallInbound;
   var missedCallInbound;
@@ -518,6 +518,7 @@ class Data {
   var missedCallOutbound;
 
   Data({
+    this.dateTime,
     this.totalInboundCalls,
     this.answeredCallInbound,
     this.missedCallInbound,

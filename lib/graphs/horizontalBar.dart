@@ -16,6 +16,9 @@ class HorizontalBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return charts.BarChart(
         vertical: false,
+        // defaultRenderer: charts.BarRendererConfig(
+        //   maxBarWidthPx: 50,
+        // ),
         // barGroupingType: charts.BarGroupingType.stacked,
         behaviors: [
           charts.ChartTitle(
@@ -53,20 +56,12 @@ class HorizontalBarChart extends StatelessWidget {
         //   // how many ticks you want to show
         // ),
 
+        // for the label inside graph to be centered
         barRendererDecorator: charts.BarLabelDecorator<String>(
             labelAnchor: charts.BarLabelAnchor.middle),
-        // for the label inside graph to be centered
         // Hide domain axis.
         primaryMeasureAxis:
-            charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-        domainAxis: charts.OrdinalAxisSpec(
-            viewport: tabControllerIndex == 0
-                ? null
-                : tabControllerIndex == 1
-                    ? null
-                    : tabControllerIndex == 2
-                        ? null
-                        : null /* = how many bars you wanna show on one scr MMMdn */));
+            charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()));
   }
 
   List<charts.Series<graphData, String>> _createSampleData() {
@@ -79,76 +74,79 @@ class HorizontalBarChart extends StatelessWidget {
 
     var temp = '';
 
-    int j = 0;
-
     int numberOfBars = tabControllerIndex == 0
-        ? DateTime.now().hour
+        ? api.todayBarChartData.length
         : tabControllerIndex == 1
-            ? 7
+            ? api.weekBarChartData.length
             : tabControllerIndex == 2
-                ? 4
+                ? api.monthBarChartData.length
                 : tabControllerIndex == 3
-                    ? 12
+                    ? api.threeMonthBarChartData.length
                     : 0;
     // 0 means todays page, so first substract 0 so till current hour is shown
     int i = tabControllerIndex == 0 ? 0 : 1;
+    if (i == 1) {
+      numberOfBars++;
+    }
 
-    for (i; i <= numberOfBars; i++, j++) {
+    int j = 0;
+    for (i; i < numberOfBars; i++) {
       // if today or week , substract 1 hour / day and keep going back but for month and three month substract 7 days
-      int substractMontWeek = tabControllerIndex == 0 || tabControllerIndex == 1
-          ? i
-          : tabControllerIndex == 2
-              ? i * 7
-              : 30 * i;
-      answered.insert(
+      int substractMonthWeek =
+          tabControllerIndex == 0 || tabControllerIndex == 1
+              ? i
+              : tabControllerIndex == 2
+                  ? i * 7
+                  : 30 * i;
+      answered.add(
+        graphData(
+            tabControllerIndex == 0
+                // if today then show hour format
+                ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                    hours: substractMonthWeek,
+                  )))
+                : DateFormat('MMMd').format(
+                    DateTime.parse(api.threeMonthBarChartData[j].dateTime)),
+            tabControllerIndex == 0
+                ? api.todayBarChartData[j].totalInboundCalls
+                : tabControllerIndex == 1
+                    ? api.weekBarChartData[j].totalInboundCalls
+                    : tabControllerIndex == 2
+                        ? api.monthBarChartData[j].totalInboundCalls
+                        : api.threeMonthBarChartData[j].totalInboundCalls),
+      );
+      j++;
+    }
+    /* missed.insert(
           j,
           graphData(
               tabControllerIndex == 0
-                  // if today then show hour format
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substractMontWeek,
-                    )))
-                  : tabControllerIndex == 3
-                      ? DateFormat('MM')
-                          .format(DateTime.now().subtract(Duration(
-                          hours: substractMontWeek,
-                        )))
-                      : DateFormat('MMMd')
-                          .format(DateTime.now().subtract(Duration(
-                          days: substractMontWeek,
-                        ))),
-              Random().nextInt(60) + 30));
-      /* missed.insert(
-          j,
-          graphData(
-              tabControllerIndex == 0
-                  ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substractMontWeek,
+                      hours: substractMonthWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substractMontWeek))),
+                      .subtract(Duration(days: substractMonthWeek))),
               Random().nextInt(60) + 30));
       abandoned.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substractMontWeek,
+                      hours: substractMonthWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substractMontWeek))),
+                      .subtract(Duration(days: substractMonthWeek))),
               Random().nextInt(60) + 30));
       rejected.insert(
           j,
           graphData(
               tabControllerIndex == 0
                   ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                      hours: substractMontWeek,
+                      hours: substractMonthWeek,
                     )))
                   : DateFormat('MMMd').format(DateTime.now()
-                      .subtract(Duration(days: substractMontWeek))),
+                      .subtract(Duration(days: substractMonthWeek))),
               Random().nextInt(60) + 30)); */
-    }
 
     return [
       charts.Series<graphData, String>(
@@ -160,7 +158,7 @@ class HorizontalBarChart extends StatelessWidget {
         labelAccessorFn: ((graphData labelInStack, _) =>
             labelInStack.value.toString()),
         insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
-            fontSize: 6, color: charts.MaterialPalette.black)),
+            fontSize: 15, color: charts.MaterialPalette.white)),
         data: answered,
       ),
       /* charts.Series<graphData, String>(
