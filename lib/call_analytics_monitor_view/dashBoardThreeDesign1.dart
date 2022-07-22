@@ -26,6 +26,8 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
   var api = Get.put(PostRequest());
   var load = false.obs;
 
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]},';
   Widget graph() {
     var _isLoading = false.obs;
 
@@ -130,39 +132,36 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.weekData[0]
                                                       .answeredCallInbound ==
                                                   0
-                                              ? 20
-                                              : (api.weekData[0]
-                                                          .answeredCallInbound /
-                                                      api.weekData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .answeredCallInbound) /
+                                                  (api.weekData[0]
+                                                      .totalInboundCalls))
                                           : api.weekData[0]
                                                       .answeredCallInbound ==
                                                   0
-                                              ? 50
-                                              : (api.weekData[0]
-                                                          .answeredCallInbound /
-                                                      api.weekData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.weekData[0].answeredCallInbound}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .answeredCallInbound) /
+                                                  (api.weekData[0]
+                                                      .totalInboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.green),
+                                            color: Color(0xffd9e6d4)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${api.weekData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -177,39 +176,36 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.weekData[0]
                                                       .answeredCallOutbound ==
                                                   0
-                                              ? 20
-                                              : (api.weekData[0]
-                                                          .answeredCallOutbound /
-                                                      api.weekData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .answeredCallOutbound) /
+                                                  (api.weekData[0]
+                                                      .totalOutboundCalls))
                                           : api.weekData[0]
                                                       .answeredCallOutbound ==
                                                   0
-                                              ? 50
-                                              : (api.weekData[0]
-                                                          .answeredCallOutbound /
-                                                      api.weekData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.weekData[0].answeredCallOutbound}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .answeredCallOutbound) /
+                                                  (api.weekData[0]
+                                                      .totalOutboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.green),
+                                            color: Color(0xffd9e6d4)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${api.weekData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -250,37 +246,34 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.weekData[0].missedCallInbound ==
                                                   0
-                                              ? 20
-                                              : (api.weekData[0]
-                                                          .missedCallInbound /
-                                                      api.weekData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .missedCallInbound) /
+                                                  (api.weekData[0]
+                                                      .totalInboundCalls))
                                           : api.weekData[0].missedCallInbound ==
                                                   0
-                                              ? 50
-                                              : (api.weekData[0]
-                                                          .missedCallInbound /
-                                                      api.weekData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xff96251d)),
-                                          color: Color(0xfff5dbd6)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.weekData[0].missedCallInbound}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .missedCallInbound) /
+                                                  (api.weekData[0]
+                                                      .totalInboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff96251d)),
+                                            color: Color(0xfff5dbd6)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${api.weekData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -295,39 +288,36 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.weekData[0]
                                                       .missedCallOutbound ==
                                                   0
-                                              ? 20
-                                              : (api.weekData[0]
-                                                          .missedCallOutbound /
-                                                      api.weekData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .missedCallOutbound) /
+                                                  (api.weekData[0]
+                                                      .totalOutboundCalls))
                                           : api.weekData[0]
                                                       .missedCallOutbound ==
                                                   0
-                                              ? 50
-                                              : (api.weekData[0]
-                                                          .missedCallOutbound /
-                                                      api.weekData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xff96251d)),
-                                          color: Color(0xfff5dbd6)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.weekData[0].missedCallOutbound}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.weekData[0]
+                                                      .missedCallOutbound) /
+                                                  (api.weekData[0]
+                                                      .totalOutboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff96251d)),
+                                            color: Color(0xfff5dbd6)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${api.weekData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -383,31 +373,29 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? outboundMissedCustomer == 0
-                                              ? 20
-                                              : (outboundMissedCustomer /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((outboundMissedCustomer) /
+                                                  (totalOutboundMissedCalls))
                                           : outboundMissedCustomer == 0
-                                              ? 50
-                                              : ((outboundMissedCustomer *
-                                                          100) /
-                                                      totalOutboundMissedCalls) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
-                                        color: Color(0xfff5b470),
-                                      ),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '$outboundMissedCustomer',
+                                              ? 0.2
+                                              : ((outboundMissedCustomer) /
+                                                  (totalOutboundMissedCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.black),
+                                          color: Color(0xfff5b470),
                                         ),
-                                      )),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -446,31 +434,29 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? outboundMissedAgent == 0
-                                              ? 20
-                                              : (outboundMissedAgent /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((outboundMissedAgent) /
+                                                  (totalOutboundMissedCalls))
                                           : outboundMissedAgent == 0
-                                              ? 50
-                                              : (outboundMissedAgent /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
-                                        color: Color(0xfffff98e),
-                                      ),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '$outboundMissedAgent',
+                                              ? 0.2
+                                              : ((outboundMissedAgent) /
+                                                  (totalOutboundMissedCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.black),
+                                          color: Color(0xfffff98e),
                                         ),
-                                      )),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Text(
+                                            '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -516,36 +502,33 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
           padding: EdgeInsets.all(8),
           child: Card(
             elevation: 0,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: load.value
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xff2b5a00),
-                      ),
-                    )
-                  : errorMsgForBarChart.isNotEmpty
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 150, horizontal: 40),
-                          child: Text(
-                            errorMsgForBarChart,
-                            style: TextStyle(color: Colors.black),
-                          ))
-                      : api.weekBarChartData.isEmpty
-                          ? const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 150, horizontal: 40),
-                              child: Text(
-                                'No Calls',
-                                style: TextStyle(color: Colors.black),
-                              ))
-                          : Align(
-                              alignment: Alignment.center,
-                              child:
-                                  HorizontalBarChart(widget.tabControllerIndex),
+            child: load.value
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xff2b5a00),
+                    ),
+                  )
+                : errorMsgForBarChart.isNotEmpty
+                    ? Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          errorMsgForBarChart,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    : api.weekBarChartData.isEmpty
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'No Calls',
+                              style: TextStyle(color: Colors.black),
                             ),
-            ),
+                          )
+                        : Align(
+                            alignment: Alignment.center,
+                            child:
+                                HorizontalBarChart(widget.tabControllerIndex),
+                          ),
           ),
         );
       },

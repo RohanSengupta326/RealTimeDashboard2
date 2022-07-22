@@ -16,7 +16,7 @@ class CardRowTwo extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.only(right: 8, top: 8),
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(13))),
@@ -24,15 +24,18 @@ class CardRowTwo extends StatelessWidget {
               elevation: 2,
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 40, top: 10),
-                    child: Text(
-                      'Missed',
-                      style: TextStyle(
-                          color: Color(0xff0038c9),
-                          fontFamily: 'Lato',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(GetPlatform.isAndroid ? 5 : 16),
+                      child: Text(
+                        'Missed',
+                        style: TextStyle(
+                            color: Color(0xff0038c9),
+                            fontFamily: 'Lato',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -52,7 +55,7 @@ class CardRowTwo extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.only(left: 8, top: 8),
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(13))),
@@ -60,15 +63,18 @@ class CardRowTwo extends StatelessWidget {
               elevation: 2,
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 40, top: 10),
-                    child: Text(
-                      'Total',
-                      style: TextStyle(
-                          color: Color(0xff8b2751),
-                          fontFamily: 'Lato',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(GetPlatform.isAndroid ? 5 : 16),
+                      child: Text(
+                        'Total',
+                        style: TextStyle(
+                            color: Color(0xff8b2751),
+                            fontFamily: 'Lato',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   Expanded(

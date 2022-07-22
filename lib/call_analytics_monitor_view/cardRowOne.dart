@@ -19,7 +19,7 @@ class CardRowOne extends StatelessWidget {
           flex: 2,
           // takes 50% of screen horizontally
           child: Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(right: 8, bottom: 8),
             child: Card(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(13))),
@@ -27,15 +27,18 @@ class CardRowOne extends StatelessWidget {
               elevation: 2,
               child: Column(
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(right: 40, top: 10),
-                    child: Text(
-                      'Inbound',
-                      style: TextStyle(
-                          color: const Color(0xff553dca),
-                          fontFamily: 'Lato',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(GetPlatform.isAndroid ? 5 : 16),
+                      child: Text(
+                        'Inbound',
+                        style: TextStyle(
+                            color: const Color(0xff553dca),
+                            fontFamily: 'Lato',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
 
@@ -112,11 +115,12 @@ class CardRowOne extends StatelessWidget {
             ),
           ),
         ),
+
         // second card row
         Expanded(
           flex: 2,
           child: Container(
-            margin: const EdgeInsets.all(8),
+            margin: EdgeInsets.only(left: 8, bottom: 8),
             child: Card(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(13))),
@@ -124,23 +128,26 @@ class CardRowOne extends StatelessWidget {
               elevation: 2,
               child: Column(
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(right: 40, top: 10),
-                    child: Text(
-                      'Outbound',
-                      style: TextStyle(
-                          color: Color(
-                            0xffef8733,
-                          ),
-                          fontFamily: 'Lato',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(GetPlatform.isAndroid ? 5 : 16),
+                      child: Text(
+                        'Outbound',
+                        style: TextStyle(
+                            color: Color(
+                              0xffef8733,
+                            ),
+                            fontFamily: 'Lato',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   _tabControllerIndex == 0
                       ? api.todayData[0].totalInboundCalls == 0
-                          ? Container(
-                              margin: const EdgeInsets.only(top: 120),
+                          ? Align(
+                              alignment: Alignment.center,
                               child: const Text(
                                 'No Calls',
                               ),

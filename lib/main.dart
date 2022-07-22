@@ -7,10 +7,10 @@ import './customScroll.dart';
 import 'package:flutter/services.dart';
 
 void main() {
+//  transparent android statusbar
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
- ));
-//  transparent android statusbar
+  ));
   runApp(const MyApp());
 }
 
@@ -24,24 +24,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dashboard',
       theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 224, 128, 221),
-          colorScheme: const ColorScheme(
-              brightness: Brightness.light,
-              primary: Colors.blue,
-              onPrimary: Color.fromRGBO(185, 84, 81, 1),
-              secondary: Color.fromARGB(255, 202, 188, 147),
-              onSecondary: Colors.black,
-              error: Color.fromRGBO(185, 84, 81, 1),
-              onError: Colors.white,
-              surface: Colors.amberAccent,
-              onSurface: Color.fromRGBO(146, 149, 102, 1),
-              background: Colors.black,
-              onBackground: Colors.white),
-          textTheme: const TextTheme(
-              bodyText1: TextStyle(
-                  fontSize: 17,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),),),
+        primaryColor: const Color.fromARGB(255, 224, 128, 221),
+        colorScheme: const ColorScheme(
+            brightness: Brightness.light,
+            primary: Colors.blue,
+            onPrimary: Color.fromRGBO(185, 84, 81, 1),
+            secondary: Color.fromARGB(255, 202, 188, 147),
+            onSecondary: Colors.black,
+            error: Color.fromRGBO(185, 84, 81, 1),
+            onError: Colors.white,
+            surface: Colors.amberAccent,
+            onSurface: Color.fromRGBO(146, 149, 102, 1),
+            background: Colors.black,
+            onBackground: Colors.white),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(
+              fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
       home: HomeView(),
     );
   }

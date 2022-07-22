@@ -53,6 +53,8 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
         ));
         errorMsg = onError.toString();
       }).then((value) {
+        print((api.threeMonthData[0].answeredCallInbound) /
+            (api.threeMonthData[0].totalInboundCalls));
         _isLoading.value = false;
       });
     }
@@ -137,43 +139,43 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.threeMonthData[0]
                                                       .answeredCallInbound ==
                                                   0
-                                              ? 20
-                                              : (api.threeMonthData[0]
-                                                          .answeredCallInbound /
-                                                      api.threeMonthData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .answeredCallInbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalInboundCalls))
                                           : api.threeMonthData[0]
                                                       .answeredCallInbound ==
                                                   0
-                                              ? 50
-                                              : (api.threeMonthData[0]
-                                                          .answeredCallInbound /
-                                                      api.threeMonthData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.threeMonthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .answeredCallInbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalInboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.green),
+                                            color: Color(0xffd9e6d4)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              '${api.threeMonthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -184,43 +186,43 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.threeMonthData[0]
                                                       .answeredCallOutbound ==
                                                   0
-                                              ? 20
-                                              : (api.threeMonthData[0]
-                                                          .answeredCallOutbound /
-                                                      api.threeMonthData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .answeredCallOutbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalOutboundCalls))
                                           : api.threeMonthData[0]
                                                       .answeredCallOutbound ==
                                                   0
-                                              ? 50
-                                              : (api.threeMonthData[0]
-                                                          .answeredCallOutbound /
-                                                      api.threeMonthData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.threeMonthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .answeredCallOutbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalOutboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.green),
+                                            color: Color(0xffd9e6d4)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              '${api.threeMonthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -257,43 +259,43 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.threeMonthData[0]
                                                       .missedCallInbound ==
                                                   0
-                                              ? 20
-                                              : (api.threeMonthData[0]
-                                                          .missedCallInbound /
-                                                      api.threeMonthData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .missedCallInbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalInboundCalls))
                                           : api.threeMonthData[0]
                                                       .missedCallInbound ==
                                                   0
-                                              ? 50
-                                              : (api.threeMonthData[0]
-                                                          .missedCallInbound /
-                                                      api.threeMonthData[0]
-                                                          .totalInboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xff96251d)),
-                                          color: Color(0xfff5dbd6)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.threeMonthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .missedCallInbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalInboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff96251d)),
+                                            color: Color(0xfff5dbd6)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              '${api.threeMonthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -304,43 +306,43 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? api.threeMonthData[0]
                                                       .missedCallOutbound ==
                                                   0
-                                              ? 20
-                                              : (api.threeMonthData[0]
-                                                          .missedCallOutbound /
-                                                      api.threeMonthData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .missedCallOutbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalOutboundCalls))
                                           : api.threeMonthData[0]
                                                       .missedCallOutbound ==
                                                   0
-                                              ? 50
-                                              : (api.threeMonthData[0]
-                                                          .missedCallOutbound /
-                                                      api.threeMonthData[0]
-                                                          .totalOutboundCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xff96251d)),
-                                          color: Color(0xfff5dbd6)),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${api.threeMonthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
-                                        ),
-                                      )),
+                                              ? 0.2
+                                              : ((api.threeMonthData[0]
+                                                      .missedCallOutbound) /
+                                                  (api.threeMonthData[0]
+                                                      .totalOutboundCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff96251d)),
+                                            color: Color(0xfff5dbd6)),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              '${api.threeMonthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -393,35 +395,38 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                 key: _key1,
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? outboundMissedCustomer == 0
-                                              ? 20
-                                              : (outboundMissedCustomer /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((outboundMissedCustomer) /
+                                                  (totalOutboundMissedCalls))
                                           : outboundMissedCustomer == 0
-                                              ? 50
-                                              : ((outboundMissedCustomer *
-                                                          100) /
-                                                      totalOutboundMissedCalls) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
-                                        color: Color(0xfff5b470),
-                                      ),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                              ? 0.2
+                                              : ((outboundMissedCustomer) /
+                                                  (totalOutboundMissedCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.black),
+                                          color: Color(0xfff5b470),
                                         ),
-                                      )),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -456,35 +461,38 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: GetPlatform.isAndroid ? 20 : 30,
-                                      width: GetPlatform.isAndroid
+                                    child: FractionallySizedBox(
+                                      widthFactor: GetPlatform.isAndroid
                                           ? outboundMissedAgent == 0
-                                              ? 20
-                                              : (outboundMissedAgent /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  10
+                                              ? 0.2
+                                              : ((outboundMissedAgent) /
+                                                  (totalOutboundMissedCalls))
                                           : outboundMissedAgent == 0
-                                              ? 50
-                                              : (outboundMissedAgent /
-                                                      totalOutboundMissedCalls *
-                                                      100) +
-                                                  600,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
-                                        color: Color(0xfffff98e),
-                                      ),
-                                      child: Center(
-                                          child: FittedBox(
-                                        child: Text(
-                                          '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                              ? 0.2
+                                              : ((outboundMissedAgent) /
+                                                  (totalOutboundMissedCalls)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.black),
+                                          color: Color(0xfffff98e),
                                         ),
-                                      )),
+                                        child: Center(
+                                            child: FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -65,7 +65,7 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
                               widget._tabControllerIndex,
                             )),
                         // Row 1 for 2 cards
-
+                      
                         Expanded(
                             flex: 2,
                             child: CardRowTwo(
