@@ -4,8 +4,13 @@ import 'package:get/get.dart';
 import 'package:login/homeview.dart';
 import './customScroll.dart';
 // for horizontal scrolling on web
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+ ));
+//  transparent android statusbar
   runApp(const MyApp());
 }
 

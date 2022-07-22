@@ -426,20 +426,13 @@ class PostRequest extends GetxController {
             ['counts_over_time']['buckets'];
 
         if (extractedData[0] == null) {
-          print('bucketlist empty');
+          // print('bucketlist empty');
           throw 'zero data available';
         } else if (extractedData == null) {
           throw 'No Data available.';
         }
 
         // USING CONDITION BELOW IF MONTH AND 3 MONTHS DATA PUT IN RESPECTIVE LISTS CAUSE WE ARE NOT GONNA UPDATE THAT LIST EVERYTIME WE SWIPE TABS CAUSE BIG DATA
-
-        print('starting for loop');
-        // for(int i = 0 ; i < extractedData.length  ; i ++){
-        // }
-
-        // print ('${extractedData[i]['doc_count']}\n');
-        // final data = extractedData[i]['doc_count'];
 
         if (index == 3) {
           // print(index);
@@ -459,37 +452,60 @@ class PostRequest extends GetxController {
             );
           }
         }
-        /*  index == 1
-                  ? _weekBarChartData.add(
-                      Data(
-                        answeredCallInbound: 0,
-                        answeredCallOutbound: 0,
-                        missedCallInbound: 0,
-                        missedCallOutbound: 0,
-                        totalInboundCalls: data,
-                      ),
-                    )
-                  : index == 2
-                      ? _monthBarChartData.add(
-                          Data(
-                            answeredCallInbound: 0,
-                            answeredCallOutbound: 0,
-                            missedCallInbound: 0,
-                            missedCallOutbound: 0,
-                            totalInboundCalls: data,
-                          ),
-                        )
-                      : _threeMonthBarChartData.insert(
-                          i,
-                          Data(
-                            answeredCallInbound: 0,
-                            answeredCallOutbound: 0,
-                            missedCallInbound: 0,
-                            missedCallOutbound: 0,
-                            totalInboundCalls: data,
-                          ),
-                        ); */
+        if (index == 2) {
+          // print(index);
 
+          // print(extractedData.length);
+          for (int i = 0; i < extractedData.length; i++) {
+            _monthBarChartData.add(
+              Data(
+                totalOutboundCalls: 0,
+                answeredCallInbound: 0,
+                answeredCallOutbound: 0,
+                missedCallInbound: 0,
+                missedCallOutbound: 0,
+                totalInboundCalls: extractedData[i]['doc_count'],
+                dateTime: extractedData[i]['key_as_string'],
+              ),
+            );
+          }
+        }
+        if (index == 1) {
+          // print(index);
+
+          // print(extractedData.length);
+          for (int i = 0; i < extractedData.length; i++) {
+            _weekBarChartData.add(
+              Data(
+                totalOutboundCalls: 0,
+                answeredCallInbound: 0,
+                answeredCallOutbound: 0,
+                missedCallInbound: 0,
+                missedCallOutbound: 0,
+                totalInboundCalls: extractedData[i]['doc_count'],
+                dateTime: extractedData[i]['key_as_string'],
+              ),
+            );
+          }
+        }
+        if (index == 0) {
+          // print(index);
+
+          // print(extractedData.length);
+          for (int i = 0; i < extractedData.length; i++) {
+            _todayBarChartData.add(
+              Data(
+                totalOutboundCalls: 0,
+                answeredCallInbound: 0,
+                answeredCallOutbound: 0,
+                missedCallInbound: 0,
+                missedCallOutbound: 0,
+                totalInboundCalls: extractedData[i]['doc_count'],
+                dateTime: extractedData[i]['key_as_string'],
+              ),
+            );
+          }
+        }
       } else if (response.statusCode > 400) {
         throw 'Could not load data at this moment';
       }

@@ -30,6 +30,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
   String errorMsgForBarChart = '';
 
   var api = Get.put(PostRequest());
+  var load = false.obs;
 
   Widget graph() {
     var api = Get.put(PostRequest());
@@ -52,10 +53,10 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
       });
     }
 
-    return Obx(() {
-      return Column(
-        children: [
-          _isLoading.value
+    return Column(
+      children: [
+        Obx(() {
+          return _isLoading.value
               ? const Expanded(
                   flex: 1,
                   child: Align(
@@ -79,13 +80,150 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: GetPlatform.isAndroid ? 10 : 20,
                           ),
                           Row(
                             children: [
                               Expanded(flex: 2, child: SizedBox()),
-                              Expanded(flex: 2, child: Text('Inbound')),
-                              Expanded(flex: 2, child: Text('Outbound')),
+                              Expanded(
+                                  flex: 2,
+                                  child: Text('Inbound',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)
+                                          : TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold))),
+                              Expanded(
+                                  flex: 2,
+                                  child: Text('Outbound',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)
+                                          : TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                          SizedBox(
+                            height: GetPlatform.isAndroid ? 10 : 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    child: Text(
+                                      'Answered',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(
+                                              color: Colors.green, fontSize: 10)
+                                          : TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 15,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? api.monthData[0]
+                                                      .answeredCallInbound ==
+                                                  0
+                                              ? 20
+                                              : (api.monthData[0]
+                                                          .answeredCallInbound /
+                                                      api.monthData[0]
+                                                          .totalInboundCalls *
+                                                      100) +
+                                                  10
+                                          : api.monthData[0]
+                                                      .answeredCallInbound ==
+                                                  0
+                                              ? 50
+                                              : (api.monthData[0]
+                                                          .answeredCallInbound /
+                                                      api.monthData[0]
+                                                          .totalInboundCalls *
+                                                      100) +
+                                                  600,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.green),
+                                          color: Color(0xffd9e6d4)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.monthData[0].answeredCallInbound}',
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: GetPlatform.isAndroid ? 20 : 30,
+                                  child: Align(
+                                    // to give height and width to a widget inside an expanded widget
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? api.monthData[0]
+                                                      .answeredCallOutbound ==
+                                                  0
+                                              ? 20
+                                              : (api.monthData[0]
+                                                          .answeredCallOutbound /
+                                                      api.monthData[0]
+                                                          .totalOutboundCalls *
+                                                      100) +
+                                                  10
+                                          : api.monthData[0]
+                                                      .answeredCallOutbound ==
+                                                  0
+                                              ? 50
+                                              : (api.monthData[0]
+                                                          .answeredCallOutbound /
+                                                      api.monthData[0]
+                                                          .totalOutboundCalls *
+                                                      100) +
+                                                  600,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.green),
+                                          color: Color(0xffd9e6d4)),
+                                      child: Center(
+                                          child: FittedBox(
+                                        child: Text(
+                                          '${api.monthData[0].answeredCallOutbound}',
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -94,118 +232,36 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                           Row(
                             children: [
                               Expanded(
-                                flex: 2,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 25),
-                                  child: Text(
-                                    'Answered',
-                                    style: TextStyle(
-                                        color: Color(0xff265000), fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                fit: FlexFit.tight,
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 20,
-                                  child: Align(
-                                    // to give height and width to a widget inside an expanded widget
-                                    alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: 20,
-                                      width: api.monthData[0]
-                                                  .answeredCallInbound ==
-                                              0
-                                          ? 20
-                                          : (api.monthData[0]
-                                                      .answeredCallInbound /
-                                                  api.monthData[0]
-                                                      .totalInboundCalls *
-                                                  100) +
-                                              10,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                        child: Text(
-                                          '${api.monthData[0].answeredCallInbound}',
-                                          style: TextStyle(fontSize: 11),
-                                        ),
-                                      ),
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    child: Text(
+                                      'Missed',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(
+                                              color: Color(0xff9b271f),
+                                              fontSize: 10)
+                                          : TextStyle(
+                                              color: Color(0xff9b271f),
+                                              fontSize: 15,
+                                            ),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 8,
-                              ),
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: 20,
+                                  height: GetPlatform.isAndroid ? 20 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: Container(
-                                      height: 20,
-                                      width: api.monthData[0]
-                                                  .answeredCallOutbound ==
-                                              0
-                                          ? 20
-                                          : (api.monthData[0]
-                                                      .answeredCallOutbound /
-                                                  api.monthData[0]
-                                                      .totalOutboundCalls *
-                                                  100) +
-                                              10,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.green),
-                                          color: Color(0xffd9e6d4)),
-                                      child: Center(
-                                        child: Text(
-                                          '${api.monthData[0].answeredCallOutbound}',
-                                          style: TextStyle(fontSize: 11),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 25),
-                                  child: Text(
-                                    'Missed',
-                                    style: TextStyle(
-                                        color: Color(0xff9b271f), fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 20,
-                                  child: Align(
-                                    // to give height and width to a widget inside an expanded widget
-                                    alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: 20,
-                                      width:
-                                          api.monthData[0].missedCallInbound ==
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? api.monthData[0]
+                                                      .missedCallInbound ==
                                                   0
                                               ? 20
                                               : (api.monthData[0]
@@ -213,17 +269,27 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                                       api.monthData[0]
                                                           .totalInboundCalls *
                                                       100) +
-                                                  10,
+                                                  10
+                                          : api.monthData[0]
+                                                      .missedCallInbound ==
+                                                  0
+                                              ? 50
+                                              : (api.monthData[0]
+                                                          .missedCallInbound /
+                                                      api.monthData[0]
+                                                          .totalInboundCalls *
+                                                      100) +
+                                                  600,
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Color(0xff96251d)),
                                           color: Color(0xfff5dbd6)),
                                       child: Center(
+                                          child: FittedBox(
                                         child: Text(
                                           '${api.monthData[0].missedCallInbound}',
-                                          style: TextStyle(fontSize: 11),
                                         ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
@@ -234,14 +300,15 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: 20,
+                                  height: GetPlatform.isAndroid ? 20 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: Container(
-                                      height: 20,
-                                      width:
-                                          api.monthData[0].missedCallOutbound ==
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? api.monthData[0]
+                                                      .missedCallOutbound ==
                                                   0
                                               ? 20
                                               : (api.monthData[0]
@@ -249,17 +316,27 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                                       api.monthData[0]
                                                           .totalOutboundCalls *
                                                       100) +
-                                                  10,
+                                                  10
+                                          : api.monthData[0]
+                                                      .missedCallOutbound ==
+                                                  0
+                                              ? 50
+                                              : (api.monthData[0]
+                                                          .missedCallOutbound /
+                                                      api.monthData[0]
+                                                          .totalOutboundCalls *
+                                                      100) +
+                                                  600,
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Color(0xff96251d)),
                                           color: Color(0xfff5dbd6)),
                                       child: Center(
+                                          child: FittedBox(
                                         child: Text(
                                           '${api.monthData[0].missedCallOutbound}',
-                                          style: TextStyle(fontSize: 11),
                                         ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
@@ -270,12 +347,21 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                             ],
                           ),
                           SizedBox(
-                            height: 20,
+                            height: GetPlatform.isAndroid ? 10 : 20,
                           ),
                           Row(
                             children: [
                               Expanded(flex: 1, child: SizedBox()),
-                              Expanded(flex: 2, child: Text('Outbound Missed')),
+                              Expanded(
+                                  flex: 2,
+                                  child: Text('Outbound Missed',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)
+                                          : TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold))),
                             ],
                           ),
                           SizedBox(
@@ -285,44 +371,57 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 25),
-                                  child: Text(
-                                    'Customer',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 10),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    child: Text(
+                                      'Customer',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(fontSize: 10)
+                                          : TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                    ),
                                   ),
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: 20,
+                                  height: GetPlatform.isAndroid ? 20 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: Container(
-                                      height: 20,
-                                      width: outboundMissedCustomer == 0
-                                          ? 20
-                                          : (outboundMissedCustomer /
-                                                  totalOutboundMissedCalls *
-                                                  100) +
-                                              10,
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? outboundMissedCustomer == 0
+                                              ? 20
+                                              : (outboundMissedCustomer /
+                                                      totalOutboundMissedCalls *
+                                                      100) +
+                                                  10
+                                          : outboundMissedCustomer == 0
+                                              ? 50
+                                              : ((outboundMissedCustomer *
+                                                          100) /
+                                                      totalOutboundMissedCalls) +
+                                                  600,
                                       decoration: BoxDecoration(
                                         border: Border.all(color: Colors.black),
                                         color: Color(0xfff5b470),
                                       ),
                                       child: Center(
+                                          child: FittedBox(
                                         child: Text(
                                           '$outboundMissedCustomer',
-                                          style: TextStyle(fontSize: 11),
                                         ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
                               ),
+                              Expanded(flex: 2, child: SizedBox()),
                               SizedBox(
                                 width: 8,
                               ),
@@ -335,44 +434,57 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 25),
-                                  child: Text(
-                                    'Agent',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 10),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    child: Text(
+                                      'Agent',
+                                      style: GetPlatform.isAndroid
+                                          ? TextStyle(fontSize: 10)
+                                          : TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                    ),
                                   ),
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: 20,
+                                  height: GetPlatform.isAndroid ? 20 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: Container(
-                                      height: 20,
-                                      width: outboundMissedAgent == 0
-                                          ? 20
-                                          : (outboundMissedAgent /
-                                                  totalOutboundMissedCalls *
-                                                  100) +
-                                              10,
+                                      height: GetPlatform.isAndroid ? 20 : 30,
+                                      width: GetPlatform.isAndroid
+                                          ? outboundMissedAgent == 0
+                                              ? 20
+                                              : (outboundMissedAgent /
+                                                      totalOutboundMissedCalls *
+                                                      100) +
+                                                  10
+                                          : outboundMissedAgent == 0
+                                              ? 50
+                                              : (outboundMissedAgent /
+                                                      totalOutboundMissedCalls *
+                                                      100) +
+                                                  600,
                                       decoration: BoxDecoration(
                                         border: Border.all(color: Colors.black),
                                         color: Color(0xfffff98e),
                                       ),
                                       child: Center(
+                                          child: FittedBox(
                                         child: Text(
                                           '$outboundMissedAgent',
-                                          style: TextStyle(fontSize: 11),
                                         ),
-                                      ),
+                                      )),
                                     ),
                                   ),
                                 ),
                               ),
+                              Expanded(flex: 2, child: SizedBox()),
                               SizedBox(
                                 width: 8,
                               ),
@@ -380,20 +492,19 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                           ),
                         ],
                       ),
-                    ),
-          Expanded(
-            flex: 2,
-            child: barChart(),
-          ),
-        ],
-      );
-    });
+                    );
+        }),
+        Expanded(
+          flex: 2,
+          child: barChart(),
+        ),
+      ],
+    );
   }
 
   Widget barChart() {
-    var _isLoading = false.obs;
     if (api.monthBarChartData.isEmpty) {
-      _isLoading.value = true;
+      load.value = true;
 
       widget
           .generateBarChartData(widget.tabControllerIndex)
@@ -403,19 +514,20 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
         errorMsgForBarChart = onError.toString();
       }).then((value) {
         // calling fetch data with index
-        _isLoading.value = false;
+        load.value = false;
       });
     }
 
     return Obx(
       () {
         return Container(
+          width: GetPlatform.isAndroid ? 500 : 700,
           padding: EdgeInsets.all(8),
           child: Card(
             elevation: 0,
             child: Padding(
               padding: EdgeInsets.all(8.0),
-              child: _isLoading.value
+              child: load.value
                   ? const Center(
                       child: CircularProgressIndicator(
                         color: Color(0xff2b5a00),
@@ -429,7 +541,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                             errorMsgForBarChart,
                             style: TextStyle(color: Colors.black),
                           ))
-                      : api.monthBarChartData[0].totalInboundCalls == 0
+                      : api.monthBarChartData.isEmpty
                           ? const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 150, horizontal: 40),
@@ -437,7 +549,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                 'No Calls',
                                 style: TextStyle(color: Colors.black),
                               ))
-                          : Expanded(
+                          : Align(
+                              alignment: Alignment.center,
                               child:
                                   HorizontalBarChart(widget.tabControllerIndex),
                             ),

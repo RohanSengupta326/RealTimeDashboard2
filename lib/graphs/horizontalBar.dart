@@ -66,6 +66,9 @@ class HorizontalBarChart extends StatelessWidget {
 
   List<charts.Series<graphData, String>> _createSampleData() {
     print(tabControllerIndex);
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    String Function(Match) mathFunc = (Match match) => '${match[1]},';
+    // to put comma inside big number
 
     List<graphData> answered = [];
     List<graphData> missed = [];
@@ -105,8 +108,11 @@ class HorizontalBarChart extends StatelessWidget {
                 ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
                     hours: substractMonthWeek,
                   )))
-                : DateFormat('MMMd').format(
-                    DateTime.parse(api.threeMonthBarChartData[j].dateTime)),
+                : tabControllerIndex == 3
+                    ? DateFormat('MMM').format(
+                        DateTime.parse(api.threeMonthBarChartData[j].dateTime))
+                    : DateFormat('MMMd').format(
+                        DateTime.parse(api.threeMonthBarChartData[j].dateTime)),
             tabControllerIndex == 0
                 ? api.todayBarChartData[j].totalInboundCalls
                 : tabControllerIndex == 1
@@ -156,7 +162,8 @@ class HorizontalBarChart extends StatelessWidget {
         domainFn: (graphData yAxisValue, _) => yAxisValue.day,
         measureFn: (graphData xAxisValue, _) => xAxisValue.value,
         labelAccessorFn: ((graphData labelInStack, _) =>
-            labelInStack.value.toString()),
+            labelInStack.value.toString().replaceAllMapped(reg, mathFunc)),
+            // putting commas inside numbers accordingly
         insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
             fontSize: 15, color: charts.MaterialPalette.white)),
         data: answered,
