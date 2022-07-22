@@ -45,10 +45,16 @@ class CardRowOne extends StatelessWidget {
                   // for different tabs if total calls 0 then dont build graph show no calls
                   _tabControllerIndex == 0
                       ? api.todayData[0].totalInboundCalls == 0
-                          ? Container(
-                              margin: const EdgeInsets.only(top: 120),
-                              child: const Text(
-                                'No Calls',
+                          ? Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: const Text(
+                                      'No Calls',
+                                    ),
+                                  ),
+                                ],
                               ),
                             )
                           : Expanded(
@@ -62,10 +68,16 @@ class CardRowOne extends StatelessWidget {
                             )
                       : _tabControllerIndex == 1
                           ? api.weekData[0].totalInboundCalls == 0
-                              ? Container(
-                                  margin: const EdgeInsets.only(top: 120),
-                                  child: const Text(
-                                    'No Calls',
+                              ? Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: const Text(
+                                          'No Calls',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Expanded(
@@ -79,10 +91,17 @@ class CardRowOne extends StatelessWidget {
                                 )
                           : _tabControllerIndex == 2
                               ? api.monthData[0].totalInboundCalls == 0
-                                  ? Container(
-                                      margin: const EdgeInsets.only(top: 120),
-                                      child: const Text(
-                                        'No Calls',
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: const Text(
+                                              'No Calls',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : Expanded(
@@ -95,10 +114,17 @@ class CardRowOne extends StatelessWidget {
                                       ),
                                     )
                               : api.threeMonthData[0].totalInboundCalls == 0
-                                  ? Container(
-                                      margin: const EdgeInsets.only(top: 120),
-                                      child: const Text(
-                                        'No Calls',
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: const Text(
+                                              'No Calls',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : Expanded(
@@ -146,10 +172,16 @@ class CardRowOne extends StatelessWidget {
                   ),
                   _tabControllerIndex == 0
                       ? api.todayData[0].totalInboundCalls == 0
-                          ? Align(
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'No Calls',
+                          ? Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: const Text(
+                                      'No Calls',
+                                    ),
+                                  ),
+                                ],
                               ),
                             )
                           : Expanded(
@@ -165,10 +197,16 @@ class CardRowOne extends StatelessWidget {
                             )
                       : _tabControllerIndex == 1
                           ? api.weekData[0].totalInboundCalls == 0
-                              ? Container(
-                                  margin: const EdgeInsets.only(top: 120),
-                                  child: const Text(
-                                    'No Calls',
+                              ? Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: const Text(
+                                          'No Calls',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Expanded(
@@ -184,10 +222,17 @@ class CardRowOne extends StatelessWidget {
                                 )
                           : _tabControllerIndex == 2
                               ? api.monthData[0].totalInboundCalls == 0
-                                  ? Container(
-                                      margin: const EdgeInsets.only(top: 120),
-                                      child: const Text(
-                                        'No Calls',
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: const Text(
+                                              'No Calls',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : Expanded(
@@ -202,10 +247,17 @@ class CardRowOne extends StatelessWidget {
                                       ),
                                     )
                               : api.threeMonthData[0].totalInboundCalls == 0
-                                  ? Container(
-                                      margin: const EdgeInsets.only(top: 120),
-                                      child: const Text(
-                                        'No Calls',
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: const Text(
+                                              'No Calls',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : Expanded(

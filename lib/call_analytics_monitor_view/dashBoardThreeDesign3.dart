@@ -461,7 +461,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  // height: GetPlatform.isAndroid ? 25 : 30,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -484,7 +484,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                         child: Center(
                                             child: FittedBox(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(10.0),
                                             child: FittedBox(
                                               child: Text(
                                                 '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
