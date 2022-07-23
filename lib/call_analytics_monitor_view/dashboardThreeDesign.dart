@@ -31,7 +31,7 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
 
   var load = false.obs;
 
-  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
 
   // body of the progressive container

@@ -26,7 +26,7 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
   var api = Get.put(PostRequest());
   var load = false.obs;
 
-  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
   Widget graph() {
     var _isLoading = false.obs;

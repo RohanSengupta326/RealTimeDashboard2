@@ -66,7 +66,7 @@ class HorizontalBarChart extends StatelessWidget {
 
   List<charts.Series<graphData, String>> _createSampleData() {
     print(tabControllerIndex);
-    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
     String Function(Match) mathFunc = (Match match) => '${match[1]},';
     // to put comma inside big number
 

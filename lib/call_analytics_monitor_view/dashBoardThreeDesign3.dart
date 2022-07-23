@@ -32,9 +32,9 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   var api = Get.put(PostRequest());
   var load = false.obs;
 
-  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
-  String Function(Match) mathFunc = (Match match) => '${match[1]},';
   // to put comma inside big number, regular expression
+  RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
+  String Function(Match) mathFunc = (Match match) => '${match[1]},';
 
   Widget graph() {
     var _isLoading = false.obs;
