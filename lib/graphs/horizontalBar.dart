@@ -165,7 +165,7 @@ class HorizontalBarChart extends StatelessWidget {
             labelInStack.value.toString().replaceAllMapped(reg, mathFunc)),
             // putting commas inside numbers accordingly
         insideLabelStyleAccessorFn: ((_, index) => const charts.TextStyleSpec(
-            fontSize: 15, color: charts.MaterialPalette.white)),
+            fontSize: 20, color: charts.MaterialPalette.white)),
         data: answered,
       ),
       /* charts.Series<graphData, String>(

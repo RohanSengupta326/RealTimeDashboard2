@@ -32,11 +32,9 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   var api = Get.put(PostRequest());
   var load = false.obs;
 
-  var _key1 = GlobalKey();
-
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
-  // to put comma inside big number
+  // to put comma inside big number, regular expression
 
   Widget graph() {
     var _isLoading = false.obs;
@@ -82,7 +80,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                             style: const TextStyle(color: Colors.black),
                           )))
                   : Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: Column(
                         children: [
                           SizedBox(
@@ -139,7 +137,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -167,14 +165,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                 Border.all(color: Colors.green),
                                             color: Color(0xffd9e6d4)),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              '${api.threeMonthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${api.threeMonthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -186,7 +186,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -214,14 +214,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                 Border.all(color: Colors.green),
                                             color: Color(0xffd9e6d4)),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              '${api.threeMonthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${api.threeMonthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -259,7 +261,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -287,14 +289,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                 color: Color(0xff96251d)),
                                             color: Color(0xfff5dbd6)),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              '${api.threeMonthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${api.threeMonthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -306,7 +310,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -334,14 +338,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                 color: Color(0xff96251d)),
                                             color: Color(0xfff5dbd6)),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              '${api.threeMonthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${api.threeMonthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -392,10 +398,9 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                 ),
                               ),
                               Expanded(
-                                key: _key1,
                                 flex: 2,
                                 child: SizedBox(
-                                  height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -416,16 +421,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                           color: Color(0xfff5b470),
                                         ),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
                                                 '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
                                               ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -461,7 +466,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                               Expanded(
                                 flex: 2,
                                 child: SizedBox(
-                                  // height: GetPlatform.isAndroid ? 25 : 30,
+                                  height: GetPlatform.isAndroid ? 35 : 45,
                                   child: Align(
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
@@ -482,16 +487,16 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                           color: Color(0xfffff98e),
                                         ),
                                         child: Center(
-                                            child: FittedBox(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                            padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
                                                 '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                                style: TextStyle(fontSize: 20),
                                               ),
                                             ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -561,8 +566,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                 'No Calls',
                                 style: TextStyle(color: Colors.black),
                               ))
-                          : Align(
-                              alignment: Alignment.center,
+                          : Expanded(
                               child:
                                   HorizontalBarChart(widget.tabControllerIndex),
                             );
