@@ -411,7 +411,7 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Colors.black),
+                                              Border.all(color: Colors.orange.shade500),
                                           color: Color(0xfff5b470),
                                         ),
                                         child: Center(
@@ -477,7 +477,7 @@ class _DashBoardThreeDesignState extends State<DashBoardThreeDesign> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Colors.black),
+                                              Border.all(color: Colors.yellow.shade500),
                                           color: Color(0xfffff98e),
                                         ),
                                         child: Center(

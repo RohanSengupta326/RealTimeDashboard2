@@ -29,7 +29,7 @@ class AppDrawer extends StatelessWidget {
                 )),
             onTap: () {
               // Navigator.of(context).pushReplacementNamed('/');
-              Get.offAll(HomeView());
+              Get.to(HomeView());
             },
           ),
           const Divider(),
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 )),
             onTap: () {
-              Get.offAll(DashboardTwo());
+              Get.to(DashboardTwo());
             },
           ),
           const Divider(),
@@ -55,7 +55,7 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 )),
             onTap: () {
-              Get.offAll(DashboardThree());
+              Get.to(DashboardThree());
             },
           ),
         ],
