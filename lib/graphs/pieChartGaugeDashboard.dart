@@ -28,6 +28,9 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   var controller = Get.put(PostRequest());
 
   _generateData() {
+    RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
+    String Function(Match) mathFunc = (Match match) => '${match[1]},';
+
     // fetch data according to index
     print('graph recieved index : ${widget._tabControllerIndex}');
 
@@ -124,43 +127,47 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
   @override
   Widget build(BuildContext context) {
     return charts.PieChart<String>(
-        animate: true,
-        animationDuration: Duration(seconds: 1),
-        _seriesPieData,
-        // intregrating set data with graph
-        behaviors: [
-          charts.DatumLegend(
-            // adding legends
-            outsideJustification: charts.OutsideJustification.start,
-            // position of legend at left most position
-            horizontalFirst: false,
-            position: charts.BehaviorPosition.bottom,
-            // legends at bottom
-            desiredMaxRows: 2,
-            // keep legends in two rows
-            cellPadding: EdgeInsets.only(left: 16, bottom: 5),
-            entryTextStyle: charts.TextStyleSpec(
-                color: charts.MaterialPalette.black, fontSize: 11),
-            // legend styling
-          ),
+      animate: true,
+      animationDuration: Duration(seconds: 1),
+      _seriesPieData,
+
+      // intregrating set data with graph
+      behaviors: [
+        charts.DatumLegend(
+          // adding legends
+          outsideJustification: charts.OutsideJustification.start,
+          // position of legend at left most position
+          horizontalFirst: false,
+          position: charts.BehaviorPosition.bottom,
+          // legends at bottom
+          desiredMaxRows: 2,
+          // keep legends in two rows
+          cellPadding: EdgeInsets.only(left: 16, bottom: 5),
+          entryTextStyle: charts.TextStyleSpec(
+              color: charts.MaterialPalette.black, fontSize: 11),
+          // legend styling
+        ),
+      ],
+
+      defaultRenderer: charts.ArcRendererConfig(
+        // configuration of the pie arc
+        strokeWidthPx: 0,
+        // gap between two different colors in graph
+
+        // calling overridden class to design custom widget
+
+        arcRendererDecorators: [
+          charts.ArcLabelDecorator(
+              labelPadding: 5,
+              labelPosition: charts.ArcLabelPosition.inside,
+              insideLabelStyleSpec: charts.TextStyleSpec(
+                  fontSize: 12,
+                  color: charts.ColorUtil.fromDartColor(Colors.white)))
         ],
-        defaultRenderer: charts.ArcRendererConfig(
-          // configuration of the pie arc
-          strokeWidthPx: 0,
-          // gap between two different colors in graph
-
-          // calling overridden class to design custom widget
-
-          arcRendererDecorators: [
-            charts.ArcLabelDecorator(
-                labelPosition: charts.ArcLabelPosition.inside,
-                insideLabelStyleSpec: charts.TextStyleSpec(
-                    fontSize: 11,
-                    color: charts.ColorUtil.fromDartColor(Colors.white)))
-          ],
-          // arcWidth: 30,
-          startAngle: 0,
-        ));
+        // arcWidth: 30,
+        startAngle: 0,
+      ),
+    );
     // startAngle = from which angle gauge is starting
   }
 }
