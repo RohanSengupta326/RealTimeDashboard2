@@ -7,7 +7,7 @@ import '../api/post.dart';
 
 class CallAnalyticsView2 extends StatefulWidget {
   int _tabControllerIndex;
-  final Future<void> Function(int) fetchDataFunction;
+  final Future<void> Function(int, String, String) fetchDataFunction;
 
   CallAnalyticsView2(this._tabControllerIndex, this.fetchDataFunction);
 
@@ -23,12 +23,31 @@ class _CallAnalyticsView2State extends State<CallAnalyticsView2> {
   Widget graph() {
     // api fetch
 
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 7,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     if (api.weekData.isEmpty) {
       // will fetch once as big data not everytime user comes to this page
       // so if list is full , so some data was already fetched , dont fetch again
       _isLoading.value = true;
       widget
-          .fetchDataFunction(widget._tabControllerIndex)
+          .fetchDataFunction(
+              widget._tabControllerIndex, startTimeDate, endTimeDate)
           .catchError((onError) {
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();

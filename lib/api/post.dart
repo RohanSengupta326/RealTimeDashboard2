@@ -66,86 +66,12 @@ class PostRequest extends GetxController {
   }
 
   // fetch function for api 1
-  Future<void> fetchData(int index) async {
+  Future<void> fetchData(
+      int index, String startDateTime, String endDateTime) async {
     // time conversion
 
-    // setting post request time variables according to pages
-    if (index == 0) {
-      // tab 1 = today's data
-
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
-    } else if (index == 1) {
-      // week data
-      print('entered if');
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 7,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
-    } else if (index == 2) {
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 30,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
-    } else if (index == 3) {
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 90,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
-    }
+    startTimeDate = startDateTime;
+    endTimeDate = endDateTime;
 
     print(startTimeDate);
     print(endTimeDate);
@@ -312,91 +238,26 @@ class PostRequest extends GetxController {
   }
 
   // api fetch for bar chart
-  Future<void> fetchHistoData(int index) async {
+  Future<void> fetchHistoData(
+      int index, String startDateTime, String endDateTime) async {
     // time conversion
-
+    startTimeDate = startDateTime;
+    endTimeDate = endDateTime;
     // setting post request time variables according to pages
     if (index == 0) {
       // tab 1 = today's data
       // print('index = 0');
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
 
       interval = '1h';
     } else
     // print('in api file index : $index');
     if (index == 1) {
       // week data
-      print('entered if');
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 7,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
+
       interval = '1d';
     } else if (index == 2) {
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 30,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
       interval = '1w';
     } else if (index == 3) {
-      final now = DateTime.now();
-      startTimeDate = now
-          .subtract(
-            Duration(
-              days: 90,
-              hours: now.hour,
-              minutes: now.minute,
-              seconds: now.second,
-              milliseconds: now.millisecond,
-              microseconds: now.microsecond,
-            ),
-          )
-          .toUtc()
-          .toIso8601String();
-      endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
-          .toUtc()
-          .toIso8601String();
       interval = '1M';
     }
 

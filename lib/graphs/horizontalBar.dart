@@ -30,9 +30,6 @@ class HorizontalBarChart extends StatelessWidget {
           ),
           // charts.BehaviorPosition.start is label at y axis
           charts.ChartTitle(
-            // innerPadding: isSmallWidth ? 16 : 16,
-
-            // outerPadding: isSmallWidth ? 16 : 16,
             'Call Count',
             subTitle: 'answered, missed, abandoned, rejected',
             titleStyleSpec: charts.TextStyleSpec(
@@ -70,13 +67,13 @@ class HorizontalBarChart extends StatelessWidget {
     String Function(Match) mathFunc = (Match match) => '${match[1]},';
     // to put comma inside big number
 
+    // four list for storing stacked graph data
     List<graphData> answered = [];
     List<graphData> missed = [];
     List<graphData> abandoned = [];
     List<graphData> rejected = [];
 
-    var temp = '';
-
+    // to run for loop till the no of bars should be created
     int numberOfBars = tabControllerIndex == 0
         ? api.todayBarChartData.length
         : tabControllerIndex == 1

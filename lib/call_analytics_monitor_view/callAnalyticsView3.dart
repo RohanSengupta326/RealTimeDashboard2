@@ -7,7 +7,7 @@ import 'errorPage.dart';
 
 class CallAnalyticsView3 extends StatefulWidget {
   int _tabControllerIndex;
-  final Future<void> Function(int) fetchDataFunction;
+  final Future<void> Function(int, String, String) fetchDataFunction;
 
   CallAnalyticsView3(this._tabControllerIndex, this.fetchDataFunction);
 
@@ -22,6 +22,23 @@ class _CallAnalyticsView3State extends State<CallAnalyticsView3> {
 
   Widget graph() {
     // api fetch
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 30,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
 
     if (api.monthData.isEmpty) {
       // will fetch once as big data not everytime user comes to this page
@@ -29,7 +46,8 @@ class _CallAnalyticsView3State extends State<CallAnalyticsView3> {
       _isLoading.value = true;
 
       widget
-          .fetchDataFunction(widget._tabControllerIndex)
+          .fetchDataFunction(
+              widget._tabControllerIndex, startTimeDate, endTimeDate)
           .catchError((onError) {
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();

@@ -6,8 +6,8 @@ import 'errorPage.dart';
 
 class DashBoardThreeDesign3 extends StatefulWidget {
   int tabControllerIndex;
-  final Future<void> Function(int) generateData;
-  final Future<void> Function(int) generateBarChartData;
+  final Future<void> Function(int, String, String) generateData;
+  final Future<void> Function(int, String, String) generateBarChartData;
   DashBoardThreeDesign3(
       this.tabControllerIndex, this.generateData, this.generateBarChartData);
 
@@ -16,7 +16,7 @@ class DashBoardThreeDesign3 extends StatefulWidget {
 }
 
 class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
-  // call data, will fetch from api later
+  // outbound missed call data, will fetch from api later
 
   int totalOutboundMissedCalls = 100;
 
@@ -32,17 +32,41 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   var api = Get.put(PostRequest());
   var load = false.obs;
 
-  // to put comma inside big number, regular expression
+  // to put comma inside big number, regular expression indian style comma
   RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
 
   Widget graph() {
+    // sending time according to tab to fetch data for that particular dateTime range
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 90,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
     var _isLoading = false.obs;
 
     if (api.threeMonthData.isEmpty) {
       _isLoading.value = true;
 
-      widget.generateData(widget.tabControllerIndex).catchError((onError) {
+      widget
+          .generateData(
+        widget.tabControllerIndex,
+        startTimeDate,
+        endTimeDate,
+      )
+          .catchError((onError) {
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -416,8 +440,8 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.orange.shade800),
+                                          border: Border.all(
+                                              color: Colors.orange.shade800),
                                           color: Color(0xfff5b470),
                                         ),
                                         child: Center(
@@ -482,8 +506,8 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.yellow.shade600),
+                                          border: Border.all(
+                                              color: Colors.yellow.shade600),
                                           color: Color(0xfffff98e),
                                         ),
                                         child: Center(
@@ -521,11 +545,30 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
   }
 
   Widget barChart() {
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 90,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     if (api.threeMonthBarChartData.isEmpty) {
       load.value = true;
       print('function called');
       widget
-          .generateBarChartData(widget.tabControllerIndex)
+          .generateBarChartData(
+              widget.tabControllerIndex, startTimeDate, endTimeDate)
           .catchError((onError) {
         // print(onError);
 
@@ -566,7 +609,8 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
                                 'No Calls',
                                 style: TextStyle(color: Colors.black),
                               ))
-                          : Expanded(
+                          : Align(
+                              alignment: Alignment.center,
                               child:
                                   HorizontalBarChart(widget.tabControllerIndex),
                             );
@@ -581,9 +625,4 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
 
     return graph();
   }
-
-  // int getWidth(GlobalKey<State<StatefulWidget>> key1, BuildContext context) {
-  //   print(int.parse(key1.context!.size!.width.toString()));
-  //   return int.parse(key1.currentContext!.size!.width.toString());
-  // }
 }

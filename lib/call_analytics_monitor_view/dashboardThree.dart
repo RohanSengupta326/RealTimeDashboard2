@@ -17,15 +17,21 @@ class _DashboardThreeState extends State<DashboardThree> {
   // FETCH TODAYS DATA AS WE ARE AT THE FIRST SCREEN WHEN APP RUNS
   var api = Get.put(PostRequest());
 
-  Future<void> _generateData(int tabIndex) async {
-    await api.fetchData(tabIndex).catchError((onError) {
+  Future<void> _generateData(
+      int tabIndex, String startTimeDate, String endTimeDate) async {
+    await api
+        .fetchData(tabIndex, startTimeDate, endTimeDate)
+        .catchError((onError) {
       throw onError;
     });
   }
 
   // api fetch function for horizontal bar chart
-  Future<void> _generateBarChartData(int tabIndex) async {
-    await api.fetchHistoData(tabIndex).catchError((onError) {
+  Future<void> _generateBarChartData(
+      int tabIndex, String startDateTime, String endDateTime) async {
+    await api
+        .fetchHistoData(tabIndex, startDateTime, endDateTime)
+        .catchError((onError) {
       throw onError;
     });
   }

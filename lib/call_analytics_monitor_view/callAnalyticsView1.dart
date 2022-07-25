@@ -7,7 +7,7 @@ import 'errorPage.dart';
 
 class CallAnalyticsView1 extends StatefulWidget {
   int _tabControllerIndex;
-  final Future<void> Function(int) fetchDataFunction;
+  final Future<void> Function(int, String, String) fetchDataFunction;
 
   CallAnalyticsView1(this._tabControllerIndex, this.fetchDataFunction);
 
@@ -22,10 +22,30 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
   Widget graph(BuildContext context) {
     // api fetch
 
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     String errorMsg = '';
     // not fetching only once condition here cause for today screen, fetch data everytime user comes to today page
     _isLoading.value = true;
-    widget.fetchDataFunction(widget._tabControllerIndex).catchError((onError) {
+    widget
+        .fetchDataFunction(
+            widget._tabControllerIndex, startTimeDate, endTimeDate)
+        .catchError((onError) {
       // print(onError.toString());
       errorMsg = onError.toString();
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -65,7 +85,7 @@ class _CallAnalyticsView1State extends State<CallAnalyticsView1> {
                               widget._tabControllerIndex,
                             )),
                         // Row 1 for 2 cards
-                      
+
                         Expanded(
                             flex: 2,
                             child: CardRowTwo(

@@ -6,8 +6,8 @@ import 'errorPage.dart';
 
 class DashBoardThreeDesign1 extends StatefulWidget {
   int tabControllerIndex;
-  final Future<void> Function(int) generateData;
-  final Future<void> Function(int) generateBarChartData;
+  final Future<void> Function(int, String, String) generateData;
+  final Future<void> Function(int, String, String) generateBarChartData;
   DashBoardThreeDesign1(
       this.tabControllerIndex, this.generateData, this.generateBarChartData);
 
@@ -29,13 +29,33 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
   RegExp reg = RegExp(r'(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?');
   String Function(Match) mathFunc = (Match match) => '${match[1]},';
   Widget graph() {
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 7,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     var _isLoading = false.obs;
 
     if (api.weekData.isEmpty) {
       // only fetch data when already not fetched once  list empty
       _isLoading.value = true;
 
-      widget.generateData(widget.tabControllerIndex).catchError((onError) {
+      widget
+          .generateData(widget.tabControllerIndex, startTimeDate, endTimeDate)
+          .catchError((onError) {
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -405,8 +425,8 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.orange.shade800),
+                                          border: Border.all(
+                                              color: Colors.orange.shade800),
                                           color: Color(0xfff5b470),
                                         ),
                                         child: Center(
@@ -471,8 +491,8 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.yellow.shade600),
+                                          border: Border.all(
+                                              color: Colors.yellow.shade600),
                                           color: Color(0xfffff98e),
                                         ),
                                         child: Center(
@@ -510,11 +530,30 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
   }
 
   Widget barChart() {
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 7,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     if (api.weekBarChartData.isEmpty) {
       load.value = true;
 
       widget
-          .generateBarChartData(widget.tabControllerIndex)
+          .generateBarChartData(
+              widget.tabControllerIndex, startTimeDate, endTimeDate)
           .catchError((onError) {
         // print(onError);
 

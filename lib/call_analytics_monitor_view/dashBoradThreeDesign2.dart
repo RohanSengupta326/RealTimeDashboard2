@@ -6,8 +6,8 @@ import 'errorPage.dart';
 
 class DashBoardThreeDesign2 extends StatefulWidget {
   int tabControllerIndex;
-  final Future<void> Function(int) generateData;
-  final Future<void> Function(int) generateBarChartData;
+  final Future<void> Function(int, String, String) generateData;
+  final Future<void> Function(int, String, String) generateBarChartData;
   DashBoardThreeDesign2(
       this.tabControllerIndex, this.generateData, this.generateBarChartData);
 
@@ -37,6 +37,24 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
   // to put comma inside big number
 
   Widget graph() {
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 30,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     var api = Get.put(PostRequest());
 
     var _isLoading = false.obs;
@@ -44,7 +62,9 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
     if (api.monthData.isEmpty) {
       _isLoading.value = true;
 
-      widget.generateData(widget.tabControllerIndex).catchError((onError) {
+      widget
+          .generateData(widget.tabControllerIndex, startTimeDate, endTimeDate)
+          .catchError((onError) {
         // print(onError);
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -416,8 +436,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.orange.shade800),
+                                          border: Border.all(
+                                              color: Colors.orange.shade800),
                                           color: Color(0xfff5b470),
                                         ),
                                         child: Center(
@@ -482,8 +502,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                                   (totalOutboundMissedCalls)),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.yellow.shade600),
+                                          border: Border.all(
+                                              color: Colors.yellow.shade600),
                                           color: Color(0xfffff98e),
                                         ),
                                         child: Center(
@@ -521,11 +541,30 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
   }
 
   Widget barChart() {
+    final now = DateTime.now();
+    final startTimeDate = now
+        .subtract(
+          Duration(
+            days: 30,
+            hours: now.hour,
+            minutes: now.minute,
+            seconds: now.second,
+            milliseconds: now.millisecond,
+            microseconds: now.microsecond,
+          ),
+        )
+        .toUtc()
+        .toIso8601String();
+    final endTimeDate = DateTime(now.year, now.month, now.day, now.hour, 0)
+        .toUtc()
+        .toIso8601String();
+
     if (api.monthBarChartData.isEmpty) {
       load.value = true;
 
       widget
-          .generateBarChartData(widget.tabControllerIndex)
+          .generateBarChartData(
+              widget.tabControllerIndex, startTimeDate, endTimeDate)
           .catchError((onError) {
         // print(onError);
 
