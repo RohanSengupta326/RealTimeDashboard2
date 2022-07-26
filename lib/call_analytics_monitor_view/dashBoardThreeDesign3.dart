@@ -565,7 +565,7 @@ class _DashBoardThreeDesign3State extends State<DashBoardThreeDesign3> {
 
     if (api.threeMonthBarChartData.isEmpty) {
       load.value = true;
-      print('function called');
+
       widget
           .generateBarChartData(
               widget.tabControllerIndex, startTimeDate, endTimeDate)

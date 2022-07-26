@@ -549,6 +549,7 @@ class _DashBoardThreeDesign1State extends State<DashBoardThreeDesign1> {
         .toIso8601String();
 
     if (api.weekBarChartData.isEmpty) {
+      // condition so that for big data tabs fetch function get called once only
       load.value = true;
 
       widget

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../auth.dart';
 import 'package:login/homeview.dart';
 import 'dashboard2HomePage.dart';
 import 'dashboardThree.dart';
@@ -56,6 +57,19 @@ class AppDrawer extends StatelessWidget {
                 )),
             onTap: () {
               Get.offAll(DashboardThree());
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.login,
+            ),
+            title: Text('LogIn Screen',
+                style: TextStyle(
+                  color: Colors.black,
+                )),
+            onTap: () {
+              Get.offAll(AuthPage());
             },
           ),
         ],

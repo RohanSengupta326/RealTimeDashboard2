@@ -228,7 +228,7 @@ class PostRequest extends GetxController {
 
       throw InternetError('Unable to connect to the internet!');
     } on ArgumentError catch (_) {
-      // when api is wrong
+      // when post request parameters are wrong
       throw 'Could not load data for graph.';
     } catch (error) {
       // some generic unknown error

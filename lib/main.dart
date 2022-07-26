@@ -24,17 +24,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dashboard',
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 224, 128, 221),
+        primaryColor: const Color(0xff003551),
         colorScheme: const ColorScheme(
             brightness: Brightness.light,
             primary: Colors.blue,
             onPrimary: Color.fromRGBO(185, 84, 81, 1),
-            secondary: Color.fromARGB(255, 202, 188, 147),
+            secondary: Color(0xffffd966),
             onSecondary: Colors.black,
             error: Color.fromRGBO(185, 84, 81, 1),
             onError: Colors.white,
             surface: Colors.amberAccent,
-            onSurface: Color.fromRGBO(146, 149, 102, 1),
+            onSurface: Color(0xff666a66),
             background: Colors.black,
             onBackground: Colors.white),
         textTheme: const TextTheme(
