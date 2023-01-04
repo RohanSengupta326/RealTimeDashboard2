@@ -46,12 +46,12 @@ class _HomeViewState extends State<HomeView>
   Future<void> _generateData(
       int tabIndex, String startTimeDate, String endTimeDate) async {
     // fetching api
-    await api
+    /* await api
         .fetchData(tabIndex, startTimeDate, endTimeDate)
         .catchError((onError) {
       throw onError;
       // catching this error on every respective tab pages
-    });
+    }); */
   }
 
   @override

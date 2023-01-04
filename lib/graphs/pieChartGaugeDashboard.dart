@@ -38,7 +38,10 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
       PieChartData(
         // class to store legend title, graph percentage, and graph color
         'Answered',
-        widget._tabControllerIndex == 0
+
+        /* FOR SHOWING DIFFERENT DATA FROM API CALL */
+
+        /* widget._tabControllerIndex == 0
             ? widget.inbound
                 ? controller.todayData[0].answeredCallInbound
                 : widget.outbound
@@ -63,12 +66,15 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
                                 ? controller
                                     .threeMonthData[0].answeredCallOutbound
                                 : 60
-                        : 0,
+                        : 0, */
+
+        /* DUMMY DATA */
+        60,
         widget.color,
       ),
       PieChartData(
         'Missed',
-        widget._tabControllerIndex == 0
+        /* widget._tabControllerIndex == 0
             ? widget.inbound
                 ? controller.todayData[0].missedCallInbound
                 : widget.outbound
@@ -93,7 +99,8 @@ class _PieChartGaugeDashboardState extends State<PieChartGaugeDashboard> {
                                 ? controller
                                     .threeMonthData[0].missedCallOutbound
                                 : 40
-                        : 0,
+                        : 0, */
+        40,
         widget.color2,
       ),
     ];

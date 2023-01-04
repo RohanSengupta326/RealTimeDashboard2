@@ -74,7 +74,7 @@ class HorizontalBarChart extends StatelessWidget {
     List<graphData> rejected = [];
 
     // to run for loop till the no of bars should be created
-    int numberOfBars = tabControllerIndex == 0
+    int numberOfBars = /* tabControllerIndex == 0
         ? api.todayBarChartData.length
         : tabControllerIndex == 1
             ? api.weekBarChartData.length
@@ -82,15 +82,16 @@ class HorizontalBarChart extends StatelessWidget {
                 ? api.monthBarChartData.length
                 : tabControllerIndex == 3
                     ? api.threeMonthBarChartData.length
-                    : 0;
+                    : 0 */
+        3;
     // 0 means todays page, so first substract 0 so till current hour is shown
-    int i = tabControllerIndex == 0 ? 0 : 1;
+    /* int i = tabControllerIndex == 0 ? 0 : 1;
     if (i == 1) {
       numberOfBars++;
-    }
+    } */
 
     int j = 0;
-    for (i; i < numberOfBars; i++) {
+    for (int i = 0; i < numberOfBars; i++) {
       // if today or week , substract 1 hour / day and keep going back but for month and three month substract 7 days
       int substractMonthWeek =
           tabControllerIndex == 0 || tabControllerIndex == 1
@@ -100,23 +101,27 @@ class HorizontalBarChart extends StatelessWidget {
                   : 30 * i;
       answered.add(
         graphData(
-            tabControllerIndex == 0
-                // if today then show hour format
-                ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
-                    hours: substractMonthWeek,
-                  )))
-                : tabControllerIndex == 3
-                    ? DateFormat('MMM').format(
-                        DateTime.parse(api.threeMonthBarChartData[j].dateTime))
-                    : DateFormat('MMMd').format(
-                        DateTime.parse(api.threeMonthBarChartData[j].dateTime)),
-            tabControllerIndex == 0
+          tabControllerIndex == 0
+              // if today then show hour format
+              ? DateFormat('HH:00').format(DateTime.now().subtract(Duration(
+                  hours: substractMonthWeek,
+                )))
+              : tabControllerIndex == 3
+                  ? /* DateFormat('MMM').format(
+                        DateTime.parse(api.threeMonthBarChartData[j].dateTime)) */
+                  DateTime.now().toString()
+                  : /* DateFormat('MMMd').format(
+                        DateTime.parse(api.threeMonthBarChartData[j].dateTime)) */
+                  DateTime.now().toString(),
+          /* tabControllerIndex == 0
                 ? api.todayBarChartData[j].totalInboundCalls
                 : tabControllerIndex == 1
                     ? api.weekBarChartData[j].totalInboundCalls
                     : tabControllerIndex == 2
                         ? api.monthBarChartData[j].totalInboundCalls
-                        : api.threeMonthBarChartData[j].totalInboundCalls),
+                        : api.threeMonthBarChartData[j].totalInboundCalls */
+          30,
+        ),
       );
       j++;
     }

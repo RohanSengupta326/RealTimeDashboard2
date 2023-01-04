@@ -19,21 +19,21 @@ class _DashboardThreeState extends State<DashboardThree> {
 
   Future<void> _generateData(
       int tabIndex, String startTimeDate, String endTimeDate) async {
-    await api
-        .fetchData(tabIndex, startTimeDate, endTimeDate)
-        .catchError((onError) {
-      throw onError;
-    });
+    // await api
+    //     .fetchData(tabIndex, startTimeDate, endTimeDate)
+    //     .catchError((onError) {
+    //   throw onError;
+    // });
   }
 
   // api fetch function for horizontal bar chart
   Future<void> _generateBarChartData(
       int tabIndex, String startDateTime, String endDateTime) async {
-    await api
-        .fetchHistoData(tabIndex, startDateTime, endDateTime)
-        .catchError((onError) {
-      throw onError;
-    });
+    // await api
+    //     .fetchHistoData(tabIndex, startDateTime, endDateTime)
+    //     .catchError((onError) {
+    //   throw onError;
+    // });
   }
 
   @override

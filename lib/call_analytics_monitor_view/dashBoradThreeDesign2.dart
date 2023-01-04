@@ -162,7 +162,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? api.monthData[0]
                                                       .answeredCallInbound ==
                                                   0
@@ -178,7 +178,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                               : ((api.monthData[0]
                                                       .answeredCallInbound) /
                                                   (api.monthData[0]
-                                                      .totalInboundCalls)),
+                                                      .totalInboundCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                             border:
@@ -189,7 +190,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${api.monthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${api.monthData[0].answeredCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '30',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -211,7 +213,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? api.monthData[0]
                                                       .answeredCallOutbound ==
                                                   0
@@ -227,7 +229,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                               : ((api.monthData[0]
                                                       .answeredCallOutbound) /
                                                   (api.monthData[0]
-                                                      .totalOutboundCalls)),
+                                                      .totalOutboundCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                             border:
@@ -238,7 +241,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${api.monthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${api.monthData[0].answeredCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '50',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -286,7 +290,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? api.monthData[0]
                                                       .missedCallInbound ==
                                                   0
@@ -302,7 +306,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                               : ((api.monthData[0]
                                                       .missedCallInbound) /
                                                   (api.monthData[0]
-                                                      .totalInboundCalls)),
+                                                      .totalInboundCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                             border: Border.all(
@@ -313,7 +318,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${api.monthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${api.monthData[0].missedCallInbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '60',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -335,7 +341,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? api.monthData[0]
                                                       .missedCallOutbound ==
                                                   0
@@ -351,7 +357,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                               : ((api.monthData[0]
                                                       .missedCallOutbound) /
                                                   (api.monthData[0]
-                                                      .totalOutboundCalls)),
+                                                      .totalOutboundCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                             border: Border.all(
@@ -362,7 +369,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${api.monthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${api.monthData[0].missedCallOutbound.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '70',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -425,7 +433,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? outboundMissedCustomer == 0
                                               ? 0.2
                                               : ((outboundMissedCustomer) /
@@ -433,7 +441,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                           : outboundMissedCustomer == 0
                                               ? 0.2
                                               : ((outboundMissedCustomer) /
-                                                  (totalOutboundMissedCalls)),
+                                                  (totalOutboundMissedCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -445,7 +454,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${outboundMissedCustomer.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '20',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -491,7 +501,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                     // to give height and width to a widget inside an expanded widget
                                     alignment: Alignment.topLeft,
                                     child: FractionallySizedBox(
-                                      widthFactor: GetPlatform.isAndroid
+                                      widthFactor: /* GetPlatform.isAndroid
                                           ? outboundMissedAgent == 0
                                               ? 0.2
                                               : ((outboundMissedAgent) /
@@ -499,7 +509,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                           : outboundMissedAgent == 0
                                               ? 0.2
                                               : ((outboundMissedAgent) /
-                                                  (totalOutboundMissedCalls)),
+                                                  (totalOutboundMissedCalls)) */
+                                          0.2,
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -511,7 +522,8 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: FittedBox(
                                               child: Text(
-                                                '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                                // '${outboundMissedAgent.toString().replaceAllMapped(reg, mathFunc)}',
+                                                '30',
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ),
@@ -533,7 +545,7 @@ class _DashBoardThreeDesign2State extends State<DashBoardThreeDesign2> {
                     );
         }),
         Expanded(
-          flex: 2,
+          flex: 1,
           child: barChart(),
         ),
       ],
